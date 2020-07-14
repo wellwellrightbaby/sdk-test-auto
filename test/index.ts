@@ -7,7 +7,7 @@ const APPID = 1739272706;
 let token = "";
 let zg:ZegoExpressEngine;
 
-describe("sdk-web", function () {
+describe("express-web", function () {
             before(async function () {
                         let {data} = await Axios.get("https://wsliveroom-demo.zego.im:8282/token", {
                                     params: { app_id: APPID, id_name: userID },
@@ -25,8 +25,18 @@ describe("sdk-web", function () {
                         let result = await zg.loginRoom("choui", token, {
                                     userID: userID,
                                     userName: "name" + userID,
-                        });
-                        console.log("loginRoom", result);
+                        }); 
                         expect(result).to.equal(true);
+            });
+
+            it("创建流", async function () {
+                        try{
+                                    let steam = await zg.createStream(); 
+                                    expect(steam).is.not.null;
+                        }catch(error){
+                                    expect(error).is.not.null;
+                        }
+                        
+                        
             });
 });
