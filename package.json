@@ -4,11 +4,14 @@
   "description": "即构sdk 自动化测试项目",
   "main": "karma.conf.js",
   "scripts": {
-    "start": "karma start"
+    "start": "cross-env CI=false && karma start"
   },
   "keywords": [
     "karma",
-    "mocha"
+    "mocha",
+    "typescript",
+    "chai",
+    "zego sdk"
   ],
   "author": "choui",
   "license": "ISC",
@@ -19,6 +22,7 @@
     "@types/webpack-env": "^1.15.2",
     "axios": "^0.19.2",
     "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
     "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^5.1.0",
     "karma-chai": "^0.1.0",
@@ -35,6 +39,7 @@
     "webpack": "^4.43.0"
   },
   "dependencies": {
+    "webrtc-zego": "^1.8.0",
     "zego-express-engine-webrtc": "^1.7.0"
   }
 }

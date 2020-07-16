@@ -23,14 +23,16 @@ module.exports = function (config) {
       'karma-coverage-istanbul-reporter'
     ],
 
-    
+
 
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['nyan','coverage-istanbul'],
+    reporters: process.env.CI
+    ? ['nyan', 'coverage-istanbul', 'coveralls']
+    : ['nyan', 'coverage-istanbul'],
 
 
     // web server port
@@ -76,7 +78,7 @@ module.exports = function (config) {
     // files: [
     //   'sdk/*.ts',
     // ],
-    files: ['test/index.ts'], 
+    files: ['test/index.ts'],
 
     // list of files / patterns to exclude
     exclude: [
@@ -114,8 +116,8 @@ module.exports = function (config) {
             exclude: [path.join(__dirname, 'node_modules')]
           },
           {
-            test: /\.tsx?$/,
-            include: [path.join(__dirname, 'src')],
+            test: /\.jsx?$/,
+            include: [path.join(__dirname, 'sdk')],
             enforce: 'post',
             use: {
               loader: 'istanbul-instrumenter-loader',
@@ -129,26 +131,30 @@ module.exports = function (config) {
       }
     },
 
-    // coverageIstanbulReporter: process.env.CI
-    // ? {
-    //     reports: ['lcovonly', 'text-summary'],
-    //     dir: path.join(__dirname, 'coverage'),
-    //     combineBrowserReports: true,
-    //     fixWebpackSourcePaths: true
-    //   }
-    // : {
-    //     reports: ['html', 'lcovonly', 'text-summary'],
-    //     dir: path.join(__dirname, 'coverage/%browser%/'),
-    //     fixWebpackSourcePaths: true,
-    //     'report-config': {
-    //       html: { outdir: 'html' }
-    //     }
-    //   },
-      
-    // nyanReporter: {
-    //   renderOnRunCompleteOnly: process.env.CI
-    // }
+    coverageIstanbulReporter: process.env.CI
+      ? {
+        reports: ['lcovonly', 'text-summary'],
+        dir: path.join(__dirname, 'coverage'),
+        combineBrowserReports: true,
+        fixWebpackSourcePaths: true
+      }
+      : {
+        reports: ['html', 'lcovonly', 'text-summary'],
+        dir: path.join(__dirname, 'coverage/%browser%/'),
+        fixWebpackSourcePaths: true,
+        'report-config': {
+          html: { outdir: 'html' }
+        }
+      },
 
+    nyanReporter: {
+      renderOnRunCompleteOnly: process.env.CI
+    },
+
+    coverageReporter: {
+      type: 'lcovonly',
+      dir: 'coverage/'
+    },
 
   })
 }

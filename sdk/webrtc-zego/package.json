@@ -1,0 +1,43 @@
+{
+  "_from": "webrtc-zego",
+  "_id": "webrtc-zego@1.8.0",
+  "_inBundle": false,
+  "_integrity": "sha1-alKyhEbaNHwyoOiqhiO9J5QWp+Q=",
+  "_location": "/webrtc-zego",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "webrtc-zego",
+    "name": "webrtc-zego",
+    "escapedName": "webrtc-zego",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/webrtc-zego/download/webrtc-zego-1.8.0.tgz",
+  "_shasum": "6a52b28446da347c32a0e8aa8623bd279416a7e4",
+  "_spec": "webrtc-zego",
+  "_where": "/Users/zhaowei/chouiSpace/sdk/sdk-test-auto",
+  "author": {
+    "name": "zegodev"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "zego webrtc sdk",
+  "keywords": [
+    "sdk",
+    "zego",
+    "webrtc"
+  ],
+  "license": "ISC",
+  "main": "./jZego-rtc.js",
+  "name": "webrtc-zego",
+  "typings": "./sdk/webrtc/zego.client.web.d.ts",
+  "version": "1.8.0"
+}
