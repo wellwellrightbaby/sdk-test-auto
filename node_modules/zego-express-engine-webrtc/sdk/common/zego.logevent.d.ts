@@ -526,5 +526,9 @@ export declare const errorList: {
         code: number;
         message: string;
     };
+    kDeviceChangeError: {
+        code: number;
+        message: string;
+    };
 };
 export declare const codeErrMap: any;
