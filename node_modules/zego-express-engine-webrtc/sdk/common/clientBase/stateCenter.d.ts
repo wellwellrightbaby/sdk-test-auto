@@ -10,6 +10,9 @@ export declare class StateCenter {
     userid: string;
     sessionid: string;
     roomid: string;
+    roomSessionId: string;
+    bizVersion: string;
+    relateService: Array<string>;
     token: string;
     role: 1 | 2;
     server: string;
@@ -74,9 +77,11 @@ export declare class StateCenter {
     tryHeartbeatCount: number;
     heartbeatInterval: number;
     heartbeatTimer: any;
+    loginHeartbeatTimer: any;
     sendDataCheckTimer: any;
     sendDataCheckInterval: number;
     sendDataTimeout: number;
+    sendDataBizTimeout: number;
     sendDataDropTimeout: number;
     sendDataCheckOnceCount: number;
     sendRoomMsgTime: number;
@@ -125,6 +130,9 @@ export declare class StateCenter {
             script: ScriptProcessorNode;
         };
     };
+    deviceInfos: any;
+    deviceChangeTimer: any;
+    deviceStateOut: boolean;
     constructor();
     isLogin(): boolean;
     getRequestId(): string;

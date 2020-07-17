@@ -2,7 +2,7 @@
 const files = require.context('./', false, /-spec.tsx?$/);
 
 const keys = files.keys();
-console.log(keys);
+console.log("keys:",keys);
 
 keys.forEach(key => {
       files(key);

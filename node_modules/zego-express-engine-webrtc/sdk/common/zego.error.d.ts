@@ -53,10 +53,6 @@ export declare const liveRoomErrorList: {
         code: number;
         msg: string;
     };
-    KICK_OUT: {
-        code: number;
-        msg: string;
-    };
     HEARTBEAT_TIMEOUT: {
         code: number;
         msg: string;
