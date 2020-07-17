@@ -8,7 +8,7 @@ let token = '';
 let zg: ZegoClient;
 let publishStream: MediaStream;
 
-describe('express-web', function() {
+describe('liveroom-web', function() {
       before(async function() {
             const { data } = (await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
                   params: { app_id: APPID, id_name: userID },
@@ -33,7 +33,7 @@ describe('express-web', function() {
             expect(result).to.be.true;
       });
 
-      it('登录房间', async function(done) {
+      it('登录房间', function(done) {
             zg.login(
                   'choui',
                   2,
