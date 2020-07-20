@@ -70,21 +70,30 @@ export declare class ZegoPublish {
     soundLevel: number;
     script: any;
     mic: any;
-    constructor(log: LoggerWeb, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext);
+    constructor(
+        log: LoggerWeb,
+        signal: ZegoSignal | null,
+        dataReport: ZegoDataReport,
+        qualityTimeInterval: number,
+        streamCenter: ZegoStreamCenterWeb,
+        ac: ZegoAudioContext,
+    );
     private publishStateUpdateError;
     private resetPublish;
     private clearTryPublishTimer;
     private clearPublishQualityTimer;
     private shouldSendCloseSession;
-    startPublish(streamId: string, localStream: MediaStream, videoInfo: VideoInfo, mediaStreamConfig: any, publishOption?: webPublishOption): void;
+    startPublish(
+        streamId: string,
+        localStream: MediaStream,
+        videoInfo: VideoInfo,
+        mediaStreamConfig: any,
+        publishOption?: webPublishOption,
+    ): void;
     onCreatePublishSessionSuccess(data: any): void;
-    onCreateOfferSuccess(desc: {
-        sdp: any;
-    }): void;
+    onCreateOfferSuccess(desc: { sdp: any }): void;
     updateBandwidthRestriction(sdp: any, bandwidth: string | number): any;
-    onSetLocalDescriptionSuccess(desc: {
-        sdp: any;
-    }): void;
+    onSetLocalDescriptionSuccess(desc: { sdp: any }): void;
     onRecvMediaDescription(seq: number, sessionId: number, data: any): void;
     onGetRemoteOfferSucceses(desc: string): void;
     onIceConnectionStateChange(event: any): void;
@@ -100,9 +109,7 @@ export declare class ZegoPublish {
     tryStartPublish(streamId: string): void;
     checkPublishConnectionFailedState(connectionState: string): void;
     setPublishQualityTimer(): void;
-    getPublishStats(results: {
-        forEach: (arg0: (result: any) => void) => void;
-    }): void;
+    getPublishStats(results: { forEach: (arg0: (result: any) => void) => void }): void;
     uploadPublishQuality(publishData: any): void;
     stopPublish(): void;
     onPublishStateUpdate(type: number, streamId: string | null, error: ERRO): void;

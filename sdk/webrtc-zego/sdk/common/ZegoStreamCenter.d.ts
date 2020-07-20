@@ -1,6 +1,6 @@
-import { Logger } from "./zego.logger";
-import { ERRO, PlayerInfo, StreamQuality, PublishInfo } from "./zego.entity";
-import { StateCenter } from "./clientBase/stateCenter";
+import { Logger } from './zego.logger';
+import { ERRO, PlayerInfo, StreamQuality, PublishInfo } from './zego.entity';
+import { StateCenter } from './clientBase/stateCenter';
 export declare abstract class ZegoStreamCenter {
     playerList: {
         [index: string]: PlayerInfo;
@@ -21,9 +21,11 @@ export declare abstract class ZegoStreamCenter {
     abstract onVideoSizeChanged(streamId: string, videoWidth: number, videoHeight: number): any;
     abstract onRemoteCameraStatusUpdate(streamID: string, status: number): any;
     abstract onRemoteMicStatusUpdate(streamID: string, status: number): any;
-    abstract onSoundLevelUpdate(soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-    }>): any;
+    abstract onSoundLevelUpdate(
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+        }>,
+    ): any;
     setSessionInfo(appid: number, userid: string, token: string, testEnvironment: boolean): void;
 }

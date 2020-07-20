@@ -10,12 +10,12 @@ export declare enum ENUM_LOG_LEVEL {
     warn = 2,
     error = 3,
     report = 99,
-    disable = 100
+    disable = 100,
 }
 export declare enum ENUM_REMOTE_TYPE {
     disable = 0,
     websocket = 1,
-    https = 2
+    https = 2,
 }
 export interface Config {
     appid: number;
@@ -205,7 +205,7 @@ export interface DataStatistics {
 export declare enum ENUM_SIGNAL_STATE {
     disconnected = 0,
     connecting = 1,
-    connected = 2
+    connected = 2,
 }
 export declare const ENUM_RESOLUTION_TYPE: {
     LOW: {
@@ -306,7 +306,7 @@ export declare const ENUM_STREAM_UPDATE_TYPE: {
 export declare enum ENUM_RUN_STATE {
     logout = 0,
     trylogin = 1,
-    login = 2
+    login = 2,
 }
 export declare const ENUM_PUBLISH_STATE_UPDATE: {
     start: number;
@@ -386,7 +386,7 @@ export declare enum QUALITYLEVEL {
     low = 1,
     stantard = 2,
     hight = 3,
-    custome = 4
+    custome = 4,
 }
 export interface MediaStreamConstraints {
     audio: boolean;
@@ -400,10 +400,12 @@ export interface MediaStreamConstraints {
     height?: number;
     frameRate?: number;
     width?: number;
-    bitRate?: number | {
-        minBitRate: number;
-        maxBitRate: number;
-    };
+    bitRate?:
+        | number
+        | {
+              minBitRate: number;
+              maxBitRate: number;
+          };
     minBitRate?: number;
     maxBitRate?: number;
     audioBitRate?: number;
@@ -489,16 +491,16 @@ export interface CdnPushConfig {
 }
 export declare enum ENUM_PLAY_SOURCE_TYPE {
     auto = 0,
-    ultra = 1
+    ultra = 1,
 }
 export declare enum ENUM_BROADCASTER_STATUS {
     stop = 0,
-    start = 1
+    start = 1,
 }
 export declare enum ENUM_DISPATCH_TYPE {
     cdn = 0,
     ultra = 1,
-    customUrl = 2
+    customUrl = 2,
 }
 export declare type PlayOption = {
     playType?: 'audio' | 'video' | 'all';
@@ -511,5 +513,5 @@ export declare enum E_CLIENT_TYPE {
     ClientType_None = 0,
     ClientType_H5 = 1,
     ClientType_SmallPragram = 2,
-    ClientType_Webrtc = 3
+    ClientType_Webrtc = 3,
 }

@@ -35,7 +35,18 @@ export declare class ZegoPlayWechat {
     playerInfo: any;
     playerLogUploadTime: number;
     stateCenter: any;
-    constructor(logger: Logger, streamId: string, urls: string[], params: any, reconnectLimit: number, streamcenter: ZegoStreamCenterWechat, sourceType: number, playerType: number, dataReport: ZegoDataReport, stateCenter: StateCenter);
+    constructor(
+        logger: Logger,
+        streamId: string,
+        urls: string[],
+        params: any,
+        reconnectLimit: number,
+        streamcenter: ZegoStreamCenterWechat,
+        sourceType: number,
+        playerType: number,
+        dataReport: ZegoDataReport,
+        stateCenter: StateCenter,
+    );
     resetPlayer(): void;
     newPlayer(): boolean;
     stopPlayer(): void;
@@ -61,9 +72,7 @@ export declare class ZegoPlayWechat {
             code: any;
         };
     }): boolean;
-    updateEvent(event: {
-        detail: any;
-    }): void;
+    updateEvent(event: { detail: any }): void;
     updatePlayerNetStatus(event: {
         detail: {
             info: {

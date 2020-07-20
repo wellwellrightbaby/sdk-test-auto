@@ -22,10 +22,15 @@ export declare class ZegoStreamCenterWechat extends ZegoStreamCenter {
     constructor(log: LoggerWechat | Logger, stateCenter: StateCenter, dataReport: ZegoDataReport);
     updatePlayingState(streamId: string, streamParams?: any, start?: boolean): boolean;
     updatePublishingState(streamId: string, streamParams?: string, start?: boolean): boolean;
-    updateStreamState(streamID: string, start: boolean, streamParams: string, streamList: Array<{
-        streamID: string;
-        params: string;
-    }>): void;
+    updateStreamState(
+        streamID: string,
+        start: boolean,
+        streamParams: string,
+        streamList: Array<{
+            streamID: string;
+            params: string;
+        }>,
+    ): void;
     isPlaying(): boolean;
     isPublishing(): boolean;
     startPlayingStream(streamId: string, streamUrlList: string[], dispatchType?: number): any;
@@ -46,10 +51,17 @@ export declare class ZegoStreamCenterWechat extends ZegoStreamCenter {
     reportPlayEvent(streamId: string, error?: any): void;
     onPlayStateUpdate(type: number, streamId: string, error: ERRO): void;
     onPlayQualityUpdate(streamID: string, streamQuality: any): void;
-    onPublishStateUpdate(type: number, streamId: string, error: number | {
-        code: string | number;
-        msg: string;
-    } | undefined): void;
+    onPublishStateUpdate(
+        type: number,
+        streamId: string,
+        error:
+            | number
+            | {
+                  code: string | number;
+                  msg: string;
+              }
+            | undefined,
+    ): void;
     onPublishQualityUpdate(streamId: string, streamQuality: any): void;
     onPublisherStreamUrlUpdate(streamId: any, url: any): void;
     onPublisherStreamUrlFail(code: number, msg: string): void;
@@ -58,18 +70,24 @@ export declare class ZegoStreamCenterWechat extends ZegoStreamCenter {
     onPlayerStart(streamId: string, playerType: number): void;
     onPlayerStop(streamId: string, playerType: number, error: any): void;
     onPlayerRetry(streamId: string, playerType: number): void;
-    onPlayerQuality(streamID: string, streamQuality: {
-        videoBitrate: any;
-        audioBitrate: any;
-        videoFPS: any;
-        videoHeight: any;
-        videoWidth: any;
-    }, playerType: number): void;
-    onSoundLevelUpdate(soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-        type: string;
-    }>): void;
+    onPlayerQuality(
+        streamID: string,
+        streamQuality: {
+            videoBitrate: any;
+            audioBitrate: any;
+            videoFPS: any;
+            videoHeight: any;
+            videoWidth: any;
+        },
+        playerType: number,
+    ): void;
+    onSoundLevelUpdate(
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+            type: string;
+        }>,
+    ): void;
     onStreamUrlUpdate(streamId: string, url: string, playerType: number): void;
     getTotalStreamId(streamid: string): string;
 }

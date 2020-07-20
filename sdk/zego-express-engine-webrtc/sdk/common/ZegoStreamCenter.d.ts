@@ -24,11 +24,13 @@ export declare abstract class ZegoStreamCenter {
     abstract onPublishStateUpdate(type: 0 | 1 | 2, streamid: string, error: ERRO): void;
     abstract onPublishQualityUpdate(streamID: string, streamQuality: StreamQuality): void;
     abstract onPlayerStreamUrlUpdate(streamid: string, url: string, type: string): void;
-    abstract onSoundLevelUpdate(soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-        type: string;
-    }>): void;
+    abstract onSoundLevelUpdate(
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+            type: string;
+        }>,
+    ): void;
     abstract getTotalStreamId(streamID: string): string;
     onRemoteCameraStatusUpdate(streamID: string, status: 'OPEN' | 'MUTE'): void;
     onRemoteMicStatusUpdate(streamID: string, status: 'OPEN' | 'MUTE'): void;

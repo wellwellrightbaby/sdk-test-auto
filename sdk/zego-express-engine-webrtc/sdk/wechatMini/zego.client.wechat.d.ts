@@ -1,6 +1,13 @@
 import { ZegoStreamCenterWechat } from './zego.streamcenter.wechat';
 import { ZegoWebSocket } from './zego.webSocket';
-import { E_CLIENT_TYPE, ENUM_DISPATCH_TYPE, ENUM_PLAY_SOURCE_TYPE, ERRO, WxListener, wxPublishOption } from '../common/zego.entity';
+import {
+    E_CLIENT_TYPE,
+    ENUM_DISPATCH_TYPE,
+    ENUM_PLAY_SOURCE_TYPE,
+    ERRO,
+    WxListener,
+    wxPublishOption,
+} from '../common/zego.entity';
 import { BaseCenter } from '../common/clientBase/index';
 export declare class ZegoExpressEngine extends BaseCenter {
     streamCenter: ZegoStreamCenterWechat;
@@ -18,16 +25,22 @@ export declare class ZegoExpressEngine extends BaseCenter {
     off<k extends keyof WxListener>(listener: k, callBack?: WxListener[k]): boolean;
     private setPreferPlaySourceType;
     private setPreferPublishSourceType;
-    startPlayingStream(streamID: string, playOption?: {
-        streamParams?: string;
-        isMix?: boolean;
-        sourceType?: 'CDN' | 'BGP';
-    }): Promise<{
+    startPlayingStream(
+        streamID: string,
+        playOption?: {
+            streamParams?: string;
+            isMix?: boolean;
+            sourceType?: 'CDN' | 'BGP';
+        },
+    ): Promise<{
         streamID: string;
         url: string;
     }>;
     stopPlayingStream(streamID: string): void;
-    startPublishingStream(streamID: string, publishOption?: wxPublishOption): Promise<{
+    startPublishingStream(
+        streamID: string,
+        publishOption?: wxPublishOption,
+    ): Promise<{
         streamID: string;
         url: string;
     }>;
@@ -50,15 +63,18 @@ export declare class ZegoExpressEngine extends BaseCenter {
     private handleFetchStreamPublishUrlRsp;
     private handleFetchStreamUrlRsp;
     private doPublishStream;
-    protected setCDNInfo(_streamInfo: {
-        urlFlv: string;
-        urlHls: string;
-        urlRtmp: string;
-    }, _streamItem: {
-        urls_flv: string;
-        urls_m3u8: string;
-        urls_rtmp: string;
-    }): void;
+    protected setCDNInfo(
+        _streamInfo: {
+            urlFlv: string;
+            urlHls: string;
+            urlRtmp: string;
+        },
+        _streamItem: {
+            urls_flv: string;
+            urls_m3u8: string;
+            urls_rtmp: string;
+        },
+    ): void;
     protected loginBodyData(): {
         id_name: string;
         nick_name: string;

@@ -2,10 +2,10 @@
 const files = require.context('./', false, /-spec.tsx?$/);
 
 const keys = files.keys();
-console.log("keys:",keys);
+console.log('keys:', keys);
 
 keys.forEach(key => {
-      files(key);
+    files(key);
 });
 
 // 以上代码可以简写为

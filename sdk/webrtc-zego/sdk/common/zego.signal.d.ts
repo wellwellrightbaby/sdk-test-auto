@@ -50,13 +50,28 @@ export declare class ZegoSignal {
     private handleServerPush;
     private disconnectCallback;
     private updateToken;
-    sendMessageWithCallback(cmd: string, seq: number, sessionId: number, body: any, success: Function, error: Function): void;
+    sendMessageWithCallback(
+        cmd: string,
+        seq: number,
+        sessionId: number,
+        body: any,
+        success: Function,
+        error: Function,
+    ): void;
     private getHeader;
     connectServer(token: string, serverUrl: string, result: Function): void;
     private startConnectTimer;
     disconnectServer(): void;
     isServerConnected(): boolean;
-    createSession(seq: number, type: number, mode: number, streamId: string, strAuthParam: string, success: any, error: any): void;
+    createSession(
+        seq: number,
+        type: number,
+        mode: number,
+        streamId: string,
+        strAuthParam: string,
+        success: any,
+        error: any,
+    ): void;
     removeSession(sessionId: number): void;
     sendCloseSession(seq: number, sessionId: number, reason: number, success?: Function, error?: Function): void;
     private sendMessage;
@@ -64,16 +79,23 @@ export declare class ZegoSignal {
     addSession(sessionId: string, token: any): void;
     handlePushData(msg: any): void;
     handlePushResetSessionData(msg: any): void;
-    sendMediaDesc(seq: number, sessionId: number, type: number, desc: {
-        sdp: any;
-        width?: number;
-        height?: number;
-        frameRate?: number;
-        video_min_kpbs?: number;
-        video_max_kpbs?: number;
-        audio_kpbs?: number;
-        keyframe_intv?: number;
-    }, success: Function, error: Function): void;
+    sendMediaDesc(
+        seq: number,
+        sessionId: number,
+        type: number,
+        desc: {
+            sdp: any;
+            width?: number;
+            height?: number;
+            frameRate?: number;
+            video_min_kpbs?: number;
+            video_max_kpbs?: number;
+            audio_kpbs?: number;
+            keyframe_intv?: number;
+        },
+        success: Function,
+        error: Function,
+    ): void;
     sendCandidateInfo(seq: any, sessionId: any, candidateList: any, success: any, error: any): void;
     sendMediaDescAck(seq: any, sessionId: any, result: any): void;
     sendCandidateInfoAck(seq: any, sessionId: any, result: any): void;

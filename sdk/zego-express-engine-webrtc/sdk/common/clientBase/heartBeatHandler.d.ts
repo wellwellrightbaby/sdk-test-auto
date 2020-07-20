@@ -25,8 +25,11 @@ export declare class HeartBeatHandler {
     onRecvReliableMessage(type: string, seq: number, data: string): void;
     resetCheckMessage(): void;
     private checkSendMessageList;
-    protected checkMessageListTimeout(messageList: LinkedList, messageMap: {
-        [index: number]: any;
-    }): void;
+    protected checkMessageListTimeout(
+        messageList: LinkedList,
+        messageMap: {
+            [index: number]: any;
+        },
+    ): void;
     startCheckMessageTimeout(): void;
 }

@@ -4,31 +4,46 @@ export declare class ClientUtil {
     static checkConfigParam(option: Config, logger: Logger): boolean;
     static checkLoginParam(roomid: string, token: string): boolean;
     static checkPreviewParam(mediaStreamConstraints: MediaStreamConstraints, logger: Logger): boolean;
-    static registerCallback(fName: any, option: {
-        success?: Function;
-        error?: Function;
-    }, callbackList: {
-        [index: string]: Function;
-    }): void;
-    static actionErrorCallback(fName: string, callbackList: {
-        [index: string]: Function;
-    }): Function;
-    static actionSuccessCallback(fName: any, callbackList: {
-        [index: string]: Function;
-    }): Function;
+    static registerCallback(
+        fName: any,
+        option: {
+            success?: Function;
+            error?: Function;
+        },
+        callbackList: {
+            [index: string]: Function;
+        },
+    ): void;
+    static actionErrorCallback(
+        fName: string,
+        callbackList: {
+            [index: string]: Function;
+        },
+    ): Function;
+    static actionSuccessCallback(
+        fName: any,
+        callbackList: {
+            [index: string]: Function;
+        },
+    ): Function;
     /**
      错误管理
      */
-    static getServerError(code: any): {
+    static getServerError(
+        code: any,
+    ): {
         code: string;
         msg: string;
     };
     static isKeepTryLogin(code: number): boolean;
-    static mergeStreamList(logger: Logger, idName: string, oldStreamList: any[], newStreamList: any[], callbackResult: any): void;
-    static checkCustomCommandParam(param: {
-        dest_id_name: string[];
-        custom_msg: string;
-    }): boolean;
+    static mergeStreamList(
+        logger: Logger,
+        idName: string,
+        oldStreamList: any[],
+        newStreamList: any[],
+        callbackResult: any,
+    ): void;
+    static checkCustomCommandParam(param: { dest_id_name: string[]; custom_msg: string }): boolean;
     static generateRandumNumber(maxNum: number): number;
     static uuid(len?: number, radix?: number): string;
     static supportDetection(screenShotReady: boolean, success: Function, error: Function): void;

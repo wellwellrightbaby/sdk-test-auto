@@ -2,10 +2,10 @@
  ZegoStreamCenter
  */
 /// <reference path="../common/ZegoStreamCenter.d.ts" />
-import { ZegoStreamCenter } from "../common/ZegoStreamCenter";
-import { LoggerWechat } from "./zego.logger.wx";
-import { ZegoDataReport } from "../common/zego.datareport";
-import { StateCenter } from "../common/clientBase/stateCenter";
+import { ZegoStreamCenter } from '../common/ZegoStreamCenter';
+import { LoggerWechat } from './zego.logger.wx';
+import { ZegoDataReport } from '../common/zego.datareport';
+import { StateCenter } from '../common/clientBase/stateCenter';
 export declare class ZegoStreamCenterWechat extends ZegoStreamCenter {
     dataReport: ZegoDataReport;
     playerList: {};
@@ -20,10 +20,15 @@ export declare class ZegoStreamCenterWechat extends ZegoStreamCenter {
     constructor(log: LoggerWechat, stateCenter: StateCenter);
     updatePlayingState(streamid: string, streamParams?: any, start?: boolean): void;
     updatePublishingState(streamid: string, streamParams?: string, start?: boolean): void;
-    updateStreamState(streamid: string, start: boolean, streamParams: string, streamList: Array<{
-        streamid: string;
-        params: string;
-    }>): void;
+    updateStreamState(
+        streamid: string,
+        start: boolean,
+        streamParams: string,
+        streamList: Array<{
+            streamid: string;
+            params: string;
+        }>,
+    ): void;
     isPlaying(): boolean;
     isPublishing(): boolean;
     startPlayingStream(streamid: string, streamUrlList: string[], dispatchType?: 1 | 0): any;
@@ -45,10 +50,12 @@ export declare class ZegoStreamCenterWechat extends ZegoStreamCenter {
     onVideoSizeChanged(streamid: any): void;
     onRemoteCameraStatusUpdate(streamID: string, status: number): void;
     onRemoteMicStatusUpdate(streamID: string, status: number): void;
-    onSoundLevelUpdate(soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-    }>): void;
+    onSoundLevelUpdate(
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+        }>,
+    ): void;
     getReconnectLimit(sourceType: number): number;
     onPlayerStart(streamid: any, playerType: any): void;
     onPlayerStop(streamid: any, playerType: any, error: any): void;

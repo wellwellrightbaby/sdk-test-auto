@@ -15,7 +15,14 @@ export declare class RoomHandler {
     onDisconnect(err: ERRO): void;
     loginSuccessCallBack(lastRunState: number, msg: any): void;
     onGetTotalUserList(roomId: string, userList: any[]): void;
-    login(roomid: string, role: 1 | 2, token: string, authToken: string, success: (list: StreamInfo[]) => void, error: (err: ERRO) => void): void;
+    login(
+        roomid: string,
+        role: 1 | 2,
+        token: string,
+        authToken: string,
+        success: (list: StreamInfo[]) => void,
+        error: (err: ERRO) => void,
+    ): void;
     loginBodyData(): any;
     private tryLogin;
     private handleLoginRsp;

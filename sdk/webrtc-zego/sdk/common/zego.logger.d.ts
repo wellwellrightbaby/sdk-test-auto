@@ -1,5 +1,5 @@
-import { ENUM_REMOTE_TYPE, ENUM_LOG_LEVEL } from "./zego.entity";
-import { ZegoWebSocket } from "../wechatMini/zego.webSocket";
+import { ENUM_REMOTE_TYPE, ENUM_LOG_LEVEL } from './zego.entity';
+import { ZegoWebSocket } from '../wechatMini/zego.webSocket';
 export declare const D: string[];
 export declare abstract class Logger {
     appid: number;
@@ -24,7 +24,14 @@ export declare abstract class Logger {
     constructor();
     setLogLevel(logLevel: ENUM_LOG_LEVEL): void;
     setRemoteLogLevel(logLevel: ENUM_LOG_LEVEL): void;
-    setSessionInfo(appid: number, roomid: string, sessionid: string, userid: string, userName: string, version: string): void;
+    setSessionInfo(
+        appid: number,
+        roomid: string,
+        sessionid: string,
+        userid: string,
+        userName: string,
+        version: string,
+    ): void;
     openLogServer(url: string): void;
     stopLogServer(): void;
     stopWebSocketServer(): void;
