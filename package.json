@@ -4,7 +4,8 @@
   "description": "即构sdk 自动化测试项目",
   "main": "karma.conf.js",
   "scripts": {
-    "start": "cross-env CI=false && karma start"
+    "start": "cross-env CI=false && karma start",
+    "lint": "prettier --write --parser typescript 'sdk/**/*.ts' '*.js' 'test/**/*.ts'"
   },
   "keywords": [
     "karma",
