@@ -4,8 +4,13 @@ import chai from 'chai';
 import { webPublishOption } from '../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 const sinon = require('sinon');
 
-const { expect } = chai;
+const { expect, assert } = chai;
 const userID = 'id' + new Date().getTime();
+let user = {
+    userID: userID,
+    userName: 'name' + userID,
+};
+let roomId: any = '1234';
 const APPID = 1739272706;
 const SERVER = 'wss://webliveroom-test.test.im/ws';
 const tokenURL = 'https://wsliveroom-demo.zego.im:8282/token';
@@ -14,91 +19,93 @@ let token = '';
 let zg: ZegoExpressEngine;
 
 describe('express-web', function() {
-    beforeEach(() => {
-        zg = new ZegoExpressEngine(APPID, SERVER);
-    });
-
-    it('初始化sdk', async function() {
-        expect(zg).is.not.null;
-    });
-
-    it('日志配置', function() {
-        const result = zg.setLogConfig({
-            logLevel: 'disable',
-            remoteLogLevel: 'disable',
+    describe('初始化相关的前置功能', function() {
+        beforeEach(() => {
+            zg = new ZegoExpressEngine(APPID, SERVER);
         });
-        expect(result).to.be.true;
-    });
-
-    it('设置调试开关', function() {
-        expect(zg.stateCenter.debug).to.be.false;
-
-        zg.setDebugVerbose(true);
-        expect(zg.stateCenter.debug).to.be.true;
-
-        zg.setDebugVerbose(false);
-        expect(zg.stateCenter.debug).to.be.false;
-    });
-
-    it('可用性检测', function() {
-        const test = async () => {
-            const result = await zg.checkSystemRequirements();
-
-            expect(result.webRTC).to.be.a('boolean');
-            expect(result.customCapture).to.be.a('boolean');
-            expect(result.camera).to.be.a('boolean');
-            expect(result.microphone).to.be.a('boolean');
-            expect(result.microphone).to.be.a('boolean');
-            expect(result.videoCodec).to.be.a('object');
-            expect(result.screenSharing).to.be.a('boolean');
-
-            const { H264, VP8 } = result.videoCodec;
-            expect(H264).to.be.a('boolean');
-            expect(VP8).to.be.a('boolean');
-        };
-
-        setTimeout(test, TIMEOUT);
-    });
-
-    it('获取媒体设备信息', async function() {
-        const result = await zg.enumDevices();
-        const [key1, key2] = ['deviceName', 'deviceID'];
-        const testArrayObjectHasKeys = (arrayObject: {}[], ...keys: string[]) =>
-            arrayObject.forEach(obj => {
-                expect(obj).to.have.all.keys(...keys);
+    
+        it('初始化sdk', async function() {
+            expect(zg).is.not.null;
+        });
+    
+        it('日志配置', function() {
+            const result = zg.setLogConfig({
+                logLevel: 'disable',
+                remoteLogLevel: 'disable',
             });
-
-        // for each
-        expect(result.microphones).to.be.an('array');
-        expect(result.speakers).to.be.an('array');
-        expect(result.cameras).to.be.an('array');
-
-        testArrayObjectHasKeys(result.microphones, key1, key2);
-        testArrayObjectHasKeys(result.speakers, key1, key2);
-        testArrayObjectHasKeys(result.cameras, key1, key2);
-    });
-
-    it('回调事件注册', function() {
-        const { listenerList } = zg.stateCenter;
-
-        zg.on('roomUserUpdate', () => {});
-        expect(listenerList.roomUserUpdate.length).to.equal(1);
-
-        zg.on('roomUserUpdate', () => {});
-        expect(listenerList.roomUserUpdate.length).to.equal(2);
-    });
-
-    it('回调事件删除', function() {
-        const { listenerList } = zg.stateCenter;
-        zg.on('roomUserUpdate', () => {});
-        zg.on('roomUserUpdate', () => {});
-        zg.off('roomUserUpdate');
-
-        expect(listenerList.roomUserUpdate.length).to.equal(0);
-    });
-
-    it('获取当前 sdk 版本号', function() {
-        expect(zg.getVersion()).to.be.a('string');
+            expect(result).to.be.true;
+        });
+    
+        it('设置调试开关', function() {
+            expect(zg.stateCenter.debug).to.be.false;
+    
+            zg.setDebugVerbose(true);
+            expect(zg.stateCenter.debug).to.be.true;
+    
+            zg.setDebugVerbose(false);
+            expect(zg.stateCenter.debug).to.be.false;
+        });
+    
+        it('可用性检测', function() {
+            const test = async () => {
+                const result = await zg.checkSystemRequirements();
+    
+                expect(result.webRTC).to.be.a('boolean');
+                expect(result.customCapture).to.be.a('boolean');
+                expect(result.camera).to.be.a('boolean');
+                expect(result.microphone).to.be.a('boolean');
+                expect(result.microphone).to.be.a('boolean');
+                expect(result.videoCodec).to.be.a('object');
+                expect(result.screenSharing).to.be.a('boolean');
+    
+                const { H264, VP8 } = result.videoCodec;
+                expect(H264).to.be.a('boolean');
+                expect(VP8).to.be.a('boolean');
+            };
+    
+            setTimeout(test, TIMEOUT);
+        });
+    
+        it('获取媒体设备信息', async function() {
+            const result = await zg.enumDevices();
+            const [key1, key2] = ['deviceName', 'deviceID'];
+            const testArrayObjectHasKeys = (arrayObject: {}[], ...keys: string[]) =>
+                arrayObject.forEach(obj => {
+                    expect(obj).to.have.all.keys(...keys);
+                });
+    
+            // for each
+            expect(result.microphones).to.be.an('array');
+            expect(result.speakers).to.be.an('array');
+            expect(result.cameras).to.be.an('array');
+    
+            testArrayObjectHasKeys(result.microphones, key1, key2);
+            testArrayObjectHasKeys(result.speakers, key1, key2);
+            testArrayObjectHasKeys(result.cameras, key1, key2);
+        });
+    
+        it('回调事件注册', function() {
+            const { listenerList } = zg.stateCenter;
+    
+            zg.on('roomUserUpdate', () => {});
+            expect(listenerList.roomUserUpdate.length).to.equal(1);
+    
+            zg.on('roomUserUpdate', () => {});
+            expect(listenerList.roomUserUpdate.length).to.equal(2);
+        });
+    
+        it('回调事件删除', function() {
+            const { listenerList } = zg.stateCenter;
+            zg.on('roomUserUpdate', () => {});
+            zg.on('roomUserUpdate', () => {});
+            zg.off('roomUserUpdate');
+    
+            expect(listenerList.roomUserUpdate.length).to.equal(0);
+        });
+    
+        it('获取当前 sdk 版本号', function() {
+            expect(zg.getVersion()).to.be.a('string');
+        });
     });
 
     describe('房间功能', function() {
@@ -107,40 +114,34 @@ describe('express-web', function() {
                 params: { app_id: APPID, id_name: userID },
             })) as any;
             token = data;
-            expect(token).to.be.a('string');
         });
 
-        // it('登录房间 roomId 传入非字符串，会返回 rejected 状态', function() {
-        //     zg = new ZegoExpressEngine(APPID, SERVER);
-        //     let user = {
-        //         userID: userID,
-        //         userName: 'name' + userID,
-        //     };
-        //     let roomId = 1234;
-        //     // @ts-ignore
-        //     return zg.loginRoom(roomId, token, user).should.be.rejected;
-        // });
-
-        // it('登录房间 roomId 传入字符串，会返回 fulfilled 状态', function() {
-        //     // todo：会有多次重试，请求会超时。同时，在多次请求失败后，promise 的状态并未改变，仍是 pending 状态。
-        //     zg = new ZegoExpressEngine(APPID, SERVER);
-        //     let user = {
-        //         userID: userID,
-        //         userName: 'name' + userID,
-        //     };
-        //     let roomId = '1234';
-        //     // @ts-ignore
-        //     return zg.loginRoom(roomId, token, user).should.be.fulfilled;
-        // });
-
-        it('登录房间 config 修改', function(done) {
-            this.timeout(TIMEOUT);
-
+        beforeEach(() => {
             zg = new ZegoExpressEngine(APPID, SERVER);
-            let user = {
-                userID: userID,
-                userName: 'name' + userID,
-            };
+        });
+
+        it('登录房间 roomId 传入非字符串，会返回 rejected 状态', async function() {
+            roomId = 1234;
+            try {
+                // @ts-ignore
+                return assert.isRejected(zg.loginRoom(roomId, token, user));
+            } catch (e) {
+                assert.fail(JSON.stringify(e));
+            }
+        });
+
+        it('登录房间 roomId 传入字符串，会返回 fulfilled 状态', async function() {
+            roomId = '1234';
+            try {
+                // @ts-ignore
+                return assert.isFulfilled(zg.loginRoom(roomId, token, user));
+            } catch (e) {
+                assert.fail(JSON.stringify(e));
+            }
+        });
+
+        it('登录房间 config 修改', async function() {
+            zg = new ZegoExpressEngine(APPID, SERVER);
             let roomId = '1234';
 
             let config = {
@@ -148,20 +149,16 @@ describe('express-web', function() {
                 maxMemberCount: 3,
             };
 
-            zg.loginRoom(roomId, token, user, config)
-                .then(() => {
-                    expect(zg.stateCenter.userStateUpdate).to.be.false;
-                    expect(zg.stateCenter.maxMemberCount).to.equal(3);
-                    done();
-                }).catch(done);
+            try {
+                // @ts-ignore
+                return assert.isFulfilled(zg.loginRoom(roomId, token, user, config));
+            } catch (e) {
+                assert.fail(JSON.stringify(e));
+            }
         });
 
         it('登出房间', async function() {
             zg = new ZegoExpressEngine(APPID, SERVER);
-            let user = {
-                userID: userID,
-                userName: 'name' + userID,
-            };
             let roomId = '1234';
 
             let config = {
@@ -178,10 +175,6 @@ describe('express-web', function() {
 
         it('房间状态更新回调：连接成功', async function() {
             zg = new ZegoExpressEngine(APPID, SERVER);
-            let user = {
-                userID: userID,
-                userName: 'name' + userID,
-            };
             let roomId = '1234';
 
             let config = {
@@ -199,10 +192,6 @@ describe('express-web', function() {
 
         it('房间状态更新回调：断开连接', async function(done) {
             zg = new ZegoExpressEngine(APPID, SERVER);
-            let user = {
-                userID: userID,
-                userName: 'name' + userID,
-            };
             let roomId = '1234';
 
             let config = {
@@ -372,10 +361,6 @@ describe('express-web', function() {
 
         it('发布推流', async function() {
             zg = new ZegoExpressEngine(APPID, SERVER);
-            let user = {
-                userID: userID,
-                userName: 'name' + userID,
-            };
             let roomId = '1234';
             // @ts-ignore
             await zg.loginRoom(roomId, token, user);
@@ -388,10 +373,6 @@ describe('express-web', function() {
 
         it('发布推流，修改 publishOption 参数', async function() {
             zg = new ZegoExpressEngine(APPID, SERVER);
-            let user = {
-                userID: userID,
-                userName: 'name' + userID,
-            };
             let roomId = '1234';
             // @ts-ignore
             await zg.loginRoom(roomId, token, user);
