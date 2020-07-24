@@ -29,11 +29,12 @@ const user = {
 
 describe('express-web', function() {
     describe('初始化相关的前置功能', function() {
-        beforeEach(() => {
+        beforeEach(function() {
+            this.timeout(TIMEOUT);
             zg = new ZegoExpressEngine(APPID, SERVER);
         });
 
-        it('初始化sdk', async function() {
+        it('初始化sdk', function() {
             expect(zg).is.not.null;
 
             zg = null;
@@ -151,7 +152,8 @@ describe('express-web', function() {
             token = data;
         });
 
-        beforeEach(() => {
+        beforeEach(function() {
+            this.timeout(TIMEOUT);
             zg = new ZegoExpressEngine(APPID, SERVER);
         });
 
