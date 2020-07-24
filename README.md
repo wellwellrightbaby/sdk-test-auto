@@ -41,3 +41,35 @@ describe('a suite of tests', function () {
 const fn = async () => await zg.loginRoom(roomId, token, user);
 expect(fn).to.throw(Error);
 ```
+
+promise 处理：
+
+```js
+it('登录房间 roomId 传入非字符串，会返回 Promise', function(done) {
+    zg = new ZegoExpressEngine(APPID, SERVER);
+    zg.setDebugVerbose(false); // 禁用 debug，阻止 alert 等
+
+    let roomId = '1234';
+    try {
+        // @ts-ignore
+        zg.loginRoom(roomId, token, user).should.be.fulfilled.and.notify(done);
+    } catch (e) {
+        assert.fail(JSON.stringify(e));
+    }
+});
+
+it('创建流，修改 custom 参数', async function() {
+  this.timeout(10000);
+  const publishStream = await zg.createStream({
+    custom: {
+        bitrate: 1000,
+    },
+  });
+  expect(publishStream.id).to.be.a('string');
+  expect(publishStream.active).to.be.true;
+  expect(zg.streamCenter.previewVideoList.length).to.equal(1);
+
+  await zg.destroyStream(publishStream);
+  expect(zg.streamCenter.previewVideoList.length).to.equal(0);
+});
+```
