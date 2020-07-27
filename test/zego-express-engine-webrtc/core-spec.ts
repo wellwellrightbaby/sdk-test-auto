@@ -23,7 +23,6 @@ describe('初始化相关的前置功能', function() {
         zg = new ZegoExpressEngine(APPID, 'https://webliveroom-test.test.im/ws');
         expect(zg).is.not.null;
 
-        // todo: console.error('server wrong')
         // @ts-ignore
         zg = null;
         zg = new ZegoExpressEngine(APPID, 'http://webliveroom-test.test.im/ws');

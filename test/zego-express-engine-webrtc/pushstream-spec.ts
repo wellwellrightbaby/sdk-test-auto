@@ -357,6 +357,7 @@ describe('推流功能', function() {
 
         const test = async () => {
             try {
+                await zg.loginRoom(roomId, token, user);
                 const stream = await zg.createStream({
                     camera: {
                         video: false
@@ -380,6 +381,7 @@ describe('推流功能', function() {
 
         const test = async () => {
             try {
+                await zg.loginRoom(roomId, token, user);
                 const stream = await zg.createStream({
                     camera: {
                         audio: false,
@@ -406,12 +408,15 @@ describe('推流功能', function() {
             try {
                 const spy = sinon.spy();
                 zg.on('publisherStateUpdate', spy);
+                await zg.loginRoom(roomId, token, user);
                 const stream = await zg.createStream();
                 await zg.startPublishingStream(stream.id, stream);
 
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(2);
-                done();
+                setTimeout(() => {
+                    expect(spy.called).to.be.true;
+                    expect(spy.callCount).to.equal(1);
+                    done();
+                }, 2000)
             } catch (e) {
                 done(e);
             }
@@ -420,33 +425,34 @@ describe('推流功能', function() {
         setTimeout(test, DELAY);
     });
 
-    it('屏幕共享中断回调', function(done) {
-        this.timeout(TIMEOUT);
+    // todo:无法模拟中断操作
+    // it('屏幕共享中断回调', function(done) {
+    //     this.timeout(TIMEOUT);
 
-        const test = async () => {
-            try {
-                const spy = sinon.spy();
+    //     const test = async () => {
+    //         try {
+    //             const spy = sinon.spy();
 
-                zg.on('screenSharingEnded', spy);
-                await zg.createStream({
-                    screen: {
-                        audio: false,
-                        video: true,
-                        videoQuality: 4,
-                        frameRate: 18,
-                        bitrate: 1000,
-                    },
-                });
+    //             zg.on('screenSharingEnded', spy);
+    //             await zg.createStream({
+    //                 screen: {
+    //                     audio: false,
+    //                     video: true,
+    //                     videoQuality: 4,
+    //                     frameRate: 18,
+    //                     bitrate: 1000,
+    //                 },
+    //             });
 
-                expect(spy.called).to.be.true;
-                done();
-            } catch (e) {
-                done(e);
-            }
-        };
+    //             expect(spy.called).to.be.true;
+    //             done();
+    //         } catch (e) {
+    //             done(e);
+    //         }
+    //     };
 
-        setTimeout(test, DELAY);
-    });
+    //     setTimeout(test, DELAY);
+    // });
 
     it('开始混音', function(done) {
         this.timeout(TIMEOUT);

@@ -24,17 +24,25 @@ describe('拉流功能', function() {
         const test = async () => {
             try {
                 const spy = sinon.spy();
+                const newZg = new ZegoExpressEngine(APPID, SERVER);
+                const newUserId = randomStr();
+                const newUser = {
+                    userID: newUserId,
+                    userName: 'name' + newUserId,
+                };
+                const { data: newUsertoken } = await getToken(APPID, newUserId);
                 zg.on('roomStreamUpdate', spy);
-
-                // @ts-ignore
                 await zg.loginRoom(roomId, token, user);
-                const publishStream = await zg.createStream();
-                const streamId = randomStr();
-                const result = zg.startPublishingStream(streamId, publishStream);
 
-                expect(result).to.be.a('boolean');
-                expect(spy.called).to.be.true;
-                done();
+                await newZg.loginRoom(roomId, newUsertoken, newUser);
+                const publishStream = await newZg.createStream();
+                const streamId = randomStr();
+                newZg.startPublishingStream(streamId, publishStream);
+
+                setTimeout(() => {
+                    expect(spy.called).to.be.true;
+                    done();
+                }, 2000);
             } catch (e) {
                 done(e);
             }
@@ -48,16 +56,24 @@ describe('拉流功能', function() {
 
         const test = async () => {
             try {
-                // @ts-ignore
-                await zg.loginRoom(roomId, token, user);
-                const publishStream = await zg.createStream();
-                const streamId = randomStr();
-                await zg.startPublishingStream(streamId, publishStream);
-                const result = await zg.startPlayingStream(streamId);
+                    const newZg = new ZegoExpressEngine(APPID, SERVER);
+                    const newUserId = randomStr();
+                    const newUser = {
+                        userID: newUserId,
+                        userName: 'name' + newUserId,
+                    };
+                    const { data: newUsertoken } = await getToken(APPID, newUserId);
 
-                expect(result).to.not.be.null;
-                done();
-            } catch (e) {
+                    await zg.loginRoom(roomId, token, user);
+                    await newZg.loginRoom(roomId, newUsertoken, newUser);
+                    const publishStream = await newZg.createStream();
+                    const streamId = randomStr();
+                    await newZg.startPublishingStream(streamId, publishStream);
+
+                    const result = await zg.startPlayingStream(streamId);
+                    expect(result).to.not.be.null;
+                    done();
+                } catch (e) {
                 done(e);
             }
         };
@@ -136,13 +152,27 @@ describe('拉流功能', function() {
         const test = async () => {
             try {
                 const spy = sinon.spy();
+                const newZg = new ZegoExpressEngine(APPID, SERVER);
+                const newUserId = randomStr();
+                const newUser = {
+                    userID: newUserId,
+                    userName: 'name' + newUserId,
+                };
+                const { data: newUsertoken } = await getToken(APPID, newUserId);
 
                 zg.on('playerStateUpdate', spy);
-                const stream = await zg.createStream();
-                await zg.startPublishingStream(stream.id, stream);
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(2);
-                done();
+                await zg.loginRoom(roomId, token, user);
+
+                await newZg.loginRoom(roomId, newUsertoken, newUser);
+                const publishStream = await newZg.createStream();
+                const streamId = randomStr();
+                newZg.startPublishingStream(streamId, publishStream);
+
+                setTimeout(() => {
+                    expect(spy.called).to.be.true;
+                    expect(spy.callCount).to.equal(2);
+                    done();
+                }, 2000);
             } catch (e) {
                 done(e);
             }
@@ -157,17 +187,33 @@ describe('拉流功能', function() {
         const test = async () => {
             try {
                 const spy = sinon.spy();
-                const publishStream = await zg.createStream();
-                zg.on('remoteCameraStatusUpdate', spy);
+                const newZg = new ZegoExpressEngine(APPID, SERVER);
+                const newUserId = randomStr();
+                const newUser = {
+                    userID: newUserId,
+                    userName: 'name' + newUserId,
+                };
+                const { data: newUsertoken } = await getToken(APPID, newUserId);
 
-                await zg.mutePublishStreamVideo(publishStream, true);
+                zg.on('remoteCameraStatusUpdate', spy);
+                await zg.loginRoom(roomId, token, user);
+
+                await newZg.loginRoom(roomId, newUsertoken, newUser);
+                const publishStream = await newZg.createStream();
+                const streamId = randomStr();
+                newZg.startPublishingStream(streamId, publishStream);
+
+                await newZg.mutePublishStreamVideo(publishStream, true);
                 expect(spy.called).to.be.true;
                 expect(spy.callCount).to.equal(1);
 
-                await zg.mutePublishStreamVideo(publishStream, false);
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(2);
-                done();
+                await newZg.mutePublishStreamVideo(publishStream, false);
+
+                setTimeout(() => {
+                    expect(spy.called).to.be.true;
+                    expect(spy.callCount).to.equal(2);
+                    done();
+                }, 2000);
             } catch (e) {
                 done(e);
             }
@@ -182,14 +228,27 @@ describe('拉流功能', function() {
         const test = async () => {
             try {
                 const spy = sinon.spy();
-                const publishStream = await zg.createStream();
-                zg.on('remoteMicStatusUpdate', spy);
+                const newZg = new ZegoExpressEngine(APPID, SERVER);
+                const newUserId = randomStr();
+                const newUser = {
+                    userID: newUserId,
+                    userName: 'name' + newUserId,
+                };
+                const { data: newUsertoken } = await getToken(APPID, newUserId);
 
-                await zg.mutePublishStreamAudio(publishStream, true);
+                zg.on('remoteMicStatusUpdate', spy);
+                await zg.loginRoom(roomId, token, user);
+
+                await newZg.loginRoom(roomId, newUsertoken, newUser);
+                const publishStream = await newZg.createStream();
+                const streamId = randomStr();
+                newZg.startPublishingStream(streamId, publishStream);
+
+                await newZg.mutePublishStreamAudio(publishStream, true);
                 expect(spy.called).to.be.true;
                 expect(spy.callCount).to.equal(1);
 
-                await zg.mutePublishStreamAudio(publishStream, false);
+                await newZg.mutePublishStreamAudio(publishStream, false);
                 expect(spy.called).to.be.true;
                 expect(spy.callCount).to.equal(2);
                 done();
@@ -207,44 +266,22 @@ describe('拉流功能', function() {
         const test = async () => {
             try {
                 const spy = sinon.spy();
-                await zg.createStream();
-
                 zg.on('soundLevelUpdate', spy);
+
+                await zg.loginRoom(roomId, token, user);
+                const stream = await zg.createStream();
+                zg.startPublishingStream(stream.id, stream);
+
+                zg.startPublishingStream(stream.id, stream);
 
                 zg.setSoundLevelDelegate(false);
                 assert.ok(true, '开启或关闭音浪回调');
-                expect(spy.callCount).to.equal(1);
+                expect(spy.callCount).to.gte(1);
 
                 zg.setSoundLevelDelegate(true);
                 assert.ok(true, '开启或关闭音浪回调');
-                expect(spy.callCount).to.equal(2);
+                expect(spy.callCount).to.gte(2);
 
-                done();
-            } catch (e) {
-                done(e);
-            }
-        };
-
-        setTimeout(test, DELAY);
-    });
-
-    it('音浪更新回调', function(done) {
-        this.timeout(TIMEOUT);
-
-        const test = async () => {
-            try {
-                const spy = sinon.spy();
-                await zg.createStream();
-
-                zg.on('soundLevelUpdate', spy);
-
-                zg.setSoundLevelDelegate(false);
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(1);
-
-                zg.setSoundLevelDelegate(true);
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(2);
                 done();
             } catch (e) {
                 done(e);
