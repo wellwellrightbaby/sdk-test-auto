@@ -449,15 +449,58 @@ describe('推流功能', function() {
         setTimeout(test, DELAY);
     });
 
-    // todo
-    // mediaList 是 HTMLMediaElement
-    // it('开始混音', async function() {
-    //     zg = new ZegoExpressEngine(APPID, SERVER);
-    //     const streamID = '';
-    //     const mediaList = [];
-    //     zg.startMixingAudio(streamID, mediaList);
-    // });
+    it('开始混音', function(done) {
+        this.timeout(TIMEOUT);
 
-    // mediaList 是 HTMLMediaElement，在 node 中无法测试
-    // it('停止混音', async function() {});
+        const test = async () => {
+            const video = document.createElement('video');
+            video.id = 'video1';
+            video.src = 'https://www.runoob.com/try/demo_source/movie.mp4';
+            document.body.appendChild(video);
+
+            try {
+                const stream = await zg.createStream();
+                const mediaList: HTMLMediaElement[]= [];
+                mediaList.push(document.querySelector('#video1') as HTMLMediaElement);
+                const result = await zg.startMixingAudio(stream.id, mediaList);
+
+                document.body.removeChild(video);
+                expect(result).to.not.be.null;
+                done();
+            } catch (e) {
+                document.body.removeChild(video);
+                done(e);
+            }
+        };
+
+        setTimeout(test, DELAY);
+    });
+
+    it('停止混音', function(done) {
+        this.timeout(TIMEOUT);
+
+        const test = async () => {
+            const video = document.createElement('video');
+            video.id = 'video1';
+            video.src = 'https://www.runoob.com/try/demo_source/movie.mp4';
+            document.body.appendChild(video);
+
+            try {
+                const stream = await zg.createStream();
+                const mediaList: HTMLMediaElement[] = [];
+                mediaList.push(document.querySelector('#video1') as HTMLMediaElement);
+                await zg.startMixingAudio(stream.id, mediaList);
+                const result = await zg.stopMixingAudio(stream.id, mediaList);
+
+                expect(result).to.not.be.null;
+                document.body.removeChild(video);
+                done();
+            } catch (e) {
+                document.body.removeChild(video);
+                done(e);
+            }
+        };
+
+        setTimeout(test, DELAY);
+    });
 });
