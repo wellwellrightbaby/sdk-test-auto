@@ -1,23 +1,19 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import chai from 'chai';
+import { TIMEOUT, DELAY, APPID, SERVER, user, getToken, randomStr } from './config';
 
 const { expect } = chai;
-const userID = 'id' + new Date().getTime();
-const TIMEOUT = 5000;
-const DELAY = 2000;
-const APPID = 1739272706;
-const SERVER = 'wss://webliveroom-test.test.im/ws';
-const token = '';
-const roomId = '1234';
+let token = '';
+let roomId: any;
 let zg: ZegoExpressEngine;
-const user = {
-    userID: userID,
-    userName: 'name' + userID,
-};
 
 describe('混流功能', function() {
-    beforeEach(() => {
+    beforeEach(async () => {
         zg = new ZegoExpressEngine(APPID, SERVER);
+
+        const { data } = await getToken();
+        token = data;
+        roomId = randomStr();
     });
 
     it('开始混流', function(done) {
@@ -29,7 +25,6 @@ describe('混流功能', function() {
                 // @ts-ignore
                 await zg.loginRoom(roomId, token, user);
                 const stream = await zg.createStream();
-
                 const inputList = [
                     {
                         streamID: stream.id,
@@ -55,6 +50,7 @@ describe('混流功能', function() {
                     // singleStreamPassThrough: true
                 };
 
+                await zg.startPublishingStream(stream.id, stream);
                 const result = await zg.startMixerTask({
                     taskID,
                     outputList,
@@ -113,6 +109,7 @@ describe('混流功能', function() {
                     videoCodec: 'h264',
                 });
 
+                await zg.startPublishingStream(stream.id, stream);
                 const result = await zg.startMixerTask({
                     taskID,
                     outputList,
@@ -164,6 +161,7 @@ describe('混流功能', function() {
                     // singleStreamPassThrough: true
                 };
 
+                await zg.startPublishingStream(stream.id, stream);
                 const result = await zg.startMixerTask({
                     taskID,
                     outputList,

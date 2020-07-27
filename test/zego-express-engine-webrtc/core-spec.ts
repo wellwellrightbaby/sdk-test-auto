@@ -1,11 +1,8 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import chai from 'chai';
+import { TIMEOUT, DELAY, APPID, SERVER } from './config';
 
 const { expect } = chai;
-const TIMEOUT = 5000;
-const DELAY = 2000;
-const APPID = 1739272706;
-const SERVER = 'wss://webliveroom-test.test.im/ws';
 let zg: ZegoExpressEngine;
 
 describe('初始化相关的前置功能', function() {
@@ -61,7 +58,7 @@ describe('初始化相关的前置功能', function() {
     });
 
     it('设置调试开关', function() {
-        expect(zg.stateCenter.debug).to.be.false;
+        expect(zg.stateCenter.debug).to.be.true;
 
         zg.setDebugVerbose(true);
         expect(zg.stateCenter.debug).to.be.true;

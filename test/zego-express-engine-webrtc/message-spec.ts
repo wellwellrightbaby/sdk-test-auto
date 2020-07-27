@@ -1,21 +1,31 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import chai from 'chai';
+import {
+    userID,
+    TIMEOUT,
+    DELAY,
+    APPID,
+    SERVER,
+    user,
+    getToken,
+    randomStr,
+} from './config';
 const sinon = require('sinon');
 
 const { expect } = chai;
-const TIMEOUT = 5000;
-const DELAY = 2000;
-const APPID = 1739272706;
-const SERVER = 'wss://webliveroom-test.test.im/ws';
-let roomId = '1234';
+let token = '';
+let roomId: any;
 let zg: ZegoExpressEngine;
+let message: any;
 
 describe('消息功能', function() {
-    let message: any;
-
-    beforeEach(() => {
+    beforeEach(async function() {
         zg = new ZegoExpressEngine(APPID, SERVER);
         zg.setDebugVerbose(false);
+
+        const { data } = await getToken(APPID, userID);
+        token = data;
+        roomId = randomStr();
     });
 
     it('发送房间广播消息', function(done) {
@@ -24,7 +34,7 @@ describe('消息功能', function() {
         const test = async () => {
             try {
                 message = 'zego SDK';
-                roomId = '1234';
+                await zg.loginRoom(roomId, token, user);
 
                 const result = await zg.sendBroadcastMessage(roomId, message);
                 expect(result.messageID).to.be.a('number');
@@ -44,13 +54,21 @@ describe('消息功能', function() {
             try {
                 const spy = sinon.spy();
                 message = 'zego SDK';
-                roomId = '1234';
+                const newUserId = randomStr();
+                const newUser = {
+                    userID: newUserId,
+                    userName: 'name' + newUserId,
+                };
+                const { data: newUsertoken } = await getToken(APPID, newUserId);
 
                 zg.on('IMRecvBroadcastMessage', spy);
+
+                // await zg.loginRoom(roomId, token, user);
+                await zg.loginRoom(roomId, newUsertoken, newUser);
                 await zg.sendBroadcastMessage(roomId, message);
 
                 expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(2);
+                expect(spy.callCount).to.equal(1);
                 done();
             } catch (e) {
                 done(e);
@@ -66,8 +84,8 @@ describe('消息功能', function() {
         const test = async () => {
             try {
                 message = 'Hello from zego SDK';
-                roomId = '1234';
 
+                await zg.loginRoom(roomId, token, user);
                 const result = await zg.sendBarrageMessage(roomId, message);
                 expect(result.messageID).to.be.a('string');
                 done();
@@ -86,9 +104,17 @@ describe('消息功能', function() {
             try {
                 const spy = sinon.spy();
                 message = 'zego SDK';
-                roomId = '1234';
+                const newUserId = randomStr();
+                const newUser = {
+                    userID: newUserId,
+                    userName: 'name' + newUserId,
+                };
+                const { data: newUsertoken } = await getToken(APPID, newUserId);
 
                 zg.on('IMRecvBarrageMessage', spy);
+
+                // await zg.loginRoom(roomId, token, user);
+                await zg.loginRoom(roomId, newUsertoken, newUser);
                 await zg.sendBroadcastMessage(roomId, message);
 
                 expect(spy.called).to.be.true;
@@ -108,8 +134,8 @@ describe('消息功能', function() {
             try {
                 const toUserIDList = ['toUserIDList', 'sendCustomCommand'];
                 message = 'Command from zego SDK';
-                roomId = '1234';
 
+                await zg.loginRoom(roomId, token, user);
                 const result = await zg.sendCustomCommand(roomId, message, toUserIDList);
                 expect(result.messageID).to.be.a('number');
                 done();
@@ -129,9 +155,10 @@ describe('消息功能', function() {
                 const spy = sinon.spy();
                 const toUserIDList = ['toUserIDList', 'sendCustomCommand'];
                 message = 'Command from zego SDK';
-                roomId = '1234';
 
                 zg.on('IMRecvCustomCommand', spy);
+
+                await zg.loginRoom(roomId, token, user);
                 await zg.sendCustomCommand(roomId, message, toUserIDList);
 
                 expect(spy.called).to.be.true;

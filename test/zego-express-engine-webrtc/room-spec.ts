@@ -1,34 +1,34 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
-import Axios from 'axios';
 import chai from 'chai';
+import {
+    userID,
+    TIMEOUT,
+    DELAY,
+    APPID,
+    SERVER,
+    user,
+    getToken,
+    randomStr,
+} from './config';
 const sinon = require('sinon');
 
 const { expect } = chai;
-const userID = 'id' + new Date().getTime();
-const TIMEOUT = 10000;
-const DELAY = 2000;
-const APPID = 1739272706;
-const SERVER = 'wss://webliveroom-test.test.im/ws';
-const tokenURL = 'https://wsliveroom-demo.zego.im:8282/token';
 let token = '';
 let roomId: any = '1234';
 let zg: ZegoExpressEngine;
-const user = {
-    userID: userID,
-    userName: 'name' + userID,
-};
 
 describe('房间功能', function() {
-    before(async function() {
-        const { data } = (await Axios.get(tokenURL, {
-            params: { app_id: APPID, id_name: userID },
-        })) as any;
-        token = data;
-    });
-
-    beforeEach(function() {
+    beforeEach(async function() {
         zg = new ZegoExpressEngine(APPID, SERVER);
         zg.setDebugVerbose(false);
+
+        const { data } = await getToken(APPID, userID);
+        token = data;
+        roomId = randomStr();
+    });
+
+    afterEach(() => {
+        sinon.restore();
     });
 
     it('登录房间 roomId 传入非字符串，会返回 rejected 状态', function(done) {
@@ -39,7 +39,7 @@ describe('房间功能', function() {
             try {
                 // @ts-ignore
                 await zg.loginRoom(roomId, token, user);
-                done();
+                done('should be rejected');
             } catch (e) {
                 done();
             }
@@ -52,12 +52,11 @@ describe('房间功能', function() {
         this.timeout(TIMEOUT);
 
         const test = async () => {
-            roomId = '1234';
             token = 'error-token';
             try {
                 // @ts-ignore
                 await zg.loginRoom(roomId, token, user);
-                done();
+                done('should be rejected');
             } catch (e) {
                 done();
             }
@@ -70,7 +69,6 @@ describe('房间功能', function() {
         this.timeout(TIMEOUT);
 
         const test = async () => {
-            roomId = '1234';
             try {
                 // @ts-ignore
                 await zg.loginRoom(roomId, token, user);
@@ -91,7 +89,6 @@ describe('房间功能', function() {
                 userUpdate: false,
                 maxMemberCount: 3,
             };
-            roomId = '1234';
 
             try {
                 // @ts-ignore
@@ -113,8 +110,6 @@ describe('房间功能', function() {
                 userUpdate: false,
                 maxMemberCount: 3,
             };
-            zg = new ZegoExpressEngine(APPID, SERVER);
-            roomId = '1234';
 
             try {
                 await zg.loginRoom(roomId, token, user, config);
@@ -138,7 +133,6 @@ describe('房间功能', function() {
                     maxMemberCount: 3,
                 };
                 const spy = sinon.spy();
-                roomId = '1234';
 
                 zg.on('roomStateUpdate', spy);
                 await zg.loginRoom(roomId, token, user, config);
@@ -164,7 +158,6 @@ describe('房间功能', function() {
                     userUpdate: false,
                     maxMemberCount: 3,
                 };
-                roomId = '1234';
 
                 zg.on('roomStateUpdate', spy);
                 await zg.loginRoom(roomId, token, user, config);
@@ -191,6 +184,8 @@ describe('房间功能', function() {
                         userID: uid,
                         userName: 'name' + uid,
                     };
+                    const { data } = await getToken();
+                    token = data;
 
                     await zg.loginRoom(roomId, token, user, config);
                     return zg;
@@ -207,41 +202,20 @@ describe('房间功能', function() {
                     appid: APPID,
                     server: SERVER,
                     uid: userID,
-                    roomId: '1234',
+                    roomId,
                     config: {
                         userUpdate: true,
                         maxMemberCount: 3,
                     },
                 });
-
-                expect(spy.callCount).to.equal(2);
-
-                const user2 = await enterRoom({
-                    appid: APPID,
-                    server: SERVER,
-                    uid: userID,
-                    roomId: '1234',
-                    config: {
-                        userUpdate: true,
-                        maxMemberCount: 3,
-                    },
-                });
-
-                expect(spy.callCount).to.equal(4);
+                expect(spy.callCount).to.equal(1);
+                expect(spy.callW)
 
                 await leaveRoom({
                     user: user1,
-                    roomId: '1234',
+                    roomId,
                 });
-
-                expect(spy.callCount).to.equal(5);
-
-                await leaveRoom({
-                    user: user2,
-                    roomId: '1234',
-                });
-
-                expect(spy.callCount).to.equal(6);
+                expect(spy.callCount).to.equal(2);
             } catch (e) {
                 done(e);
             }

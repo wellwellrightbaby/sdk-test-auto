@@ -1,42 +1,31 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
-import Axios from 'axios';
 import chai from 'chai';
-const crypto = require('crypto');
-const sinon = require('sinon');
+import {
+    TIMEOUT,
+    DELAY,
+    APPID,
+    SERVER,
+    user,
+    getToken,
+    randomStr,
+    getSignature,
+    targetURL,
+    deviceId,
+} from './config';
 
+const sinon = require('sinon');
 const { expect, assert } = chai;
-const userID = 'id' + new Date().getTime();
-const md5 = (content: any) =>
-    crypto
-        .createHash('md5')
-        .update(content)
-        .digest('hex');
-const getSignature = (appID: number, secret: string): string =>
-    md5(appID + Math.ceil(new Date().getTime() / 1000).toString() + secret);
-const TIMEOUT = 5000;
-const DELAY = 2000;
-const APPID = 1739272706;
-const SERVER = 'wss://webliveroom-test.test.im/ws';
-const tokenURL = 'https://wsliveroom-demo.zego.im:8282/token';
-const targetURL = 'rtmp://wsdemo.zego.im/livestream/test259';
 let token = '';
-let roomId: any = '1234';
+let roomId: any;
 let zg: ZegoExpressEngine;
-const user = {
-    userID: userID,
-    userName: 'name' + userID,
-};
 
 describe('推流功能', function() {
-    before(async function() {
-        const { data } = (await Axios.get(tokenURL, {
-            params: { app_id: APPID, id_name: userID },
-        })) as any;
-        token = data;
-    });
-
-    beforeEach(() => {
+    beforeEach(async () => {
         zg = new ZegoExpressEngine(APPID, SERVER);
+
+        const { data } = await getToken();
+        token = data;
+        roomId = randomStr();
     });
 
     it('创建默认流', function(done) {
@@ -95,7 +84,7 @@ describe('推流功能', function() {
                     },
                 }).then(() => {
                     done('should be rejected');
-                }, done);
+                }, (e) => done());
             } catch (e) {
                 done(e);
             }
@@ -368,10 +357,14 @@ describe('推流功能', function() {
 
         const test = async () => {
             try {
-                const publishStream = await zg.createStream();
+                const stream = await zg.createStream({
+                    camera: {
+                        video: false
+                    },
+                });
 
-                const deviceId: any = '82fed889704cd583c49d36944f7260d9fc4b2334f5fe4bda054eee3738908da8';
-                const result = await zg.useVideoDevice(publishStream, deviceId);
+                await zg.startPublishingStream(stream.id, stream);
+                const result = await zg.useVideoDevice(stream, deviceId);
                 expect(result).to.not.be.null;
                 done();
             } catch (e) {
@@ -387,11 +380,16 @@ describe('推流功能', function() {
 
         const test = async () => {
             try {
-                const publishStream = await zg.createStream();
+                const stream = await zg.createStream({
+                    camera: {
+                        audio: false,
+                    },
+                });
 
-                const deviceId: any = '82fed889704cd583c49d36944f7260d9fc4b2334f5fe4bda054eee3738908da8';
-                const result = zg.useAudioDevice(publishStream, deviceId);
+                await zg.startPublishingStream(stream.id, stream);
+                const result = await zg.useAudioDevice(stream, deviceId);
                 expect(result).to.not.be.null;
+
                 done();
             } catch (e) {
                 done(e);
@@ -408,7 +406,8 @@ describe('推流功能', function() {
             try {
                 const spy = sinon.spy();
                 zg.on('publisherStateUpdate', spy);
-                await zg.createStream();
+                const stream = await zg.createStream();
+                await zg.startPublishingStream(stream.id, stream);
 
                 expect(spy.called).to.be.true;
                 expect(spy.callCount).to.equal(2);
