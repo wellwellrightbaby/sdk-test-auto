@@ -1,30 +1,27 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import chai from 'chai';
-import {
-    userID,
-    TIMEOUT,
-    DELAY,
-    APPID,
-    SERVER,
-    user,
-    getToken,
-    randomStr,
-} from './config';
+import { TIMEOUT, DELAY, APPID, SERVER, getToken, randomStr, loginRoom } from './config';
 const sinon = require('sinon');
 
 const { expect } = chai;
-let token = '';
-let roomId: any = '1234';
+let userID: any;
+let roomId: any;
 let zg: ZegoExpressEngine;
+let token = '';
+let user: any;
 
 describe('房间功能', function() {
     beforeEach(async function() {
         zg = new ZegoExpressEngine(APPID, SERVER);
         zg.setDebugVerbose(false);
 
-        const { data } = await getToken(APPID, userID);
-        token = data;
+        userID = randomStr();
         roomId = randomStr();
+        token = await getToken(APPID, userID);
+        user = {
+            userID: userID,
+            userName: 'name' + userID,
+        };
     });
 
     afterEach(() => {
@@ -178,43 +175,14 @@ describe('房间功能', function() {
 
         const test = async () => {
             try {
-                const enterRoom = async ({ appid, server, uid, roomId, config }: any) => {
-                    zg = new ZegoExpressEngine(appid, server);
-                    const user = {
-                        userID: uid,
-                        userName: 'name' + uid,
-                    };
-                    const { data } = await getToken();
-                    token = data;
-
-                    await zg.loginRoom(roomId, token, user, config);
-                    return zg;
-                };
-
-                const leaveRoom = async ({ user, roomId }: any) => {
-                    await user.logoutRoom(roomId);
-                };
                 const spy = sinon.spy();
-
                 zg.on('roomUserUpdate', spy);
+                const { zg: user } = await loginRoom(ZegoExpressEngine, APPID, SERVER, roomId, userID);
 
-                const user1 = await enterRoom({
-                    appid: APPID,
-                    server: SERVER,
-                    uid: userID,
-                    roomId,
-                    config: {
-                        userUpdate: true,
-                        maxMemberCount: 3,
-                    },
-                });
                 expect(spy.callCount).to.equal(1);
                 expect(spy.called).to.be.true;
 
-                await leaveRoom({
-                    user: user1,
-                    roomId,
-                });
+                await user.logoutRoom(roomId);
                 expect(spy.callCount).to.equal(2);
             } catch (e) {
                 done(e);
