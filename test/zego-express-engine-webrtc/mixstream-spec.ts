@@ -50,7 +50,10 @@ describe('混流功能', function() {
                     // singleStreamPassThrough: true
                 };
 
-                await zg.startPublishingStream(stream.id, stream);
+                zg.startPublishingStream(stream.id, stream);
+
+
+                // todo: 在流发布成功后再去执行混流
                 const result = await zg.startMixerTask({
                     taskID,
                     outputList,
@@ -102,6 +105,7 @@ describe('混流功能', function() {
                     // singleStreamPassThrough: true
                 };
 
+                // todo: 在流发布成功后再去执行混流
                 zg.setMixerTaskConfig({
                     // 16 进制 rgb
                     backgroundColor: 666666,
@@ -161,6 +165,7 @@ describe('混流功能', function() {
                     // singleStreamPassThrough: true
                 };
 
+                // todo: 在流发布成功后再去执行混流
                 await zg.startPublishingStream(stream.id, stream);
                 const result = await zg.startMixerTask({
                     taskID,

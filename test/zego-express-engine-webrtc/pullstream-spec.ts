@@ -18,6 +18,7 @@ describe('拉流功能', function() {
         roomId = randomStr();
     });
 
+    // todo: timeout
     it('订阅拉流更新回调', function(done) {
         this.timeout(TIMEOUT);
 
@@ -51,6 +52,7 @@ describe('拉流功能', function() {
         setTimeout(test, DELAY);
     });
 
+    // todo: timeout
     it('获取远端流', function(done) {
         this.timeout(TIMEOUT);
 
@@ -243,15 +245,16 @@ describe('拉流功能', function() {
                 const publishStream = await newZg.createStream();
                 const streamId = randomStr();
                 newZg.startPublishingStream(streamId, publishStream);
-
-                await newZg.mutePublishStreamAudio(publishStream, true);
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(1);
-
-                await newZg.mutePublishStreamAudio(publishStream, false);
-                expect(spy.called).to.be.true;
-                expect(spy.callCount).to.equal(2);
-                done();
+                // zg.on('', (state) => {
+                    await newZg.mutePublishStreamAudio(publishStream, false);
+                    expect(spy.called).to.be.true;
+                    expect(spy.callCount).to.equal(1);
+    
+                    await newZg.mutePublishStreamAudio(publishStream, true);
+                    expect(spy.called).to.be.true;
+                    expect(spy.callCount).to.equal(2);
+                    done();
+                // });
             } catch (e) {
                 done(e);
             }

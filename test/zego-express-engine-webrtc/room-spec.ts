@@ -209,7 +209,7 @@ describe('房间功能', function() {
                     },
                 });
                 expect(spy.callCount).to.equal(1);
-                expect(spy.callW)
+                expect(spy.called).to.be.true;
 
                 await leaveRoom({
                     user: user1,

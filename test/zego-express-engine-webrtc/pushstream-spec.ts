@@ -6,11 +6,14 @@ import {
     APPID,
     SERVER,
     user,
+    userID,
     getToken,
     randomStr,
     getSignature,
     targetURL,
     deviceId,
+    loginRoom,
+    videoSrc,
 } from './config';
 
 const sinon = require('sinon');
@@ -170,7 +173,7 @@ describe('推流功能', function() {
             try {
                 // @ts-ignore
                 const stream = await zg.createStream();
-                await zg.destroyStream(stream);
+                zg.destroyStream(stream);
                 done();
             } catch (e) {
                 done(e);
@@ -190,8 +193,8 @@ describe('推流功能', function() {
                 await zg.loginRoom(roomId, token, user);
 
                 const stream = await zg.createStream();
-                const result = await zg.startPublishingStream(stream.id, stream);
-                expect(result).to.be.a('boolean');
+                const result = zg.startPublishingStream(stream.id, stream);
+                expect(result).to.be.true;
                 done();
             } catch (e) {
                 done(e);
@@ -217,8 +220,8 @@ describe('推流功能', function() {
                     extraInfo: '',
                     videoCodec: 'H264',
                 };
-                const result = await zg.startPublishingStream(stream.id, stream, publishOption);
-                expect(result).to.be.a('boolean');
+                const result = zg.startPublishingStream(stream.id, stream, publishOption);
+                expect(result).to.be.true;
                 done();
             } catch (e) {
                 done(e);
@@ -234,8 +237,8 @@ describe('推流功能', function() {
         const test = async () => {
             try {
                 const stream = await zg.createStream();
-                await zg.stopPublishingStream(stream.id);
-                assert.ok(true, '停止发布推流成功');
+                const result = zg.stopPublishingStream(stream.id);
+                expect(result).to.be.true;
                 done();
             } catch (e) {
                 done(e);
@@ -252,7 +255,7 @@ describe('推流功能', function() {
             try {
                 const stream = await zg.createStream();
                 const signature = getSignature(APPID, 'secret');
-                const result = zg.addPublishCdnUrl(stream.id, signature, targetURL);
+                const result = await zg.addPublishCdnUrl(stream.id, signature, targetURL);
                 expect(result).to.not.be.null;
                 done();
             } catch (e) {
@@ -270,7 +273,8 @@ describe('推流功能', function() {
             try {
                 const signature = getSignature(APPID, 'secret');
                 const stream = await zg.createStream();
-                const result = zg.removePublishCdnUrl(stream.id, signature, targetURL);
+                await zg.addPublishCdnUrl(stream.id, signature, targetURL);
+                const result = await zg.removePublishCdnUrl(stream.id, signature, targetURL);
                 expect(result).to.not.be.null;
                 done();
             } catch (e) {
@@ -288,7 +292,7 @@ describe('推流功能', function() {
             try {
                 const extraInfo = 'extra-info';
                 const stream = await zg.createStream();
-                await zg.setStreamExtraInfo(stream.id, extraInfo);
+                zg.setStreamExtraInfo(stream.id, extraInfo);
                 done();
             } catch (e) {
                 done(e);
@@ -312,14 +316,15 @@ describe('推流功能', function() {
         const test = async () => {
             try {
                 const publishStream = await zg.createStream();
+                let result: boolean;
 
-                await zg.mutePublishStreamVideo(publishStream, true);
+                result = zg.mutePublishStreamVideo(publishStream, false);
                 // 如何检测视频流是否关闭
-                assert.ok(true, '打开流画面：成功');
+                expect(result).to.be.a('boolean');
 
-                await zg.mutePublishStreamVideo(publishStream, false);
+                result = zg.mutePublishStreamVideo(publishStream, true);
                 // 如何检测视频流是否关闭
-                assert.ok(true, '关闭流画面：成功');
+                expect(result).to.be.a('boolean');
                 done();
             } catch (e) {
                 done(e);
@@ -335,14 +340,15 @@ describe('推流功能', function() {
         const test = async () => {
             try {
                 const publishStream = await zg.createStream();
+                let result: boolean;
 
-                await zg.mutePublishStreamAudio(publishStream, true);
+                result = zg.mutePublishStreamAudio(publishStream, false);
                 // 如何检测视频流是否关闭
-                assert.ok(true, '打开流画面：成功');
+                expect(result).to.be.a('boolean');
 
-                await zg.mutePublishStreamAudio(publishStream, false);
+                result = zg.mutePublishStreamAudio(publishStream, true);
                 // 如何检测视频流是否关闭
-                assert.ok(true, '关闭流画面：成功');
+                expect(result).to.be.a('boolean');
                 done();
             } catch (e) {
                 done(e);
@@ -365,9 +371,18 @@ describe('推流功能', function() {
                 });
 
                 await zg.startPublishingStream(stream.id, stream);
-                const result = await zg.useVideoDevice(stream, deviceId);
-                expect(result).to.not.be.null;
-                done();
+
+                setTimeout(async () => {
+                    try {
+                        // const devices = await navigator.mediaDevices.enumerateDevices();
+                        // const deviceId = devices[0].deviceId;
+                        await zg.useVideoDevice(stream, deviceId);
+                        done('invalid deviceId should be rejected');
+                    } catch (e) {
+                        console.log(e);
+                        done();
+                    }
+                }, DELAY);
             } catch (e) {
                 done(e);
             }
@@ -389,10 +404,18 @@ describe('推流功能', function() {
                 });
 
                 await zg.startPublishingStream(stream.id, stream);
-                const result = await zg.useAudioDevice(stream, deviceId);
-                expect(result).to.not.be.null;
 
-                done();
+                setTimeout(async () => {
+                    try {
+                        // const devices = await navigator.mediaDevices.enumerateDevices();
+                        // const deviceId = devices[0].deviceId;
+                        await zg.useAudioDevice(stream, deviceId);
+                        done('invalid deviceId should be rejected');
+                    } catch (e) {
+                        console.log(e);
+                        done();
+                    }
+                }, DELAY);
             } catch (e) {
                 done(e);
             }
@@ -408,9 +431,18 @@ describe('推流功能', function() {
             try {
                 const spy = sinon.spy();
                 zg.on('publisherStateUpdate', spy);
+
                 await zg.loginRoom(roomId, token, user);
-                const stream = await zg.createStream();
-                await zg.startPublishingStream(stream.id, stream);
+
+                const { newZg } = await loginRoom(
+                    ZegoExpressEngine,
+                    APPID,
+                    SERVER,
+                    roomId,
+                    userID,
+                );
+                const stream = await newZg.createStream();
+                newZg.startPublishingStream(stream.id, stream);
 
                 setTimeout(() => {
                     expect(spy.called).to.be.true;
@@ -459,18 +491,19 @@ describe('推流功能', function() {
 
         const test = async () => {
             const video = document.createElement('video');
-            video.id = 'video1';
-            video.src = 'https://www.runoob.com/try/demo_source/movie.mp4';
+            video.id = randomStr();
+            video.src = videoSrc;
             document.body.appendChild(video);
 
             try {
                 const stream = await zg.createStream();
                 const mediaList: HTMLMediaElement[]= [];
                 mediaList.push(document.querySelector('#video1') as HTMLMediaElement);
-                const result = await zg.startMixingAudio(stream.id, mediaList);
+                const result = zg.startMixingAudio(stream.id, mediaList);
 
+                // 判断混音是否成功
                 document.body.removeChild(video);
-                expect(result).to.not.be.null;
+                expect(result).to.be.true;
                 done();
             } catch (e) {
                 document.body.removeChild(video);
@@ -486,18 +519,19 @@ describe('推流功能', function() {
 
         const test = async () => {
             const video = document.createElement('video');
-            video.id = 'video1';
-            video.src = 'https://www.runoob.com/try/demo_source/movie.mp4';
+            video.id = randomStr();
+            video.src = videoSrc;
             document.body.appendChild(video);
 
             try {
                 const stream = await zg.createStream();
                 const mediaList: HTMLMediaElement[] = [];
                 mediaList.push(document.querySelector('#video1') as HTMLMediaElement);
-                await zg.startMixingAudio(stream.id, mediaList);
-                const result = await zg.stopMixingAudio(stream.id, mediaList);
+                zg.startMixingAudio(stream.id, mediaList);
+                const result = zg.stopMixingAudio(stream.id, mediaList);
 
-                expect(result).to.not.be.null;
+                // 判断停止混音是否成功
+                expect(result).to.be.true;
                 document.body.removeChild(video);
                 done();
             } catch (e) {
