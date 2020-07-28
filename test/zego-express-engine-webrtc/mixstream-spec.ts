@@ -1,6 +1,6 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import chai from 'chai';
-import { TIMEOUT, DELAY, APPID, SERVER, getToken, randomStr, loginRoom } from './config';
+import { TIMEOUT, DELAY, APPID, SERVER, randomStr, loginRoom } from './config';
 
 const { expect } = chai;
 
@@ -8,7 +8,6 @@ let userID: any;
 let roomId: any;
 let zg: ZegoExpressEngine;
 let token = '';
-let user: any;
 
 describe('混流功能', function() {
     beforeEach(async () => {

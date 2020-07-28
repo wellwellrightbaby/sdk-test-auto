@@ -4,7 +4,7 @@ import { TIMEOUT, DELAY, APPID, SERVER, loginRoom, randomStr } from './config';
 const sinon = require('sinon');
 
 const { expect } = chai;
-let token = '';
+let token: any;
 let roomId: any;
 let userID: any;
 let zg: ZegoExpressEngine;

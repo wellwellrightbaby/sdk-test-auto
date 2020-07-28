@@ -12,7 +12,7 @@ const getToken = (app_id = APPID, id_name = ''): Promise<any> =>
     Axios.get(tokenURL, {
         params: { app_id, id_name },
     }).then(data => data.data);
-const randomStr = (n = 32): string => Math.random().toString(n);
+const randomStr = (n = 32): string => Date.now().toString(n);
 const md5 = (content: string): string =>
     crypto
         .createHash('md5')

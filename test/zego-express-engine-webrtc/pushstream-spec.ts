@@ -5,7 +5,6 @@ import {
     DELAY,
     APPID,
     SERVER,
-    getToken,
     randomStr,
     getSignature,
     targetURL,
@@ -15,13 +14,11 @@ import {
 } from './config';
 
 const sinon = require('sinon');
-const { expect, assert } = chai;
+const { expect } = chai;
 
-let token = '';
 let roomId: any;
 let userID: any;
 let zg: ZegoExpressEngine;
-let message: any;
 
 describe('推流功能', function() {
     beforeEach(async () => {
@@ -29,7 +26,6 @@ describe('推流功能', function() {
         userID = randomStr();
         const data = await loginRoom(ZegoExpressEngine, APPID, SERVER, roomId, userID);
         zg = data.zg;
-        token = data.token;
         zg.setDebugVerbose(false);
     });
 
@@ -391,7 +387,6 @@ describe('推流功能', function() {
 
         const test = async () => {
             try {
-                await zg.loginRoom(roomId, token, user);
                 const stream = await zg.createStream({
                     camera: {
                         audio: false,

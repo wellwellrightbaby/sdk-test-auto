@@ -1,14 +1,13 @@
 import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import chai from 'chai';
-import { TIMEOUT, DELAY, APPID, SERVER, getToken, randomStr, loginRoom } from './config';
+import { TIMEOUT, DELAY, APPID, SERVER, randomStr, loginRoom } from './config';
 const sinon = require('sinon');
 
 const { expect, assert } = chai;
-const token = '';
+let token: any;
 let roomId: any;
 let userID: any;
 let zg: ZegoExpressEngine;
-let message: any;
 
 describe('拉流功能', function() {
     beforeEach(async () => {
@@ -16,7 +15,7 @@ describe('拉流功能', function() {
         userID = randomStr();
         const data = await loginRoom(ZegoExpressEngine, APPID, SERVER, roomId, userID);
         zg = data.zg;
-        data.token = data.token;
+        token = data.token;
         zg.setDebugVerbose(false);
     });
 

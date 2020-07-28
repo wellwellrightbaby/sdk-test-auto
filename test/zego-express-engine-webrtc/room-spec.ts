@@ -4,10 +4,10 @@ import { TIMEOUT, DELAY, APPID, SERVER, getToken, randomStr, loginRoom } from '.
 const sinon = require('sinon');
 
 const { expect } = chai;
+let token: any;
 let userID: any;
 let roomId: any;
 let zg: ZegoExpressEngine;
-let token = '';
 let user: any;
 
 describe('房间功能', function() {
