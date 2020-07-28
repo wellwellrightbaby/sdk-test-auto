@@ -179,11 +179,13 @@ describe('房间功能', function() {
                 zg.on('roomUserUpdate', spy);
                 const { zg: user } = await loginRoom(ZegoExpressEngine, APPID, SERVER, roomId, userID);
 
-                expect(spy.callCount).to.equal(1);
-                expect(spy.called).to.be.true;
+                setTimeout(async () => {
+                    expect(spy.callCount).to.equal(1);
+                    expect(spy.called).to.be.true;
 
-                await user.logoutRoom(roomId);
-                expect(spy.callCount).to.equal(2);
+                    await user.logoutRoom(roomId);
+                    expect(spy.callCount).to.equal(2);
+                }, DELAY);
             } catch (e) {
                 done(e);
             }
