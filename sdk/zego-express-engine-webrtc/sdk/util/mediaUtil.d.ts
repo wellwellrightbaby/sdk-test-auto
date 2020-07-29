@@ -12,13 +12,22 @@ export declare class MediaUtil {
     private sampleBit;
     private sampleRate;
     private worker;
-    constructor(context: ZegoAudioContext, { type, channels, bufferSize, sampleBit, sampleRate, }: {
-        bufferSize?: number;
-        channels?: number;
-        sampleBit?: 8 | 16;
-        sampleRate?: number;
-        type?: string;
-    });
+    constructor(
+        context: ZegoAudioContext,
+        {
+            type,
+            channels,
+            bufferSize,
+            sampleBit,
+            sampleRate,
+        }: {
+            bufferSize?: number;
+            channels?: number;
+            sampleBit?: 8 | 16;
+            sampleRate?: number;
+            type?: string;
+        },
+    );
     connectToSource(stream: MediaStream, callback: (param: any) => void): MediaUtil;
     private recorderBuffer;
     private initRecorderBuffer;

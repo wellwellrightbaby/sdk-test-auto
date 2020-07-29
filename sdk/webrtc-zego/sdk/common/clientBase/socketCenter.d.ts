@@ -1,6 +1,6 @@
-import { StateCenter } from "./stateCenter";
-import { ZegoWebSocket } from "../../wechatMini/zego.webSocket";
-import { Logger } from "../zego.logger";
+import { StateCenter } from './stateCenter';
+import { ZegoWebSocket } from '../../wechatMini/zego.webSocket';
+import { Logger } from '../zego.logger';
 export declare class SocketCenter {
     private websocket;
     private logger;
@@ -21,12 +21,22 @@ export declare class SocketCenter {
     getSocket(server: string): ZegoWebSocket | WebSocket;
     private getHeaderV2;
     private getHeader;
-    sendMessage(cmd: string, body: {
-        [index: string]: string | number | any[];
-    }, success?: Function, error?: Function): number;
-    sendCustomMessage(cmd: string, body: {
-        [index: string]: string | number | any[];
-    }, success?: Function, error?: Function): boolean;
+    sendMessage(
+        cmd: string,
+        body: {
+            [index: string]: string | number | any[];
+        },
+        success?: Function,
+        error?: Function,
+    ): number;
+    sendCustomMessage(
+        cmd: string,
+        body: {
+            [index: string]: string | number | any[];
+        },
+        success?: Function,
+        error?: Function,
+    ): boolean;
     isDisConnect(): boolean;
     closeSocket(): void;
     createSocket(server: string): void;

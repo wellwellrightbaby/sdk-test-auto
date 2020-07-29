@@ -1,7 +1,7 @@
-import { ZegoStreamCenterWechat } from "./zego.streamcenter.wechat";
-import { ZegoWebSocket } from "./zego.webSocket";
-import { E_CLIENT_TYPE, ENUM_DISPATCH_TYPE, ENUM_PLAY_SOURCE_TYPE } from "../common/zego.entity";
-import { BaseCenter } from "../common/clientBase/index";
+import { ZegoStreamCenterWechat } from './zego.streamcenter.wechat';
+import { ZegoWebSocket } from './zego.webSocket';
+import { E_CLIENT_TYPE, ENUM_DISPATCH_TYPE, ENUM_PLAY_SOURCE_TYPE } from '../common/zego.entity';
+import { BaseCenter } from '../common/clientBase/index';
 export declare class ZegoClient extends BaseCenter {
     streamCenter: ZegoStreamCenterWechat;
     preferPlaySourceType: ENUM_PLAY_SOURCE_TYPE;
@@ -34,30 +34,37 @@ export declare class ZegoClient extends BaseCenter {
     handleFetchStreamPublishUrlRsp(msg: any): void;
     handleFetchStreamUrlRsp(msg: any): void;
     doPublishStream(streamid: string, streamUrls: string[]): boolean;
-    setCDNInfo(streamInfo: {
-        urls_flv: string;
-        urls_hls: string;
-        urls_rtmp: string;
-    }, streamItem: {
-        urls_flv: string;
-        urls_m3u8: string;
-        urls_rtmp: string;
-    }): void;
+    setCDNInfo(
+        streamInfo: {
+            urls_flv: string;
+            urls_hls: string;
+            urls_rtmp: string;
+        },
+        streamItem: {
+            urls_flv: string;
+            urls_m3u8: string;
+            urls_rtmp: string;
+        },
+    ): void;
     loginBodyData(): {
-        "id_name": string;
-        "nick_name": string;
-        "role": 1 | 2;
-        "token": string;
-        "version": any;
-        "room_name": string;
-        "user_state_flag": number;
-        "room_create_flag": number;
-        "client_type": E_CLIENT_TYPE;
+        id_name: string;
+        nick_name: string;
+        role: 1 | 2;
+        token: string;
+        version: any;
+        room_name: string;
+        user_state_flag: number;
+        room_create_flag: number;
+        client_type: E_CLIENT_TYPE;
         third_token: string;
     };
-    WebrtcOnPublishStateUpdateHandle(type: 0 | 1 | 2, streamid: string, error: {
-        code: string;
-        msg: string;
-    }): void;
+    WebrtcOnPublishStateUpdateHandle(
+        type: 0 | 1 | 2,
+        streamid: string,
+        error: {
+            code: string;
+            msg: string;
+        },
+    ): void;
     static isSupportLive(sucCall: any, errCall: any): void;
 }

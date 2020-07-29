@@ -72,12 +72,17 @@ export declare class ZegoPlayWeb {
     soundLevel: number;
     mic: any;
     script: any;
-    constructor(log: Logger, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext);
+    constructor(
+        log: Logger,
+        signal: ZegoSignal | null,
+        dataReport: ZegoDataReport,
+        qualityTimeInterval: number,
+        streamCenter: ZegoStreamCenterWeb,
+        ac: ZegoAudioContext,
+    );
     startPlay(streamId: string, success: (stream: MediaStream) => void, playOption?: webPlayOption): void;
     private onCreatePlaySessionSuccess;
-    onCreateOfferSuccess(desc: {
-        sdp: any;
-    }): void;
+    onCreateOfferSuccess(desc: { sdp: any }): void;
     private onSetLocalDescriptionSuccess;
     private onRecvMediaDesc;
     private onRecvCandidateInfo;

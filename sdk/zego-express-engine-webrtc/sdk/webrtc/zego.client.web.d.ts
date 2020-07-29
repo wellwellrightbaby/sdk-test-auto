@@ -1,4 +1,11 @@
-import { webPlayOption, Constraints, ERRO, CapabilityDetection, WebListener, webPublishOption } from '../common/zego.entity';
+import {
+    webPlayOption,
+    Constraints,
+    ERRO,
+    CapabilityDetection,
+    WebListener,
+    webPublishOption,
+} from '../common/zego.entity';
 import { ZegoStreamCenterWeb } from './zego.streamCenter.web';
 import { BaseCenter } from '../common/clientBase/index';
 import { ZegoMediaElement, MediaRecorder, ZegoAudioContext } from '../../types/index';
@@ -40,19 +47,22 @@ export declare class ZegoExpressEngine extends BaseCenter {
     private startScreenShotFirFox;
     private stopScreenShot;
     protected WebrtcOnPublishStateUpdateHandle(type: 0 | 1 | 2, streamID: string, error: ERRO): void;
-    protected setCDNInfo(streamInfo: {
-        urlHttpsFlv: string;
-        urlHttpsHls: string;
-        urlFlv: string;
-        urlHls: string;
-        urlRtmp: string;
-    }, streamItem: {
-        urls_flv: string | string[];
-        urls_m3u8: string | string[];
-        urls_rtmp: string | string[];
-        urls_https_flv: string | string[];
-        urls_https_m3u8: string | string[];
-    }): void;
+    protected setCDNInfo(
+        streamInfo: {
+            urlHttpsFlv: string;
+            urlHttpsHls: string;
+            urlFlv: string;
+            urlHls: string;
+            urlRtmp: string;
+        },
+        streamItem: {
+            urls_flv: string | string[];
+            urls_m3u8: string | string[];
+            urls_rtmp: string | string[];
+            urls_https_flv: string | string[];
+            urls_https_m3u8: string | string[];
+        },
+    ): void;
     protected loginBodyData(): {
         [index: string]: string | number | any[];
     };
@@ -76,13 +86,17 @@ export declare class ZegoExpressEngine extends BaseCenter {
         }>;
     }>;
     private static getDevices;
-    getAudioInfo(localStream: MediaStream, errCallBack: (param: any) => void, option?: {
-        type: string;
-        bufferSize?: number;
-        channels?: number;
-        sampleBit?: 8 | 16;
-        sampleRate: number;
-    }): any;
+    getAudioInfo(
+        localStream: MediaStream,
+        errCallBack: (param: any) => void,
+        option?: {
+            type: string;
+            bufferSize?: number;
+            channels?: number;
+            sampleBit?: 8 | 16;
+            sampleRate: number;
+        },
+    ): any;
     getSoundLevel(localStream: MediaStream, sucCallBack: Function, errCallBack: Function): void;
     stopSoundLevel(localStream: MediaStream): void;
     private static handleDataAvailable;

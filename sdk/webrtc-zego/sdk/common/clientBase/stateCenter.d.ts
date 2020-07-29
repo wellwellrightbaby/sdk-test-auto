@@ -1,4 +1,4 @@
-import { ENUM_RUN_STATE, LinkedList } from "../zego.entity";
+import { ENUM_RUN_STATE, LinkedList } from '../zego.entity';
 export declare class StateCenter {
     testEnvironment: boolean;
     third_token: string;

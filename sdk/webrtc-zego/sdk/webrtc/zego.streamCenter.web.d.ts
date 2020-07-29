@@ -39,27 +39,53 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
     onPublishStateUpdate(type: any, streamid: any, error: any): void;
     onPublishQualityUpdate(streamid: any, streamQuality: any): void;
     onUpdateHeartBeartIntervalHandle(interval: number): void;
-    switchDevice(type: 'audio' | 'video', localVideo: HTMLMediaElement, deviceId: string, success: Function, error: Function): void;
+    switchDevice(
+        type: 'audio' | 'video',
+        localVideo: HTMLMediaElement,
+        deviceId: string,
+        success: Function,
+        error: Function,
+    ): void;
     enableMicrophone(localVideo: HTMLElement, enable: boolean): boolean;
     enableCamera(localVideo: HTMLElement, enable: boolean): boolean;
-    startPreview(localVideo: HTMLElement, mediaStreamConstraints: MediaStreamConstraints, success: Function, error: Function): boolean;
+    startPreview(
+        localVideo: HTMLElement,
+        mediaStreamConstraints: MediaStreamConstraints,
+        success: Function,
+        error: Function,
+    ): boolean;
     stopPreview(localVideo: HTMLElement): boolean;
     setPublishStateStart(streamid: any, localVideo: any, playOption: PlayOption): boolean;
     getTotalStreamId(streamid: string): string;
     getBackStreamId(streamid: any): any;
     startPublishingStream(streamid: string, serverUrls: string[], preferPublishSourceType?: number): boolean;
-    updateWaitingList(signalInfo: SignalInfo, isPublish: boolean, streamId: string, success: Function, error: Function): void;
+    updateWaitingList(
+        signalInfo: SignalInfo,
+        isPublish: boolean,
+        streamId: string,
+        success: Function,
+        error: Function,
+    ): void;
     publishStream(streamid: any): void;
     connectPublishServer(streamId: string): boolean;
-    shouldRetry(stream: {
-        serverUrls: string[];
-        retryCount: number;
-    }, errorCode: number): boolean;
+    shouldRetry(
+        stream: {
+            serverUrls: string[];
+            retryCount: number;
+        },
+        errorCode: number,
+    ): boolean;
     getTokenSuccess(): void;
     stopPublishingStream(streamid: string): void;
     setPlayStreamAudioOutput(streamid: string, audioOutput: string): boolean;
     setStreamAudioOutput(localVideo: any, audioOutput: string): boolean;
-    connetWithReuseSignalServer(streamId: string, isPublish: boolean, serverUrl: string, success: Function, error: Function): void;
+    connetWithReuseSignalServer(
+        streamId: string,
+        isPublish: boolean,
+        serverUrl: string,
+        success: Function,
+        error: Function,
+    ): void;
     setPlayStateStart(streamid: string, remoteVideo: HTMLElement, audioOutput: string, playOption: PlayOption): boolean;
     startPlayingStream(streamid: string, serverUrls: string[], currentPlaySourceType?: number): boolean;
     connectPlayServer(streamId: string): boolean;
@@ -89,11 +115,18 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
     onVideoSizeChanged(streamId: string, videoWidth: number, videoHeight: number): void;
     onRemoteCameraStatusUpdate(streamID: string, status: number): void;
     onRemoteMicStatusUpdate(streamID: string, status: number): void;
-    onSoundLevelUpdate(soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-    }>): void;
-    setPublishStreamConstraints(streamID: string, constraints: MediaStreamConstraints, success: Function, error: Function): void;
+    onSoundLevelUpdate(
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+        }>,
+    ): void;
+    setPublishStreamConstraints(
+        streamID: string,
+        constraints: MediaStreamConstraints,
+        success: Function,
+        error: Function,
+    ): void;
     startMixingAudio(streamID: string, mediaList: Array<HTMLMediaElement>): boolean;
     stopMixingAudio(streamID: string, audio?: Array<HTMLMediaElement>): boolean;
 }

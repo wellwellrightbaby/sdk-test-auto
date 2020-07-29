@@ -25,42 +25,95 @@ export declare abstract class BaseCenter extends Common {
     loginRoom(roomID: string, token: string, user: User, config?: RoomConfig): Promise<boolean>;
     private loginReport;
     logoutRoom(roomID: string): void;
-    sendCustomCommand(roomID: string, command: string | Record<string, any>, toUserList: string[]): Promise<{
+    sendCustomCommand(
+        roomID: string,
+        command: string | Record<string, any>,
+        toUserList: string[],
+    ): Promise<{
         errorCode: number;
         messageID: number;
     }>;
-    sendBroadcastMessage(roomID: string, message: string): Promise<{
+    sendBroadcastMessage(
+        roomID: string,
+        message: string,
+    ): Promise<{
         errorCode: number;
         messageID: number;
     }>;
-    sendReliableMessage(type: string, data: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): void;
-    sendBarrageMessage(roomID: string, message: string): Promise<{
+    sendReliableMessage(
+        type: string,
+        data: string,
+        success: (seq: number) => void,
+        error: (err: ERRO, seq: number) => void,
+    ): void;
+    sendBarrageMessage(
+        roomID: string,
+        message: string,
+    ): Promise<{
         errorCode: number;
         messageID: number;
     }>;
-    sendRelayMessage(type: string, data: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): void;
-    requestJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void, resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void): boolean;
-    inviteJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void, resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void): boolean;
+    sendRelayMessage(
+        type: string,
+        data: string,
+        success: (seq: number) => void,
+        error: (err: ERRO, seq: number) => void,
+    ): void;
+    requestJoinLive(
+        destIdName: string,
+        success: (seq: number) => void,
+        error: (err: ERRO, seq: number) => void,
+        resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void,
+    ): boolean;
+    inviteJoinLive(
+        destIdName: string,
+        success: (seq: number) => void,
+        error: (err: ERRO, seq: number) => void,
+        resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void,
+    ): boolean;
     endJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): boolean;
-    respondJoinLive(requestId: string, respondResult: boolean, success?: (seq: number) => void, error?: (err: ERRO, seq: number) => void): boolean;
-    startMixerTask(mixStreamConfig: MixStreamConfig): Promise<{
+    respondJoinLive(
+        requestId: string,
+        respondResult: boolean,
+        success?: (seq: number) => void,
+        error?: (err: ERRO, seq: number) => void,
+    ): boolean;
+    startMixerTask(
+        mixStreamConfig: MixStreamConfig,
+    ): Promise<{
         errorCode: number;
         extendedData: string;
     }>;
-    setMixerTaskConfig(config: MixStreamAdvance): Promise<{
+    setMixerTaskConfig(
+        config: MixStreamAdvance,
+    ): Promise<{
         errorCode: number;
         extendedData: string;
     }>;
-    stopMixerTask(taskId: string): Promise<{
+    stopMixerTask(
+        taskId: string,
+    ): Promise<{
         errorCode: number;
     }>;
-    addPublishCdnUrl(streamID: string, signature: string, targetURL: string): Promise<{
+    addPublishCdnUrl(
+        streamID: string,
+        signature: string,
+        targetURL: string,
+    ): Promise<{
         errorCode: number;
     }>;
-    removePublishCdnUrl(streamID: string, signature: string, targetURL: string): Promise<{
+    removePublishCdnUrl(
+        streamID: string,
+        signature: string,
+        targetURL: string,
+    ): Promise<{
         errorCode: number;
     }>;
-    clearPublishCdnUrl(streamID: string, signature: string, targetURL: string): Promise<{
+    clearPublishCdnUrl(
+        streamID: string,
+        signature: string,
+        targetURL: string,
+    ): Promise<{
         errorCode: number;
     }>;
     private publishTarget;

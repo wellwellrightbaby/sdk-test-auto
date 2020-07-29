@@ -10,7 +10,7 @@ export declare enum ENUM_LOG_LEVEL {
     warn = 2,
     error = 3,
     report = 99,
-    disable = 100
+    disable = 100,
 }
 export declare const LOG_LEVEL: {
     debug: number;
@@ -23,7 +23,7 @@ export declare const LOG_LEVEL: {
 export declare enum ENUM_REMOTE_TYPE {
     disable = 0,
     websocket = 1,
-    https = 2
+    https = 2,
 }
 export interface LogConfig {
     logLevel?: 'debug' | 'info' | 'warn' | 'error' | 'report' | 'disable';
@@ -139,7 +139,7 @@ export interface DataStatistics {
 export declare enum ENUM_SIGNAL_STATE {
     disconnected = 0,
     connecting = 1,
-    connected = 2
+    connected = 2,
 }
 export declare const ENUM_RESOLUTION_TYPE: {
     LOW: {
@@ -245,7 +245,7 @@ export declare const ENUM_STREAM_UPDATE_TYPE: {
 export declare enum ENUM_RUN_STATE {
     logout = 0,
     trylogin = 1,
-    login = 2
+    login = 2,
 }
 export declare const ENUM_PUBLISH_STATE_UPDATE: {
     start: number;
@@ -364,7 +364,7 @@ export declare enum QUALITYLEVEL {
     low = 1,
     stantard = 2,
     hight = 3,
-    custome = 4
+    custome = 4,
 }
 export interface MediaStreamConstraints {
     audio?: boolean;
@@ -389,35 +389,42 @@ export interface MediaStreamConstraints {
     source?: HTMLElement | MediaStream;
 }
 export interface Constraints {
-    camera?: {
-        audio?: boolean;
-        audioInput?: string;
-        video?: boolean;
-        height?: number;
-        frameRate?: number;
-        width?: number;
-        bitRate?: number;
-        bitrate?: number;
-        audioBitrate?: number;
-        facingMode?: string;
-        videoInput?: string;
-        videoQuality?: QUALITYLEVEL;
-        ANS?: boolean;
-        AGC?: boolean;
-        AEC?: boolean;
-    } | MediaStreamConstraints;
-    screen?: {
-        audio?: boolean;
-        videoQuality?: 1 | 2 | 3 | 4;
-        bitRate?: number;
-        bitrate?: number;
-        frameRate?: number;
-    } | MediaStreamConstraints | boolean;
-    custom?: {
-        source: HTMLMediaElement | MediaStream;
-        bitRate?: number;
-        bitrate?: number;
-    } | MediaStreamConstraints;
+    camera?:
+        | {
+              audio?: boolean;
+              audioInput?: string;
+              video?: boolean;
+              height?: number;
+              frameRate?: number;
+              width?: number;
+              bitRate?: number;
+              bitrate?: number;
+              audioBitrate?: number;
+              facingMode?: string;
+              videoInput?: string;
+              videoQuality?: QUALITYLEVEL;
+              ANS?: boolean;
+              AGC?: boolean;
+              AEC?: boolean;
+          }
+        | MediaStreamConstraints;
+    screen?:
+        | {
+              audio?: boolean;
+              videoQuality?: 1 | 2 | 3 | 4;
+              bitRate?: number;
+              bitrate?: number;
+              frameRate?: number;
+          }
+        | MediaStreamConstraints
+        | boolean;
+    custom?:
+        | {
+              source: HTMLMediaElement | MediaStream;
+              bitRate?: number;
+              bitrate?: number;
+          }
+        | MediaStreamConstraints;
 }
 export interface ScreenConfig {
     audio?: boolean;
@@ -526,9 +533,11 @@ export interface MixStreamConfig {
             right: number;
         };
     }>;
-    outputList: Array<string> | Array<{
-        target: string;
-    }>;
+    outputList:
+        | Array<string>
+        | Array<{
+              target: string;
+          }>;
     outputConfig: {
         outputBitrate: number;
         outputFPS: number;
@@ -619,24 +628,33 @@ export interface WebListener {
     roomUserUpdate: (roomID: string, updateType: 'DELETE' | 'ADD', userList: User[]) => void;
     updateOnlineCount: (roomID: string, userCount: number) => void;
     IMRecvCustomCommand: (roomID: string, fromUser: User, command: string) => void;
-    IMRecvBroadcastMessage: (roomID: string, chatData: Array<{
-        fromUser: User;
-        message: string;
-        sendTime: number;
-        messageID: number;
-    }>) => void;
-    IMRecvBarrageMessage: (roomID: string, chatData: Array<{
-        fromUser: User;
-        message: string;
-        sendTime: number;
-        messageID: string;
-    }>) => void;
+    IMRecvBroadcastMessage: (
+        roomID: string,
+        chatData: Array<{
+            fromUser: User;
+            message: string;
+            sendTime: number;
+            messageID: number;
+        }>,
+    ) => void;
+    IMRecvBarrageMessage: (
+        roomID: string,
+        chatData: Array<{
+            fromUser: User;
+            message: string;
+            sendTime: number;
+            messageID: string;
+        }>,
+    ) => void;
     roomStreamUpdate: (roomID: string, updateType: 'DELETE' | 'ADD', streamList: StreamInfo[]) => void;
-    streamExtraInfoUpdate: (roomID: string, streamList: {
-        streamID: string;
-        user: User;
-        extraInfo: string;
-    }[]) => void;
+    streamExtraInfoUpdate: (
+        roomID: string,
+        streamList: {
+            streamID: string;
+            user: User;
+            extraInfo: string;
+        }[],
+    ) => void;
     playerStateUpdate: (result: {
         streamID: string;
         state: 'PLAYING' | 'NO_PLAY' | 'PLAY_REQUESTING';
@@ -649,40 +667,56 @@ export interface WebListener {
         errorCode: number;
         extendedData: string;
     }) => void;
-    roomStateUpdate: (roomID: string, state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED', errorCode: number, extendedData: string) => void;
+    roomStateUpdate: (
+        roomID: string,
+        state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED',
+        errorCode: number,
+        extendedData: string,
+    ) => void;
     screenSharingEnded: (stream: MediaStream) => void;
     publishQualityUpdate: (streamID: string, publishStats: WebPublishStats) => void;
     playQualityUpdate: (streamID: string, playStats: WebPlayStats) => void;
     remoteCameraStatusUpdate: (streamID: string, status: 'OPEN' | 'MUTE') => void;
     remoteMicStatusUpdate: (streamID: string, status: 'OPEN' | 'MUTE') => void;
-    soundLevelUpdate: (soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-        type: string;
-    }>) => void;
+    soundLevelUpdate: (
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+            type: string;
+        }>,
+    ) => void;
 }
 export interface WxListener {
     roomUserUpdate: (roomID: string, updateType: 'DELETE' | 'ADD', userList: User[]) => void;
     updateOnlineCount: (roomID: string, userCount: number) => void;
     IMRecvCustomCommand: (roomID: string, fromUser: User, command: string) => void;
-    IMRecvBroadcastMessage: (roomID: string, chatData: Array<{
-        fromUser: User;
-        message: string;
-        sendTime: number;
-        messageID: number;
-    }>) => void;
-    IMRecvBarrageMessage: (roomID: string, chatData: Array<{
-        fromUser: User;
-        message: string;
-        sendTime: number;
-        messageID: string;
-    }>) => void;
+    IMRecvBroadcastMessage: (
+        roomID: string,
+        chatData: Array<{
+            fromUser: User;
+            message: string;
+            sendTime: number;
+            messageID: number;
+        }>,
+    ) => void;
+    IMRecvBarrageMessage: (
+        roomID: string,
+        chatData: Array<{
+            fromUser: User;
+            message: string;
+            sendTime: number;
+            messageID: string;
+        }>,
+    ) => void;
     roomStreamUpdate: (roomID: string, updateType: 'DELETE' | 'ADD', streamList: StreamInfo[]) => void;
-    streamExtraInfoUpdate: (roomID: string, streamList: {
-        streamID: string;
-        user: User;
-        extraInfo: string;
-    }[]) => void;
+    streamExtraInfoUpdate: (
+        roomID: string,
+        streamList: {
+            streamID: string;
+            user: User;
+            extraInfo: string;
+        }[],
+    ) => void;
     playerStateUpdate: (result: {
         streamID: string;
         state: 'PLAYING' | 'NO_PLAY' | 'PLAY_REQUESTING';
@@ -695,27 +729,34 @@ export interface WxListener {
         errorCode: number;
         extendedData: string;
     }) => void;
-    roomStateUpdate: (roomID: string, state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED', errorCode: number, extendedData: string) => void;
+    roomStateUpdate: (
+        roomID: string,
+        state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED',
+        errorCode: number,
+        extendedData: string,
+    ) => void;
     publishQualityUpdate: (streamID: string, publishStats: WxQualityStats) => void;
     playQualityUpdate: (streamID: string, playStats: WxQualityStats) => void;
-    soundLevelUpdate: (soundLevelList: Array<{
-        streamID: string;
-        soundLevel: number;
-        type: string;
-    }>) => void;
+    soundLevelUpdate: (
+        soundLevelList: Array<{
+            streamID: string;
+            soundLevel: number;
+            type: string;
+        }>,
+    ) => void;
 }
 export declare enum ENUM_PLAY_SOURCE_TYPE {
     cdn = 0,
-    ultra = 1
+    ultra = 1,
 }
 export declare enum ENUM_BROADCASTER_STATUS {
     stop = 0,
-    start = 1
+    start = 1,
 }
 export declare enum ENUM_DISPATCH_TYPE {
     cdn = 0,
     ultra = 1,
-    customUrl = 2
+    customUrl = 2,
 }
 export declare type webPublishOption = {
     streamParams?: string;
@@ -731,7 +772,7 @@ export declare type wxPublishOption = {
 };
 export declare enum ENUM_SOURCE_TYPE {
     CDN = 0,
-    BGP = 1
+    BGP = 1,
 }
 export declare type webPlayOption = {
     video?: boolean;
@@ -747,7 +788,7 @@ export declare enum E_CLIENT_TYPE {
     ClientType_None = 0,
     ClientType_H5 = 1,
     ClientType_SmallPragram = 2,
-    ClientType_Webrtc = 3
+    ClientType_Webrtc = 3,
 }
 export declare class ListNode {
     _id: number | null;

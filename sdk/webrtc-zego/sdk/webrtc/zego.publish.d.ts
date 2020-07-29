@@ -70,17 +70,27 @@ export declare class ZegoPublish {
     ac: ZegoAudioContext;
     script: any;
     mic: any;
-    constructor(log: Logger, signal: ZegoSignal, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb);
+    constructor(
+        log: Logger,
+        signal: ZegoSignal,
+        dataReport: ZegoDataReport,
+        qualityTimeInterval: number,
+        streamCenter: ZegoStreamCenterWeb,
+    );
     private publishStateUpdateError;
     private resetPublish;
     private clearTryPublishTimer;
     private clearPublishQualityTimer;
     private shouldSendCloseSession;
-    startPublish(streamId: string, localStream: MediaStream, videoInfo: VideoInfo, mediaStreamConfig: any, playOption?: PlayOption): void;
+    startPublish(
+        streamId: string,
+        localStream: MediaStream,
+        videoInfo: VideoInfo,
+        mediaStreamConfig: any,
+        playOption?: PlayOption,
+    ): void;
     onCreatePublishSessionSuccess(data: any): void;
-    onCreateOfferSuccess(desc: {
-        sdp: any;
-    }): void;
+    onCreateOfferSuccess(desc: { sdp: any }): void;
     updateBandwidthRestriction(sdp: any, bandwidth: any): any;
     onSetLocalDescriptionSuccess(desc: any): void;
     onRecvMediaDescription(seq: number, sessionId: number, data: any): void;

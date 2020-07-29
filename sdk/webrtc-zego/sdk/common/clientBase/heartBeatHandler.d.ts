@@ -8,10 +8,7 @@ export declare class HeartBeatHandler {
     private stateCenter;
     constructor(logger: Logger, stateCenter: StateCenter, socketCenter: SocketCenter);
     resetHeartbeat(): void;
-    hbLogout(err: {
-        code: string;
-        msg: string;
-    }): void;
+    hbLogout(err: { code: string; msg: string }): void;
     start(heartbeatInterval: number): void;
     private handleHeartbeatRsp;
     ReliableMessageHandler(msg: any): void;
@@ -26,8 +23,11 @@ export declare class HeartBeatHandler {
     onRecvReliableMessage(type: string, seq: number, data: String): void;
     resetCheckMessage(): void;
     private checkSendMessageList;
-    protected checkMessageListTimeout(messageList: LinkedList, messageMap: {
-        [index: number]: any;
-    }): void;
+    protected checkMessageListTimeout(
+        messageList: LinkedList,
+        messageMap: {
+            [index: number]: any;
+        },
+    ): void;
     startCheckMessageTimeout(): void;
 }

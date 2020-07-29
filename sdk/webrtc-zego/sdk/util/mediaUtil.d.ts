@@ -11,7 +11,13 @@ export declare class MediaUtil {
     private sampleBit;
     private sampleRate;
     private worker;
-    constructor({ type, channels, bufferSize, sampleBit, sampleRate }: {
+    constructor({
+        type,
+        channels,
+        bufferSize,
+        sampleBit,
+        sampleRate,
+    }: {
         bufferSize?: number;
         channels?: number;
         sampleBit?: 8 | 16;

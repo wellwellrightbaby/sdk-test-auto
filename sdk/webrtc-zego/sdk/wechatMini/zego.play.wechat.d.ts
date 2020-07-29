@@ -1,6 +1,6 @@
-import { Logger } from "../common/zego.logger";
-import { ZegoStreamCenterWechat } from "./zego.streamcenter.wechat";
-import { ZegoDataReport } from "../common/zego.datareport";
+import { Logger } from '../common/zego.logger';
+import { ZegoStreamCenterWechat } from './zego.streamcenter.wechat';
+import { ZegoDataReport } from '../common/zego.datareport';
 /**
  ZegoPlayer
  */
@@ -26,7 +26,17 @@ export declare class ZegoPlayWechat {
     dataReport: ZegoDataReport;
     playerInfo: any;
     playerLogUploadTime: number;
-    constructor(logger: Logger, streamid: string, urls: string[], params: any, reconnectLimit: number, streamcenter: ZegoStreamCenterWechat, sourceType: number, playerType: number, dataReport: ZegoDataReport);
+    constructor(
+        logger: Logger,
+        streamid: string,
+        urls: string[],
+        params: any,
+        reconnectLimit: number,
+        streamcenter: ZegoStreamCenterWechat,
+        sourceType: number,
+        playerType: number,
+        dataReport: ZegoDataReport,
+    );
     resetPlayer(): void;
     newPlayer(): boolean;
     stopPlayer(): void;

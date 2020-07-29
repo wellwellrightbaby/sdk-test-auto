@@ -10,11 +10,18 @@ export declare class ZegoPreview {
     mediaStreamConfig: MediaStreamConstraints;
     previewSuc: boolean;
     constructor(log: Logger);
-    getMediaStreamConstraints(mediaStreamConfig: MediaStreamConstraints): {
+    getMediaStreamConstraints(
+        mediaStreamConfig: MediaStreamConstraints,
+    ): {
         audio: any;
         video: any;
     };
-    startPreview(localVideo: HTMLElement, mediaStreamConfig: MediaStreamConstraints, successCallback: Function, errorCallback: Function): void;
+    startPreview(
+        localVideo: HTMLElement,
+        mediaStreamConfig: MediaStreamConstraints,
+        successCallback: Function,
+        errorCallback: Function,
+    ): void;
     captureStream(localVideo: HTMLElement, mediaStreamConfig: MediaStreamConstraints): boolean;
     stopPreview(): void;
     enableMicrophone: (enable: boolean, streamCenter: ZegoStreamCenter) => boolean;
