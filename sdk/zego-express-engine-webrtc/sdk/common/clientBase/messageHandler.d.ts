@@ -9,12 +9,7 @@ export declare class MessageHandler {
     private stateCenter;
     private dataReport;
     constructor(logger: Logger, stateCenter: StateCenter, socketCenter: SocketCenter, dataReport: ZegoDataReport);
-    sendCustomCommand(
-        dstMembers: string[],
-        customContent: string | Record<string, any>,
-        success: Function,
-        error: Function,
-    ): void;
+    sendCustomCommand(dstMembers: string[], customContent: string | Record<string, any>, success: Function, error: Function): void;
     private handleSendCustomMsgRsp;
     handlePushCustomMsg(msg: {
         body: {
@@ -33,12 +28,7 @@ export declare class MessageHandler {
         };
     }): void;
     onRecvRoomMsg(chat_data: ChatInfo[], server_msg_id: number, ret_msg_id: number): void;
-    sendReliableMessage(
-        type: string,
-        data: string,
-        success: (seq: number) => void,
-        error: (err: ERRO, seq: number) => void,
-    ): void;
+    sendReliableMessage(type: string, data: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): void;
     sendBigRoomMessage(category: 1 | 2, room_id: string, content: string, success?: Function, error?: Function): void;
     handlePushMergeMsg(msg: any): void;
     handlePushBigRooMsg(bodyString: string): void;
@@ -47,18 +37,8 @@ export declare class MessageHandler {
     handleBigImMsgRsp(msg: any): void;
     setBigImTimer(offset: number, timeWindow: number): void;
     onBigImTimer(): void;
-    sendRelayMessage(
-        type: string,
-        data: string,
-        success: (seq: number) => void,
-        error: (err: ERRO, seq: number) => void,
-    ): void;
-    sendRelayMessageInternal(
-        type: string,
-        data: string,
-        success: Function | null | undefined,
-        error: Function | null | undefined,
-    ): void;
+    sendRelayMessage(type: string, data: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): void;
+    sendRelayMessageInternal(type: string, data: string, success: Function | null | undefined, error: Function | null | undefined): void;
     setRelayTimer(offset: number, timeWindow: number): void;
     onRelayTimer(): void;
     handlePushTransMsg(msg: {
@@ -71,4 +51,10 @@ export declare class MessageHandler {
         };
     }): void;
     onRecvReliableMessage(type: string, seq: number, data: string): void;
+    relogin(): void;
+    fetchReliableMessage(trans_channel: string, fetch_array: {
+        trans_type: string;
+        trans_seq: number;
+    }[]): void;
+    private handleFetchTransRsp;
 }

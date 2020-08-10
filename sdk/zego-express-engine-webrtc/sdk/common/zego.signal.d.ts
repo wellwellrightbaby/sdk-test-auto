@@ -56,15 +56,7 @@ export declare class ZegoSignal {
     private startConnectTimer;
     disconnectServer(): void;
     isServerConnected(): boolean;
-    createSession(
-        seq: number,
-        type: number,
-        mode: number,
-        streamId: string,
-        strAuthParam: string | undefined,
-        success: Function | null,
-        error: Function | null,
-    ): void;
+    createSession(seq: number, type: number, mode: number, streamId: string, strAuthParam: string | undefined, success: Function | null, error: Function | null): void;
     removeSession(sessionId: number): void;
     sendCloseSession(seq: number, sessionId: number, reason: number, success?: Function | null, error?: Function): void;
     private sendMessage;
@@ -81,30 +73,17 @@ export declare class ZegoSignal {
             cmd: any;
         };
     }): void;
-    sendMediaDesc(
-        seq: number,
-        sessionId: number,
-        type: number,
-        desc: {
-            sdp: any;
-            width?: number;
-            height?: number;
-            frameRate?: number;
-            video_min_kpbs?: number;
-            video_max_kpbs?: number;
-            audio_kpbs?: number;
-            keyframe_intv?: number;
-        },
-        success: Function,
-        error: Function,
-    ): void;
-    sendCandidateInfo(
-        seq: number,
-        sessionId: number,
-        candidateList: string | any[],
-        success: Function | null,
-        error: Function | null,
-    ): void;
+    sendMediaDesc(seq: number, sessionId: number, type: number, desc: {
+        sdp: any;
+        width?: number;
+        height?: number;
+        frameRate?: number;
+        video_min_kpbs?: number;
+        video_max_kpbs?: number;
+        audio_kpbs?: number;
+        keyframe_intv?: number;
+    }, success: Function, error: Function): void;
+    sendCandidateInfo(seq: number, sessionId: number, candidateList: string | any[], success: Function | null, error: Function | null): void;
     sendMediaDescAck(seq: number, sessionId: number, result: number): void;
     sendCandidateInfoAck(seq: number, sessionId: number, result: number): void;
     sendCloseSessionAck(seq: number, sessionId: number, result: number): void;
@@ -113,13 +92,7 @@ export declare class ZegoSignal {
     unregisterPushCallback(cmd: string, sessionId: number): void;
     checkMessageTimeout(): void;
     sendHeartbeat(): void;
-    QualityReport(
-        seq: number,
-        sessionId: number,
-        qualityStat: any,
-        success: Function | null,
-        error: Function | null,
-    ): void;
+    QualityReport(seq: number, sessionId: number, qualityStat: any, success: Function | null, error: Function | null): void;
     sendStreamStatus(seq: number, sessionId: number, camera: number, microphone: number): void;
     sendBroadcasterStatus(seq: number, sessionId: number, status: 0 | 1): void;
 }

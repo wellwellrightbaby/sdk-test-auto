@@ -7,32 +7,11 @@ export declare class LiveHandler {
     private socketCenter;
     private stateCenter;
     constructor(logger: Logger, stateCenter: StateCenter, socketCenter: SocketCenter);
-    requestJoinLive(
-        destIdName: string,
-        success: (seq: number) => void,
-        error: (err: ERRO, seq: number) => void,
-        resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void,
-    ): boolean;
-    inviteJoinLive(
-        destIdName: string,
-        success: (seq: number) => void,
-        error: (err: ERRO, seq: number) => void,
-        resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void,
-    ): boolean;
+    requestJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void, resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void): boolean;
+    inviteJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void, resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void): boolean;
     endJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): boolean;
-    respondJoinLive(
-        requestId: string,
-        respondResult: boolean,
-        success?: (seq: number) => void,
-        error?: (err: ERRO, seq: number) => void,
-    ): boolean;
-    sendSignalCmd(
-        cmd: number,
-        signalMsg: string,
-        dest_id_name: string,
-        success: Function | undefined,
-        error: Function | undefined,
-    ): void;
+    respondJoinLive(requestId: string, respondResult: boolean, success?: (seq: number) => void, error?: (err: ERRO, seq: number) => void): boolean;
+    sendSignalCmd(cmd: number, signalMsg: string, dest_id_name: string, success: Function | undefined, error: Function | undefined): void;
     handlePushSignalMsg(msg: any): void;
     private handlePushJoinLiveRequestMsg;
     onRecvJoinLiveRequest(requestId: string, from_userid: string, from_username: string, roomid: string): void;

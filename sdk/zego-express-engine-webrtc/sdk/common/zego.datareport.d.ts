@@ -10,37 +10,20 @@ export declare class ZegoDataReport {
     addMsgInfo(seq: number, msg_ext: any): void;
     eventStart(seq: number, event_name: string): void;
     eventEnd(seq: number, event_name: string, extInfo?: any): void;
-    eventEndWithMsg(
-        seq: number,
-        event_name: string,
-        msg_ext: {
-            [index: string]: any;
-        },
-    ): void;
-    eventEndWithMsgInfo(
-        seq: number,
-        event_name: string,
-        msg_ext: {
-            [index: string]: any;
-        },
-    ): void;
+    eventEndWithMsg(seq: number, event_name: string, msg_ext: {
+        [index: string]: any;
+    }): void;
+    eventEndWithMsgInfo(seq: number, event_name: string, msg_ext: {
+        [index: string]: any;
+    }): void;
     addEventInfo(seq: number, event_name: string, key: string, value: string | number): void;
     addEventMsg(seq: number, event_name: string, key: string, value: string | number | string[]): void;
-    addEvent(
-        seq: number,
-        event_name: string,
-        msg_ext?: {
-            [index: string]: string;
-        },
-    ): void;
-    uploadReport(
-        seq: number,
-        itemType?: string,
-        error?: {
-            code: number;
-            message: string;
-            extern?: string;
-        },
-        extern?: string,
-    ): void;
+    addEvent(seq: number, event_name: string, msg_ext?: {
+        [index: string]: string;
+    }): void;
+    uploadReport(seq: number, itemType?: string, error?: {
+        code: number;
+        message: string;
+        extern?: string;
+    }, extern?: string): void;
 }

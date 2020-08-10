@@ -24,6 +24,7 @@ export declare class ZegoPublish {
     lastPublishStats: any;
     reportSeq: number;
     retrySeq: number;
+    streamReportSeq: number;
     dataReport: ZegoDataReport;
     qualityUpload: boolean;
     qualityUploadInterval: number;
@@ -47,6 +48,11 @@ export declare class ZegoPublish {
     arrayBufferMap: {
         [index: string]: AudioMixUtil;
     };
+    effectList: Array<{
+        audioMix: AudioMixUtil;
+        effectID: string;
+        audioBuffer: AudioBuffer;
+    }>;
     sessionSeq: number;
     peerConnection: RTCPeerConnection | any;
     qualityCount: number;
@@ -54,6 +60,7 @@ export declare class ZegoPublish {
     micTrack: MediaStreamTrack | null;
     pitchEffect: PitchUtil;
     audioBitRate: number;
+    channelCount: number;
     localSdpRevert: boolean;
     videoCodec: ZegoVideoCodec;
     stateNego: number;
@@ -70,30 +77,23 @@ export declare class ZegoPublish {
     soundLevel: number;
     script: any;
     mic: any;
-    constructor(
-        log: LoggerWeb,
-        signal: ZegoSignal | null,
-        dataReport: ZegoDataReport,
-        qualityTimeInterval: number,
-        streamCenter: ZegoStreamCenterWeb,
-        ac: ZegoAudioContext,
-    );
+    cameraState: string;
+    microState: string;
+    constructor(log: LoggerWeb, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext);
     private publishStateUpdateError;
     private resetPublish;
     private clearTryPublishTimer;
     private clearPublishQualityTimer;
     private shouldSendCloseSession;
-    startPublish(
-        streamId: string,
-        localStream: MediaStream,
-        videoInfo: VideoInfo,
-        mediaStreamConfig: any,
-        publishOption?: webPublishOption,
-    ): void;
+    startPublish(streamId: string, localStream: MediaStream, videoInfo: VideoInfo, mediaStreamConfig: any, publishOption?: webPublishOption): void;
     onCreatePublishSessionSuccess(data: any): void;
-    onCreateOfferSuccess(desc: { sdp: any }): void;
+    onCreateOfferSuccess(desc: {
+        sdp: any;
+    }): void;
     updateBandwidthRestriction(sdp: any, bandwidth: string | number): any;
-    onSetLocalDescriptionSuccess(desc: { sdp: any }): void;
+    onSetLocalDescriptionSuccess(desc: {
+        sdp: any;
+    }): void;
     onRecvMediaDescription(seq: number, sessionId: number, data: any): void;
     onGetRemoteOfferSucceses(desc: string): void;
     onIceConnectionStateChange(event: any): void;
@@ -109,23 +109,27 @@ export declare class ZegoPublish {
     tryStartPublish(streamId: string): void;
     checkPublishConnectionFailedState(connectionState: string): void;
     setPublishQualityTimer(): void;
-    getPublishStats(results: { forEach: (arg0: (result: any) => void) => void }): void;
+    peerConnectionGetStats(supportStatsCallback: boolean, callback?: Function): void;
+    getPublishStats(results: {
+        forEach: (arg0: (result: any) => void) => void;
+    }, callbackResults: any): void;
     uploadPublishQuality(publishData: any): void;
     stopPublish(): void;
     onPublishStateUpdate(type: number, streamId: string | null, error: ERRO): void;
     onPublishQualityUpdate(streamId: string | null, quality: any): void;
     onDisconnect(): void;
     playEffect(AudioMixConfig: AudioMixConfig, audioBuffer: AudioBuffer, start?: Function, end?: Function): void;
-    pauseEffect(): void;
-    resumeEffect(): void;
+    pauseEffect(effectID?: string): boolean;
+    resumeEffect(effectID?: string): boolean;
+    stopEffect(effectID?: string): boolean;
     startMixingAudio(mediaList: Array<HTMLMediaElement>): boolean;
     stopMixingAudio(media?: Array<HTMLMediaElement>): boolean;
     mixingBuffer(sourceID: string, arrayBuffer: ArrayBuffer, callBack?: Function): void;
-    stopMixingBuffer(sourceID: string): boolean;
-    voiceChange(mult: number): false | undefined;
-    voiceBack(): void;
+    stopMixingBuffer(sourceID?: string): boolean;
+    setMixingAudioVolume(volume: number, audio: HTMLMediaElement): boolean;
     publishSuccess(): void;
     tryNextSignal(error: any): void;
     startSoundLevel(): void;
     stopSoundLevel(): void;
+    rebackMic(): void;
 }

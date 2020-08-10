@@ -16,6 +16,7 @@ export declare class AudioMixUtil {
     startOffset: number;
     pauseTimes: number;
     resumeOffset: number;
+    paused: boolean;
     isMixAudio: boolean;
     isMixingBuffer: boolean;
     private streamSource;

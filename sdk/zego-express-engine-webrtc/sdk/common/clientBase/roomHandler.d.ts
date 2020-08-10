@@ -15,14 +15,8 @@ export declare class RoomHandler {
     onDisconnect(err: ERRO): void;
     onConnecting(err: ERRO): void;
     loginSuccessCallBack(lastRunState: number, msg: any): void;
-    login(
-        roomid: string,
-        token: string,
-        user: User,
-        config: RoomConfig | undefined,
-        success: (success: boolean) => void,
-        error: (err: ERRO) => void,
-    ): void;
+    fetchReliableMessage(trans_channel: string, trans_seq_array: any): void;
+    login(roomid: string, token: string, user: User, config: RoomConfig | undefined, success: (success: boolean) => void, error: (err: ERRO) => void): void;
     loginBodyData(): void;
     private tryLogin;
     private handleLoginRsp;
@@ -31,6 +25,7 @@ export declare class RoomHandler {
     private openHandler;
     private closeHandler;
     logout(roomID: string): void;
+    relogin(): void;
     fetchUserList(lastRunState?: number): void;
     private fetchUserListWithPageV2;
     private fetchUserListWithPage;
@@ -44,14 +39,10 @@ export declare class RoomHandler {
             room_id: string;
         };
     }): void;
-    onUserStateUpdate(
-        roomId: string,
-        updateType: 'DELETE' | 'ADD',
-        userList: Array<{
-            userID: string;
-            userName: string;
-        }>,
-    ): void;
+    onUserStateUpdate(roomId: string, updateType: 'DELETE' | 'ADD', userList: Array<{
+        userID: string;
+        userName: string;
+    }>): void;
     private mergeUserByUserSeq;
     private mergeUser;
 }

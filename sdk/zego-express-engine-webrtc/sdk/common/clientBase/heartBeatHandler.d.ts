@@ -11,11 +11,11 @@ export declare class HeartBeatHandler {
     constructor(logger: Logger, stateCenter: StateCenter, socketCenter: SocketCenter, dataReport: ZegoDataReport);
     resetHeartbeat(): void;
     hbLogout(err: ERRO): void;
+    fetchReliableMessage(trans_channel: string, trans_seq_array: any): void;
     start(heartbeatInterval: number): void;
+    relogin(): void;
     private handleHeartbeatRsp;
     ReliableMessageHandler(msg: any): void;
-    private fetchReliableMessage;
-    private handleFetchTransRsp;
     private fetchStreamList;
     private patchUserList;
     handleFetchStreamListRsp(msg: any): void;
@@ -25,11 +25,8 @@ export declare class HeartBeatHandler {
     onRecvReliableMessage(type: string, seq: number, data: string): void;
     resetCheckMessage(): void;
     private checkSendMessageList;
-    protected checkMessageListTimeout(
-        messageList: LinkedList,
-        messageMap: {
-            [index: number]: any;
-        },
-    ): void;
+    protected checkMessageListTimeout(messageList: LinkedList, messageMap: {
+        [index: number]: any;
+    }): void;
     startCheckMessageTimeout(): void;
 }

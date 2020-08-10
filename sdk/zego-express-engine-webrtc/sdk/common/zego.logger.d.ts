@@ -27,14 +27,7 @@ export declare abstract class Logger {
     constructor(stateCenter: StateCenter);
     setLogLevel(logLevel: ENUM_LOG_LEVEL): void;
     setRemoteLogLevel(logLevel: ENUM_LOG_LEVEL): void;
-    setSessionInfo(
-        appid: number,
-        roomid: string,
-        sessionid: string,
-        userid: string,
-        userName: string,
-        version: string,
-    ): void;
+    setSessionInfo(appid: number, roomid: string, sessionid: string, userid: string, userName: string, version: string): void;
     openLogServer(url: string): void;
     stopLogServer(): void;
     stopWebSocketServer(): void;
