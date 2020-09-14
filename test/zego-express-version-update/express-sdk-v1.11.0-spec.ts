@@ -2,7 +2,7 @@ import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import Axios from 'axios';
 import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 import { before } from 'mocha';
-import { deviceId } from './../zego-express-engine-webrtc/config';
+//import { deviceId } from './../zego-express-engine-webrtc/config';
 const expect = chai.expect;
 
 const TIMEOUT = 10000;
@@ -33,6 +33,7 @@ describe('on roomOnlineUserCountUpdate', function() {
             remoteLogLevel: 'info',
         });
         expect(result).to.be.true;
+        zg.checkSystemRequirements();
         const result1 = zg.on('roomOnlineUserCountUpdate', (roomID, userCount) => {
             mydate = new Date();
             console.warn('roomOnlineUserCountUpdate: ', roomID, userCount, mydate.toLocaleTimeString());
@@ -49,7 +50,7 @@ describe('on roomOnlineUserCountUpdate', function() {
     });
 
     it('connect2', async function() {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 2; i++) {
             const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
                 params: { app_id: APPID, id_name: 'ROUC100' + i },
             });

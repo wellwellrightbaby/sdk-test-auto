@@ -2,7 +2,7 @@ import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import Axios from 'axios';
 import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 import { before } from 'mocha';
-import { deviceId } from './../zego-express-engine-webrtc/config';
+//import { deviceId } from './zego-express-engine-webrtc/config';
 const expect = chai.expect;
 
 const TIMEOUT = 10000;
@@ -12,7 +12,7 @@ const APPID = 1739272706;
 let token = '';
 let zg: ZegoExpressEngine;
 let publishStream: MediaStream;
-let roomID: string; /*
+let roomID: string;
 describe('express-web setLogConfig', function() {
     before(function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -69,11 +69,11 @@ describe('express-web setLogConfig', function() {
     });
 
     it('setLogConfig logLevel8', function() {
-      const result = zg.setLogConfig({
-          logLevel: null,
-      });
-      expect(result).to.be.true;
-  });
+        const result = zg.setLogConfig({
+            logLevel: null,
+        });
+        expect(result).to.be.true;
+    });
 
     it('setLogConfig remoteLogLevel1', function() {
         const result = zg.setLogConfig({
@@ -125,11 +125,11 @@ describe('express-web setLogConfig', function() {
     });
 
     it('setLogConfig remoteLogLevel8', function() {
-      const result = zg.setLogConfig({
-          remoteLogLevel: null,
-      });
-      expect(result).to.be.true;
-  });
+        const result = zg.setLogConfig({
+            remoteLogLevel: null,
+        });
+        expect(result).to.be.true;
+    });
 
     it('setLogConfig logURL1', function() {
         const result = zg.setLogConfig({
@@ -160,11 +160,11 @@ describe('express-web setLogConfig', function() {
     });
 
     it('setLogConfig logURL5', function() {
-      const result = zg.setLogConfig({
-          logURL: null,
-      });
-      expect(result).to.be.true;
-  });
+        const result = zg.setLogConfig({
+            logURL: null,
+        });
+        expect(result).to.be.true;
+    });
 
     it('setLogConfig all1', function() {
         const result = zg.setLogConfig({
@@ -234,49 +234,49 @@ describe('express-web setDebugVerbose', function() {
     });
 
     it('setDebugVerbose null', function() {
-      const result = zg.setDebugVerbose(null);
-      expect(result).to.be.true;
-  });
+        const result = zg.setDebugVerbose(null);
+        expect(result).to.be.true;
+    });
 });
-*/ //"系统弹出的获取摄像头麦克风权限有没有办法实现自动" //使用checkSystemRequirements会向浏览器请求权限
+//"系统弹出的获取摄像头麦克风权限有没有办法实现自动" //使用checkSystemRequirements会向浏览器请求权限
 
-// describe('express-web', function() {
-//       before(async function() {
-//             const { data } = (await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-//                   params: { app_id: APPID, id_name: userID },
-//             })) as any;
-//             token = data;
-//             expect(token).to.be.a('string');
-//       });
+describe('express-web', function() {
+    before(async function() {
+        const { data } = (await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+            params: { app_id: APPID, id_name: userID },
+        })) as any;
+        token = data;
+        expect(token).to.be.a('string');
+    });
 
-//       it('初始化sdk', async function() {
-//             zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
-//             expect(zg).is.not.null;
-//             const result = zg.setLogConfig({
-//                   logLevel: 'disable',
-//                   remoteLogLevel: 'disable',
-//             });
-//             expect(result).to.be.true;
-//       });
+    it('初始化sdk', async function() {
+        zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
+        expect(zg).is.not.null;
+        const result = zg.setLogConfig({
+            logLevel: 'disable',
+            remoteLogLevel: 'disable',
+        });
+        expect(result).to.be.true;
+    });
 
-//       it('登录房间', async function() {
-//             const result = await zg.loginRoom('choui', token, {
-//                   userID: userID,
-//                   userName: 'name' + userID,
-//             });
-//             expect(result).to.equal(true);
-//       });
+    it('登录房间', async function() {
+        const result = await zg.loginRoom('choui', token, {
+            userID: userID,
+            userName: 'name' + userID,
+        });
+        expect(result).to.equal(true);
+    });
 
-//       it('创建流', async function() {
-//             try {
-//                   publishStream = await zg.createStream();
-//                   expect(publishStream).is.not.null;
-//             } catch (error) {
-//                   expect(error).is.not.null;
-//             }
-//       });
-// });
-/*
+    it('创建流', async function() {
+        try {
+            publishStream = await zg.createStream();
+            expect(publishStream).is.not.null;
+        } catch (error) {
+            expect(error).is.not.null;
+        }
+    });
+});
+
 describe('express-web 初始化SDK', function() {
     before(function() {
         console.log('初始化SDK All Begin');
@@ -355,16 +355,16 @@ describe('express-web 初始化SDK', function() {
     });
 
     it('初始化sdk：异常场景8', function() {
-      const zg11 = new ZegoExpressEngine(APPID,null);
-      expect(zg11).is.not.null;
-  });
+        const zg11 = new ZegoExpressEngine(APPID, null);
+        expect(zg11).is.not.null;
+    });
 
-  it('初始化sdk：异常场景9', function() {
-      const zg12 = new ZegoExpressEngine(null,'test');
-      expect(zg12).is.not.null;
-  });
+    it('初始化sdk：异常场景9', function() {
+        const zg12 = new ZegoExpressEngine(null, 'test');
+        expect(zg12).is.not.null;
+    });
 });
-*/ describe('express-web checkSystemRequirements', function() {
+describe('express-web checkSystemRequirements', function() {
     before(function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;

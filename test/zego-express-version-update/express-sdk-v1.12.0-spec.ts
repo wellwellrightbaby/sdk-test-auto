@@ -2,7 +2,7 @@ import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import Axios from 'axios';
 import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 import { before } from 'mocha';
-import { deviceId } from './../zego-express-engine-webrtc/config';
+//import { deviceId } from './../zego-express-engine-webrtc/config';
 const expect = chai.expect;
 
 const TIMEOUT = 10000;

@@ -3,8 +3,10 @@
 
 const files = require.context('./', true, /zego-express-?/);
 
-const keys = files.keys();
-console.log('keys:', keys);
+let keys = files.keys();
+
+keys = keys.filter(k => k.includes('init-spec.ts'));
+console.warn('keys:', keys);
 
 keys.forEach(key => {
     files(key);
