@@ -12,12 +12,11 @@ const APPID = 1739272706;
 let token = '';
 let zg: ZegoExpressEngine;
 let publishStream: MediaStream;
-let roomID : any;
+let roomID: any;
 let firstCamera;
 let firstMicrophones: any;
 let video: any;
-let mydate = new Date();
-
+const mydate = new Date();
 
 describe('1.12.0 createStream', function() {
     before(async function() {
@@ -41,7 +40,7 @@ describe('1.12.0 createStream', function() {
     afterEach(function() {
         document.body.appendChild(video);
     });
-    
+
     // it('1.12.0 创建流，宽为带小数点时', function(done) {
     //     console.log('1.12.0 创建流，宽为带小数点时');
     //     this.timeout(TIMEOUT);
@@ -71,7 +70,7 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // });   
+    // });
 
     // it('1.12.0 创建流，高为带小数点时', function(done) {
     //     console.log('1.12.0 创建流，高为带小数点时');
@@ -102,7 +101,7 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // }); 
+    // });
 
     // it('1.12.0 创建流，宽和高为带小数点时', function(done) {
     //     console.log('1.12.0 创建流，宽和高为带小数点时');
@@ -133,7 +132,7 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // }); 
+    // });
 
     // it('1.12.0 创建流，帧率和码率为带小数点时', function(done) {
     //     console.log('1.12.0 创建流，帧率和码率为带小数点时');
@@ -164,7 +163,7 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // }); 
+    // });
 
     // it('1.12.0 创建流，码率为带小数点时', function(done) {
     //     console.log('1.12.0 创建流，码率为带小数点时');
@@ -195,7 +194,7 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // }); 
+    // });
 
     // it('1.12.0 创建流，宽、高、帧率和码率为带小数点时', function(done) {
     //     console.log('1.12.0 创建流，宽、高、帧率和码率为带小数点时');
@@ -226,7 +225,7 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // }); 
+    // });
 
     // it('1.12.0 创建流，宽、高、帧率和码率为整数时', function(done) {
     //     console.log('1.12.0 创建流，宽、高、帧率和码率为整数时');
@@ -257,14 +256,14 @@ describe('1.12.0 createStream', function() {
     //         }
     //     };
     //     setTimeout(test, DELAY);
-    // }); 
+    // });
 
     it('1.12.0 登录并创建流，宽和高为带小数点时', async function(done) {
         console.log('1.12.0 登录并创建流，宽和高为带小数点时');
         this.timeout(TIMEOUT);
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-                  params: { app_id: APPID, id_name: userID+'1' },
-            });
+            params: { app_id: APPID, id_name: userID + '1' },
+        });
         token = data;
 
         // Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
@@ -273,26 +272,21 @@ describe('1.12.0 createStream', function() {
         //         console.log(AxiosRespon)
         //         token1 = AxiosRespon.data;
         // });
-        
+
         roomID = 'v1.12.0_roomID1';
-        zg.loginRoom(
-            roomID,
-            token,
-            {
-                  userID: userID+'1',
-                  userName: 'v1.12.0_userName1',
-            },
-        );
+        zg.loginRoom(roomID, token, {
+            userID: userID + '1',
+            userName: 'v1.12.0_userName1',
+        });
 
         const test = () => {
-            
             try {
                 // @ts-ignore
                 zg.createStream({
                     camera: {
                         videoQuality: 4,
                         width: 640.05,
-                        height: 300.50,
+                        height: 300.5,
                         frameRate: 15,
                         bitrate: 1500,
                     },
@@ -310,14 +304,14 @@ describe('1.12.0 createStream', function() {
             }
         };
         setTimeout(test, DELAY);
-    }); 
+    });
 
     it('1.12.0 登录并创建流，宽、高、帧率、码率为整数时', async function(done) {
         console.log('1.12.0 登录并创建流，宽、高、帧率、码率为整数时');
         this.timeout(TIMEOUT);
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-                  params: { app_id: APPID, id_name: userID+'2' },
-            });
+            params: { app_id: APPID, id_name: userID + '2' },
+        });
         token = data;
         // Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
         //           params: { app_id: APPID, id_name: userID+'1' },
@@ -326,14 +320,10 @@ describe('1.12.0 createStream', function() {
         // });
 
         roomID = 'v1.12.0_roomID2';
-        zg.loginRoom(
-            roomID,
-            token,
-            {
-                  userID: userID+'2',
-                  userName: 'v1.12.0_userName2',
-            },
-        );
+        zg.loginRoom(roomID, token, {
+            userID: userID + '2',
+            userName: 'v1.12.0_userName2',
+        });
 
         const test = () => {
             try {
@@ -360,7 +350,7 @@ describe('1.12.0 createStream', function() {
             }
         };
         setTimeout(test, DELAY);
-    }); 
+    });
 });
 
 describe('v1.12.0 logout', function() {
@@ -444,7 +434,7 @@ describe('v1.12.0 logout', function() {
         const abc = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: 'test2' },
         });
-        token = abc.data
+        token = abc.data;
         const result2 = await zg3.loginRoom(roomID, token, {
             userID: 'test2',
             userName: 'uName_test2',
@@ -470,7 +460,7 @@ describe('v1.12.0 logout', function() {
         const abc = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: 'test22' },
         });
-        token = abc.data
+        token = abc.data;
         const result2 = await zg4.loginRoom(roomID, token, {
             userID: 'test22',
             userName: 'uName_test22',
@@ -480,13 +470,11 @@ describe('v1.12.0 logout', function() {
         const result1 = await zg4.logoutRoom();
         expect(result1).to.be.undefined;
     });
-
 });
-
 
 describe('混流功能', function() {
     before(async () => {
-        console.warn('开始测试停止混流里logout问题')
+        console.warn('开始测试停止混流里logout问题');
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;
         const result1 = zg.setLogConfig({
@@ -664,7 +652,7 @@ describe('混流功能', function() {
                         ];
                         const outputList = [
                             {
-                                target: '13579246810'+new Date().getTime(),
+                                target: '13579246810' + new Date().getTime(),
                             },
                         ];
                         const outputConfig = {
@@ -680,22 +668,22 @@ describe('混流功能', function() {
                             outputList,
                             outputConfig,
                             inputList,
-                        }).then(res=>{
-                            console.warn('混流成功')
+                        }).then(res => {
+                            console.warn('混流成功');
                             expect(res).to.have.keys(['errorCode', 'extendedData']);
                         });
 
-                        zg.stopMixerTask(taskID).then(
-                            res=>{
-                                console.warn('停止混流成功')
-                                zg.logoutRoom('mixer1.12.0')
-                                console.warn('完成测试停止混流里logout问题')
+                        zg.stopMixerTask(taskID)
+                            .then(res => {
+                                console.warn('停止混流成功');
+                                zg.logoutRoom('mixer1.12.0');
+                                console.warn('完成测试停止混流里logout问题');
                                 expect(res).to.have.keys(['errorCode']);
-                            },
-                        ).catch(err => {
-                            zg.logoutRoom('mixer1.12.0')
-                            console.error('停止混流失败:'+err)
-                        });;
+                            })
+                            .catch(err => {
+                                zg.logoutRoom('mixer1.12.0');
+                                console.error('停止混流失败:' + err);
+                            });
                         done();
                     } catch (e) {
                         done(e);
@@ -705,7 +693,7 @@ describe('混流功能', function() {
                 done(e);
             }
         };
-        
+
         setTimeout(test, DELAY);
     });
 });

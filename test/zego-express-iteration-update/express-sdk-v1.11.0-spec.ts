@@ -34,7 +34,7 @@ describe('on roomOnlineUserCountUpdate', function() {
         });
         expect(result).to.be.true;
         const result1 = zg.on('roomOnlineUserCountUpdate', (roomID, userCount) => {
-            mydate = new Date()
+            mydate = new Date();
             console.warn('roomOnlineUserCountUpdate: ', roomID, userCount, mydate.toLocaleTimeString());
         });
         expect(result1).to.be.true;
@@ -56,7 +56,7 @@ describe('on roomOnlineUserCountUpdate', function() {
             const zg1 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
             const result = await zg1.loginRoom(roomID, data, {
                 userID: 'ROUC100' + i,
-                userName: 'uName_ROUC100'+i,
+                userName: 'uName_ROUC100' + i,
             });
             expect(result).to.be.true;
         }
@@ -96,5 +96,5 @@ describe('on roomOnlineUserCountUpdate', function() {
 // });
 
 // describe('hello',function(){
-    
+
 // })

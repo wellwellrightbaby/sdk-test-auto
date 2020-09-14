@@ -12,133 +12,7 @@ const APPID = 1739272706;
 let token = '';
 let zg: ZegoExpressEngine;
 let publishStream: MediaStream;
-let roomID: string;
-
-// describe('express-web', function() {
-//       before(async function() {
-//             const { data } = (await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-//                   params: { app_id: APPID, id_name: userID },
-//             })) as any;
-//             token = data;
-//             expect(token).to.be.a('string');
-//       });
-
-//       it('初始化sdk', async function() {
-//             zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
-//             expect(zg).is.not.null;
-//             const result = zg.setLogConfig({
-//                   logLevel: 'disable',
-//                   remoteLogLevel: 'disable',
-//             });
-//             expect(result).to.be.true;
-//       });
-
-//       it('登录房间', async function() {
-//             const result = await zg.loginRoom('choui', token, {
-//                   userID: userID,
-//                   userName: 'name' + userID,
-//             });
-//             expect(result).to.equal(true);
-//       });
-
-//       it('创建流', async function() {
-//             try {
-//                   publishStream = await zg.createStream();
-//                   expect(publishStream).is.not.null;
-//             } catch (error) {
-//                   expect(error).is.not.null;
-//             }
-//       });
-// });
-/*
-describe('express-web 初始化SDK', function() {
-    before(function() {
-        console.log('初始化SDK All Begin');
-    });
-
-    after(function() {
-        console.log('初始化SDK All End');
-    });
-
-    beforeEach(function() {
-        console.log('初始化SDK TestCase Begin');
-    });
-
-    afterEach(function() {
-        console.log('初始化SDK TestCase End');
-    });
-
-    it('初始化sdk：正常场景1', function() {
-        const zg1 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
-        expect(zg1).is.not.null;
-    });
-
-    it('初始化sdk：正常场景2', function() {
-        const zg2 = new ZegoExpressEngine(APPID, [
-            'wss://webliveroom-test.zego.im/ws',
-            'wss://webliveroom-test.zego.im/ws',
-        ]);
-        expect(zg2).is.not.null;
-    });
-
-    it('初始化sdk：正常场景3', function() {
-        const zg3 = new ZegoExpressEngine(APPID, [
-            'wss://webliveroom-test.zego.im/ws',
-            'wss://webliveroom-test.zego.im/ws',
-            'wss://webliveroom-test.zego.im/ws',
-        ]);
-        expect(zg3).is.not.null;
-    });
-
-    it('初始化sdk：异常场景1', function() {
-        const zg4 = new ZegoExpressEngine(APPID, '');
-        expect(zg4).is.not.null;
-    });
-
-    it('初始化sdk：异常场景2', function() {
-        const zg5 = new ZegoExpressEngine(APPID, ['', '']);
-        expect(zg5).is.not.null;
-    });
-
-    it('初始化sdk：异常场景3', function() {
-        const zg6 = new ZegoExpressEngine(APPID, ['', '', '']);
-        expect(zg6).is.not.null;
-    });
-
-    it('初始化sdk：异常场景4', function() {
-        const zg7 = new ZegoExpressEngine(0, 'wss://webliveroom-test.zego.im/ws');
-        expect(zg7).is.not.null;
-    });
-
-    it('初始化sdk：异常场景5', function() {
-        const zg8 = new ZegoExpressEngine(0, [
-            'wss://webliveroom-test.zego.im/ws',
-            'wss://webliveroom-test.zego.im/ws',
-        ]);
-        expect(zg8).is.not.null;
-    });
-
-    it('初始化sdk：异常场景6', function() {
-        const zg9 = new ZegoExpressEngine(123456, 'wss://webliveroom-test.zego.im/ws');
-        expect(zg9).is.not.null;
-    });
-
-    it('初始化sdk：异常场景7', function() {
-        const zg10 = new ZegoExpressEngine(APPID, 'test');
-        expect(zg10).is.not.null;
-    });
-
-    it('初始化sdk：异常场景8', function() {
-      const zg11 = new ZegoExpressEngine(APPID,null);
-      expect(zg11).is.not.null;
-  });
-
-  it('初始化sdk：异常场景9', function() {
-      const zg12 = new ZegoExpressEngine(null,'test');
-      expect(zg12).is.not.null;
-  });
-});
-*//*
+let roomID: string; /*
 describe('express-web setLogConfig', function() {
     before(function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -364,10 +238,133 @@ describe('express-web setDebugVerbose', function() {
       expect(result).to.be.true;
   });
 });
-*/
-//"系统弹出的获取摄像头麦克风权限有没有办法实现自动"
-//使用checkSystemRequirements会向浏览器请求权限
-describe('express-web checkSystemRequirements', function() {
+*/ //"系统弹出的获取摄像头麦克风权限有没有办法实现自动" //使用checkSystemRequirements会向浏览器请求权限
+
+// describe('express-web', function() {
+//       before(async function() {
+//             const { data } = (await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+//                   params: { app_id: APPID, id_name: userID },
+//             })) as any;
+//             token = data;
+//             expect(token).to.be.a('string');
+//       });
+
+//       it('初始化sdk', async function() {
+//             zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
+//             expect(zg).is.not.null;
+//             const result = zg.setLogConfig({
+//                   logLevel: 'disable',
+//                   remoteLogLevel: 'disable',
+//             });
+//             expect(result).to.be.true;
+//       });
+
+//       it('登录房间', async function() {
+//             const result = await zg.loginRoom('choui', token, {
+//                   userID: userID,
+//                   userName: 'name' + userID,
+//             });
+//             expect(result).to.equal(true);
+//       });
+
+//       it('创建流', async function() {
+//             try {
+//                   publishStream = await zg.createStream();
+//                   expect(publishStream).is.not.null;
+//             } catch (error) {
+//                   expect(error).is.not.null;
+//             }
+//       });
+// });
+/*
+describe('express-web 初始化SDK', function() {
+    before(function() {
+        console.log('初始化SDK All Begin');
+    });
+
+    after(function() {
+        console.log('初始化SDK All End');
+    });
+
+    beforeEach(function() {
+        console.log('初始化SDK TestCase Begin');
+    });
+
+    afterEach(function() {
+        console.log('初始化SDK TestCase End');
+    });
+
+    it('初始化sdk：正常场景1', function() {
+        const zg1 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
+        expect(zg1).is.not.null;
+    });
+
+    it('初始化sdk：正常场景2', function() {
+        const zg2 = new ZegoExpressEngine(APPID, [
+            'wss://webliveroom-test.zego.im/ws',
+            'wss://webliveroom-test.zego.im/ws',
+        ]);
+        expect(zg2).is.not.null;
+    });
+
+    it('初始化sdk：正常场景3', function() {
+        const zg3 = new ZegoExpressEngine(APPID, [
+            'wss://webliveroom-test.zego.im/ws',
+            'wss://webliveroom-test.zego.im/ws',
+            'wss://webliveroom-test.zego.im/ws',
+        ]);
+        expect(zg3).is.not.null;
+    });
+
+    it('初始化sdk：异常场景1', function() {
+        const zg4 = new ZegoExpressEngine(APPID, '');
+        expect(zg4).is.not.null;
+    });
+
+    it('初始化sdk：异常场景2', function() {
+        const zg5 = new ZegoExpressEngine(APPID, ['', '']);
+        expect(zg5).is.not.null;
+    });
+
+    it('初始化sdk：异常场景3', function() {
+        const zg6 = new ZegoExpressEngine(APPID, ['', '', '']);
+        expect(zg6).is.not.null;
+    });
+
+    it('初始化sdk：异常场景4', function() {
+        const zg7 = new ZegoExpressEngine(0, 'wss://webliveroom-test.zego.im/ws');
+        expect(zg7).is.not.null;
+    });
+
+    it('初始化sdk：异常场景5', function() {
+        const zg8 = new ZegoExpressEngine(0, [
+            'wss://webliveroom-test.zego.im/ws',
+            'wss://webliveroom-test.zego.im/ws',
+        ]);
+        expect(zg8).is.not.null;
+    });
+
+    it('初始化sdk：异常场景6', function() {
+        const zg9 = new ZegoExpressEngine(123456, 'wss://webliveroom-test.zego.im/ws');
+        expect(zg9).is.not.null;
+    });
+
+    it('初始化sdk：异常场景7', function() {
+        const zg10 = new ZegoExpressEngine(APPID, 'test');
+        expect(zg10).is.not.null;
+    });
+
+    it('初始化sdk：异常场景8', function() {
+      const zg11 = new ZegoExpressEngine(APPID,null);
+      expect(zg11).is.not.null;
+  });
+
+  it('初始化sdk：异常场景9', function() {
+      const zg12 = new ZegoExpressEngine(null,'test');
+      expect(zg12).is.not.null;
+  });
+});
+*/ describe('express-web checkSystemRequirements', function() {
     before(function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;
@@ -1472,7 +1469,7 @@ describe('express-web logoutRoom', function() {
 
 describe('on RoomStateUpdate', function() {
     before(async function() {
-      console.warn('test RoomStateUpdate')
+        console.warn('test RoomStateUpdate');
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: userID },
         });
@@ -1491,7 +1488,7 @@ describe('on RoomStateUpdate', function() {
         });
         expect(result1).to.be.true;
 
-        console.warn('test RoomStateUpdate' )
+        console.warn('test RoomStateUpdate');
     });
 
     it('connect', async function() {
