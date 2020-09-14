@@ -1,6 +1,6 @@
 import { ZegoDataReport } from '../common/zego.datareport';
 import { ZegoPreview } from './zego.preview';
-import { MediaStreamConstraints, webPlayOption, SignalInfo, ScreenConfig, ERRO, webPublishOption, ChargeInfos, Constraints, AudioMixConfig } from '../common/zego.entity';
+import { MediaStreamConstraints, webPlayOption, SignalInfo, ScreenConfig, ERRO, webPublishOption, ChargeInfos, Constraints, AudioMixConfig, PublishStreamConstraints } from '../common/zego.entity';
 import { ZegoStreamCenter } from '../common/ZegoStreamCenter';
 import { LoggerWeb } from './zego.logger.webrtc';
 import { StateCenter } from '../common/clientBase/stateCenter';
@@ -27,10 +27,17 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
     chargeInfosInterval: number;
     chargeInfoSeq: number;
     ac: ZegoAudioContext;
+    mediaEleSources: Array<{
+        audio: HTMLMediaElement;
+        node: MediaElementAudioSourceNode;
+    }>;
     soundLevelDelegate: boolean;
     soundLevelInterval: number;
     soundLevelTimer: any;
-    constructor(log: LoggerWeb, stateCenter: StateCenter, dataReport: ZegoDataReport, ac: ZegoAudioContext);
+    constructor(log: LoggerWeb, stateCenter: StateCenter, dataReport: ZegoDataReport, ac: ZegoAudioContext, mediaEleSources: Array<{
+        audio: HTMLMediaElement;
+        node: MediaElementAudioSourceNode;
+    }>);
     onSignalDisconnected(server: any): void;
     setQualityMonitorCycle(timeInMs: number): boolean;
     setSessionInfo(appid: number, userid: string, token: string, testEnvironment: boolean): void;
@@ -94,7 +101,8 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
         frameRate?: number;
     } | MediaStreamConstraints | boolean): ScreenConfig;
     createScreenPreviewer(stream: MediaStream, screenConfig?: ScreenConfig): any;
-    setPublishStreamConstraints(stream: MediaStream, constraints: MediaStreamConstraints, success?: Function, error?: Function): void;
+    switchDevice(type: 'audio' | 'video', localStream: MediaStream, deviceId: string, success: Function, error: Function): void;
+    setPublishStreamConstraints(stream: MediaStream, constraints: PublishStreamConstraints, success?: Function, error?: Function): void;
     preloadEffect(ac: ZegoAudioContext, id: string, effectUrl: string, callBack?: Function): void;
     playEffect(AudioMixConfig: AudioMixConfig, start?: Function, end?: Function): void;
     pauseEffect(streamID: string, effectID?: string): boolean;

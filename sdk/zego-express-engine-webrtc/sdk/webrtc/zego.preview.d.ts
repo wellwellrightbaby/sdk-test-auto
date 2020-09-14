@@ -1,4 +1,4 @@
-import { MediaStreamConstraints, ERRO } from '../common/zego.entity';
+import { ERRO } from '../common/zego.entity';
 import { Logger } from '../common/zego.logger';
 import { ZegoStreamCenter } from '../common/ZegoStreamCenter';
 export declare class ZegoPreview {
@@ -9,7 +9,7 @@ export declare class ZegoPreview {
     mediaStreamConfig: any;
     previewSuc: boolean;
     constructor(log: Logger);
-    getMediaStreamConstraints(mediaStreamConfig: any): MediaStreamConstraints;
+    getMediaStreamConstraints(mediaStreamConfig: any, force?: boolean): any;
     startPreview(mediaStreamConfig: any, successCallback: Function, errorCallback: (err: ERRO) => void): void;
     captureStream(localVideo: any): MediaStream | null;
     stopPreview(): void;

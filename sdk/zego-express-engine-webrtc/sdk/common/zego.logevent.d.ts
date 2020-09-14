@@ -44,8 +44,12 @@ export declare const eventList: {
     kZegoTaskCreateStream: string;
     kZegoTaskDestroyStream: string;
     kZegoTaskScreenSharingEnded: string;
+    kZegoTaskVideoDeviceChanged: string;
+    kZegoTaskAudioDeviceChanged: string;
+    kZegoTaskDeviceError: string;
     kZegoEventPublishStat: string;
     kZegoEventPlayStat: string;
+    kZegoSetPublishConstraints: string;
 };
 export declare const errorList: {
     kOK: number;
@@ -527,6 +531,18 @@ export declare const errorList: {
         message: string;
     };
     kDeviceChangeError: {
+        code: number;
+        message: string;
+    };
+    kNoVideo: {
+        code: number;
+        message: string;
+    };
+    kNoAudio: {
+        code: number;
+        message: string;
+    };
+    kTrackNotFound: {
         code: number;
         message: string;
     };

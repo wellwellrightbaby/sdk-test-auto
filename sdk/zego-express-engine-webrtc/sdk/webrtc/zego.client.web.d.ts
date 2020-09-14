@@ -1,10 +1,14 @@
-import { webPlayOption, AudioMixConfig, Constraints, ERRO, CapabilityDetection, WebListener, webPublishOption } from '../common/zego.entity';
+import { webPlayOption, AudioMixConfig, Constraints, ERRO, CapabilityDetection, WebListener, webPublishOption, PublishStreamConstraints } from '../common/zego.entity';
 import { ZegoStreamCenterWeb } from './zego.streamCenter.web';
 import { BaseCenter } from '../common/clientBase/index';
 import { ZegoMediaElement, MediaRecorder, ZegoAudioContext } from '../../types/index';
 export declare class ZegoExpressEngine extends BaseCenter {
     streamCenter: ZegoStreamCenterWeb;
     ac: ZegoAudioContext;
+    mediaEleSources: Array<{
+        audio: HTMLMediaElement;
+        node: MediaElementAudioSourceNode;
+    }>;
     constructor(appID: number, server: string | Array<string>);
     static screenShotReady: boolean;
     static mediaRecorder: MediaRecorder;
@@ -21,10 +25,14 @@ export declare class ZegoExpressEngine extends BaseCenter {
     startPlayingStream(streamID: string, playOption?: webPlayOption): Promise<MediaStream>;
     stopPlayingStream(streamID: string): void;
     createStream(option?: Constraints): Promise<MediaStream>;
+    private checkCameraParams;
     destroyStream(localStream: MediaStream): void;
     startPublishingStream(streamID: string, localStream: MediaStream, publishOption?: webPublishOption): boolean;
     stopPublishingStream(streamID: string): boolean;
-    setPublishStreamConstraints(localStream: MediaStream, constraints: any): Promise<void>;
+    setPublishStreamConstraints(localStream: MediaStream, constraints: PublishStreamConstraints): Promise<{
+        errorCode: number;
+        extendedData: string;
+    }>;
     replaceTrack(localStream: MediaStream, mediaStreamTrack: MediaStreamTrack): Promise<{
         errorCode: number;
         extendedData: string;
@@ -95,8 +103,14 @@ export declare class ZegoExpressEngine extends BaseCenter {
     saveRecord(name: string): void;
     takeSnapShot(el: HTMLVideoElement, img: HTMLImageElement): void;
     saveSnapShot(el: HTMLVideoElement, name: string): void;
-    useVideoDevice(localStream: MediaStream, deviceID: string): Promise<void>;
-    useAudioDevice(localStream: MediaStream, deviceID: string): Promise<void>;
+    useVideoDevice(localStream: MediaStream, deviceID: string): Promise<{
+        errorCode: number;
+        extendData: string;
+    }>;
+    useAudioDevice(localStream: MediaStream, deviceID: string): Promise<{
+        errorCode: number;
+        extendData: string;
+    }>;
     setSoundLevelDelegate(bool: boolean, timeInMs?: number): void;
     private bindWindowListener;
 }

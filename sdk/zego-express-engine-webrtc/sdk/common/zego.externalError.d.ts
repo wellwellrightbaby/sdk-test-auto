@@ -237,6 +237,10 @@ export declare const errorCodeList: {
         code: number;
         msg: string;
     };
+    DEVICE_NOT_FOUND: {
+        code: number;
+        msg: string;
+    };
     PLAYER_PARAM: {
         code: number;
         msg: string;

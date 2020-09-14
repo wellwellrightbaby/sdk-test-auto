@@ -15,6 +15,7 @@ export declare abstract class ZegoStreamCenter {
         [index: string]: Function;
     };
     constructor(log: Logger, stateCenter: StateCenter);
+    abstract stopPublishingStream(streamId: string): void;
     abstract stopPlayingStream(streamId: string): void;
     abstract reset(): void;
     abstract startPlayingStream(streamid: string, serverUrls: string[], third?: any): boolean;

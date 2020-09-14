@@ -1,4 +1,5 @@
 import { ENUM_RUN_STATE, LinkedList, MixStreamAdvance } from '../zego.entity';
+import { LoggerWeb } from '../../webrtc/zego.logger.webrtc';
 export declare class StateCenter {
     debug: boolean;
     debugCustom: boolean;
@@ -133,6 +134,7 @@ export declare class StateCenter {
     deviceInfos: any;
     deviceChangeTimer: any;
     deviceStateOut: boolean;
+    logger: LoggerWeb;
     constructor();
     isLogin(): boolean;
     getRequestId(): string;

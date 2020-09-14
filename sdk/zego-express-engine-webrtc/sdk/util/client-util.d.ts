@@ -54,6 +54,7 @@ export declare class ClientUtil {
         dest_id_name: string[];
         custom_msg: string;
     }): boolean;
+    static checkValidNumber(param: number, min?: number, max?: number): boolean;
     static generateRandumNumber(maxNum: number): number;
     static uuid(len?: number, radix?: number): string;
     static supportDetection(screenShotReady: boolean, success: Function): Promise<void>;

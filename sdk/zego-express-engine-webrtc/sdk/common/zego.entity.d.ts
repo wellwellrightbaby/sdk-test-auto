@@ -376,6 +376,7 @@ export interface PublisherInfo {
     tryCountConnect: number;
     countConnectTimer: any;
     cameraLabel?: string;
+    microLabel: string;
     cameraDeviceId?: string;
     microDeviceId?: string;
     deviceStateCount: number;
@@ -439,7 +440,18 @@ export interface Constraints {
         source: HTMLMediaElement | MediaStream;
         bitRate?: number;
         bitrate?: number;
+        channelCount?: number;
     } | MediaStreamConstraints;
+}
+export interface PublishStreamConstraints {
+    width?: number;
+    height?: number;
+    frameRate?: number;
+    minBitrate?: number;
+    maxBitrate?: number;
+    ANS?: boolean;
+    AGC?: boolean;
+    AEC?: boolean;
 }
 export interface ScreenConfig {
     audio?: boolean;
@@ -583,7 +595,6 @@ export interface MixStreamAdvance {
         key: string;
         value: string;
     }>;
-    pureAudio?: boolean;
 }
 export declare const ENUM_PUBLISH_STATE_NEGO: {
     stop: number;
@@ -643,7 +654,7 @@ export interface WebPlayStats {
 }
 export interface WebListener {
     roomUserUpdate: (roomID: string, updateType: 'DELETE' | 'ADD', userList: User[]) => void;
-    updateOnlineCount: (roomID: string, userCount: number) => void;
+    roomOnlineUserCountUpdate: (roomID: string, userCount: number) => void;
     IMRecvCustomCommand: (roomID: string, fromUser: User, command: string) => void;
     IMRecvBroadcastMessage: (roomID: string, chatData: Array<{
         fromUser: User;
@@ -687,13 +698,13 @@ export interface WebListener {
         type: string;
     }>) => void;
     roomExtraInfoUpdate: (roomID: string, type: string, data: string) => void;
-    videoDeviceStateChanged: (deviceInfo: DeviceInfo, updateType: 'DELETE' | 'ADD') => void;
-    audioDeviceStateChanged: (deviceInfo: DeviceInfo, updateType: 'DELETE' | 'ADD', deviceType: 'Input' | 'Output') => void;
+    videoDeviceStateChanged: (updateType: 'DELETE' | 'ADD', deviceInfo: Device) => void;
+    audioDeviceStateChanged: (updateType: 'DELETE' | 'ADD', deviceType: 'Input' | 'Output', deviceInfo: Device) => void;
     deviceError: (errorCode: number, deviceName: string) => void;
 }
 export interface WxListener {
     roomUserUpdate: (roomID: string, updateType: 'DELETE' | 'ADD', userList: User[]) => void;
-    updateOnlineCount: (roomID: string, userCount: number) => void;
+    roomOnlineUserCountUpdate: (roomID: string, userCount: number) => void;
     IMRecvCustomCommand: (roomID: string, fromUser: User, command: string) => void;
     IMRecvBroadcastMessage: (roomID: string, chatData: Array<{
         fromUser: User;

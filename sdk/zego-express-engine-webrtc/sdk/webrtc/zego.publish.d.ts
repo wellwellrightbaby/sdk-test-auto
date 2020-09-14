@@ -35,12 +35,17 @@ export declare class ZegoPublish {
     retryState: number;
     waitingServerTimerInterval: number;
     waitingServerTimer: number | null;
+    firstGetStatsTimer: any;
     videoInfo: VideoInfo;
     mediaStreamConfig: null;
     offerSeq: number;
     streamId: string;
     localStream: MediaStream;
     ac: ZegoAudioContext;
+    mediaEleSources: Array<{
+        audio: HTMLMediaElement;
+        node: MediaElementAudioSourceNode;
+    }>;
     audioMixList: Array<{
         audioMix: AudioMixUtil;
         media: HTMLMediaElement;
@@ -79,7 +84,10 @@ export declare class ZegoPublish {
     mic: any;
     cameraState: string;
     microState: string;
-    constructor(log: LoggerWeb, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext);
+    constructor(log: LoggerWeb, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext, mediaEleSources: Array<{
+        audio: HTMLMediaElement;
+        node: MediaElementAudioSourceNode;
+    }>);
     private publishStateUpdateError;
     private resetPublish;
     private clearTryPublishTimer;

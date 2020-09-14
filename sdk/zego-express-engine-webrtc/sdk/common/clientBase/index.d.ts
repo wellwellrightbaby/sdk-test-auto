@@ -24,7 +24,7 @@ export declare abstract class BaseCenter extends Common {
     setDebugVerbose(enable: boolean): void;
     loginRoom(roomID: string, token: string, user: User, config?: RoomConfig): Promise<boolean>;
     private loginReport;
-    logoutRoom(roomID: string): void;
+    logoutRoom(roomID?: string): void;
     sendCustomCommand(roomID: string, command: string | Record<string, any>, toUserList: string[]): Promise<{
         errorCode: number;
         messageID: number;
