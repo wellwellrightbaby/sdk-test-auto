@@ -5,7 +5,7 @@ const files = require.context('./', true, /zego-express-?/);
 
 let keys = files.keys();
 
-keys = keys.filter(k => k.includes('init-spec.ts'));
+keys = keys.filter(k => k.includes('roomuser-spec.ts'));
 console.warn('keys:', keys);
 
 keys.forEach(key => {
