@@ -3,12 +3,17 @@ import Axios from 'axios';
 import { before } from 'mocha';
 import { P0, P1, P2 } from './config';
 import {
-    tokenError,
+    tokenFormatError,
     inputParmError,
     roomIDIllegalCharError,
     liveroomCmdError,
     roomIDTooLongError,
     roomIDEmptyError,
+    userIDTooLongError,
+    userIDIllegalCharError,
+    tokenError,
+    userIDEmptyError,
+    userNameEmptyError,
 } from './config';
 import { assert, config, should } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
@@ -47,7 +52,7 @@ describe('express-web loginRoom', function() {
         console.warn('loginRoom TestCase End ' + num);
     });
 
-    if (P0) {
+    /*if (P0) {
         it('loginRoom 不填config参数', async function() {
             roomID = 'roomID';
             const result = await zg.loginRoom(roomID, token, {
@@ -383,7 +388,7 @@ describe('express-web loginRoom', function() {
             };
             setTimeout(test, DELAY);
         });
-    }
+    }*/
     /*
     if (P0) {
         it('loginRoom token1', async function() {
@@ -411,10 +416,7 @@ describe('express-web loginRoom', function() {
                             done();
                         },
                         e => {
-                            //expect(e).not.to.be.true;
-                            //expect(e).not.to.be.satisfies;
-                            expect(e['code']).to.equals(1102016);
-                            expect(e['msg']).to.equals('token format error');
+                            expect(e).to.deep.equal(tokenFormatError);
                             done();
                         },
                     );
@@ -439,8 +441,7 @@ describe('express-web loginRoom', function() {
                             done();
                         },
                         e => {
-                            expect(e['code']).to.equals(1100001);
-                            expect(e['msg']).to.equals('input parm error.');
+                            expect(e).to.deep.equal(inputParmError);
                             done();
                         },
                     );
@@ -465,8 +466,7 @@ describe('express-web loginRoom', function() {
                             done();
                         },
                         e => {
-                            expect(e['code']).to.equals(1102016);
-                            expect(e['msg']).to.equals('token format error');
+                            expect(e).to.deep.equal(tokenFormatError);
                             done();
                         },
                     );
@@ -478,187 +478,359 @@ describe('express-web loginRoom', function() {
         });
     }*/
     /*
-    it('loginRoom userID1', async function() {
-        roomID = 'loginRoom_1234567890';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: userID },
+    if (P0) {
+        it('loginRoom userID1', async function() {
+            roomID = 'loginRoom_1234567890';
+            const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: userID },
+            });
+            const result = await zg.loginRoom(roomID, data, {
+                userID: userID,
+                userName: 'userName',
+            });
+            expect(result).to.be.true;
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: userID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID2', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '0';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID2', async function() {
+            roomID = 'loginRoom_1234567890';
+            const uID = '0';
+            const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            });
+            const result = await zg.loginRoom(roomID, data, {
+                userID: uID,
+                userName: 'userName',
+            });
+            expect(result).to.be.true;
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
+    }
 
-    it('loginRoom userID3', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '123456789012345678901234567890123456789012345678901234567890123';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+    if (P2) {
+        it('loginRoom userID3', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '123456789012345678901234567890123456789012345678901234567890123';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.be.null;
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID4', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '1234567890123456789012345678901234567890123456789012345678901234';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID4', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '1234567890123456789012345678901234567890123456789012345678901234';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(liveroomCmdError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID5', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '12345678901234567890123456789012345678901234567890123456789012345';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID5', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '12345678901234567890123456789012345678901234567890123456789012345';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDTooLongError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID6', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID6', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(liveroomCmdError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID7', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '""';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID7', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '""';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDIllegalCharError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID8', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = 'test';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID8', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = 'test';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: 'test123',
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(tokenError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: 'test123',
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID9', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = 'test';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID9', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = 'test';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: '',
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDEmptyError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: '',
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID10', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = ' ';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID10', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = ' ';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDIllegalCharError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID11', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '~!@#$%^&*()_+`1234567890-=[]\'{}|;:",./<>?/';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID11', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '~!@#$%^&*()_+`1234567890-=[]\'{}|;:",./<>?/';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDIllegalCharError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID12', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = ':';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID12', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = ':';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDIllegalCharError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID13', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '一二三四五六七八九十一二三四五六七八九十一';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID13', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '一二三四五六七八九十一二三四五六七八九十一';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDIllegalCharError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
 
-    it('loginRoom userID14', async function() {
-        roomID = 'loginRoom_1234567890';
-        const uID = '一二三四五六七八九十一二三四五六七八九十一二';
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: uID },
+        it('loginRoom userID14', function(done) {
+            this.timeout(TIMEOUT);
+            roomID = 'loginRoom_1234567890';
+            const uID = '一二三四五六七八九十一二三四五六七八九十一二';
+            Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: uID },
+            }).then(token => {
+                try {
+                    zg.loginRoom(roomID, token.data, {
+                        userID: uID,
+                        userName: 'userName',
+                    }).then(
+                        loginResult => {
+                            expect(loginResult).to.be.true;
+                            done();
+                        },
+                        e => {
+                            expect(e).to.deep.equal(userIDIllegalCharError);
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            });
         });
-        const result = await zg.loginRoom(roomID, data, {
-            userID: uID,
-            userName: 'userName',
-        });
-        expect(result).to.be.true;
-    });
-
+    }*/
+    /*
     it('loginRoom userName1', async function() {
         roomID = 'loginRoom_1234567890';
         const result = await zg.loginRoom(roomID, token, {
@@ -714,14 +886,31 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom userName7', async function() {
+    it('loginRoom userName7', function(done) {
+        this.timeout(TIMEOUT);
         roomID = 'loginRoom_1234567890';
-        const result = await zg.loginRoom(roomID, token, {
-            userID: userID,
-            userName:
-                '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456',
-        });
-        expect(result).to.be.true;
+        const uName =
+            '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456';
+        const test = () => {
+            try {
+                zg.loginRoom(roomID, token, {
+                    userID: userID,
+                    userName: uName,
+                }).then(
+                    loginResult => {
+                        expect(loginResult).to.be.true;
+                        done();
+                    },
+                    e => {
+                        expect(e).to.deep.equal(liveroomCmdError);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
     });
 
     it('loginRoom userName8', async function() {
@@ -734,14 +923,31 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom userName9', async function() {
+    it('loginRoom userName9', function(done) {
+        this.timeout(TIMEOUT);
         roomID = 'loginRoom_1234567890';
-        const result = await zg.loginRoom(roomID, token, {
-            userID: userID,
-            userName:
-                '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六',
-        });
-        expect(result).to.be.true;
+        const uName =
+            '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六';
+        const test = () => {
+            try {
+                zg.loginRoom(roomID, token, {
+                    userID: userID,
+                    userName: uName,
+                }).then(
+                    loginResult => {
+                        expect(loginResult).to.be.true;
+                        done();
+                    },
+                    e => {
+                        expect(e).to.deep.equal(liveroomCmdError);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
     });
 
     it('loginRoom userName10', async function() {
@@ -780,16 +986,35 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom userName14', async function() {
+    it('loginRoom userName14', function(done) {
+        this.timeout(TIMEOUT);
         roomID = 'loginRoom_1234567890';
-        const result = await zg.loginRoom(roomID, token, {
-            userID: userID,
-            userName: '',
-        });
-        expect(result).to.be.true;
-    });
+        const uName = '';
+        const test = () => {
+            try {
+                zg.loginRoom(roomID, token, {
+                    userID: userID,
+                    userName: uName,
+                }).then(
+                    loginResult => {
+                        expect(loginResult).to.be.true;
+                        done();
+                    },
+                    e => {
+                        console.warn('eee' + JSON.stringify(e));
+                        expect(e).to.deep.equal(userNameEmptyError);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });*/
 
     it('loginRoom config1', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -806,6 +1031,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config2', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -822,6 +1048,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config3', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -838,6 +1065,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config4', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -854,6 +1082,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config5', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -870,6 +1099,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config6', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -885,39 +1115,74 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom config7', async function() {
+    it('loginRoom config7', function(done) {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
-        const result = await zg.loginRoom(
-            roomID,
-            token,
-            {
-                userID: userID,
-                userName: 'userName',
-            },
-            {
-                maxMemberCount: Number.MAX_VALUE,
-            },
-        );
-        expect(result).to.be.true;
+        const test = () => {
+            try {
+                zg.loginRoom(
+                    roomID,
+                    token,
+                    {
+                        userID: userID,
+                        userName: 'userName',
+                    },
+                    {
+                        maxMemberCount: Number.MAX_VALUE,
+                    },
+                ).then(
+                    loginResult => {
+                        expect(loginResult).to.be.true;
+                        done();
+                    },
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+        done();
     });
 
-    it('loginRoom config8', async function() {
+    it('loginRoom config8', function(done) {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
-        const result = await zg.loginRoom(
-            roomID,
-            token,
-            {
-                userID: userID,
-                userName: 'userName',
-            },
-            {
-                maxMemberCount: -1,
-            },
-        );
-        expect(result).to.be.true;
+        const test = () => {
+            try {
+                zg.loginRoom(
+                    roomID,
+                    token,
+                    {
+                        userID: userID,
+                        userName: 'userName',
+                    },
+                    {
+                        maxMemberCount: -1,
+                    },
+                ).then(
+                    loginResult => {
+                        expect(loginResult).to.be.true;
+                        done();
+                    },
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+        done();
     });
 
     it('loginRoom config9', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -934,6 +1199,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config10', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -951,6 +1217,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config11', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -968,6 +1235,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config12', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -985,6 +1253,7 @@ describe('express-web loginRoom', function() {
     });
 
     it('loginRoom config13', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -1001,41 +1270,56 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom config14', async function() {
+    it('loginRoom config14', function(done) {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
-        const result = await zg.loginRoom(
-            roomID,
-            token,
-            {
-                userID: userID,
-                userName: 'userName',
-            },
-            {
-                userUpdate: true,
-                maxMemberCount: Number.MAX_VALUE,
-            },
-        );
-        expect(result).to.be.true;
+        // const result = await zg.loginRoom(
+        //     roomID,
+        //     token,
+        //     {
+        //         userID: userID,
+        //         userName: 'userName',
+        //     },
+        //     {
+        //         userUpdate: true,
+        //         maxMemberCount: Number.MAX_VALUE,
+        //     },
+        // );
+        // expect(result).to.be.true;
+        const test = () => {
+            try {
+                zg.loginRoom(
+                    roomID,
+                    token,
+                    {
+                        userID: userID,
+                        userName: 'userName',
+                    },
+                    {
+                        userUpdate: true,
+                        maxMemberCount: Number.MAX_VALUE,
+                    },
+                ).then(
+                    loginResult => {
+                        expect(loginResult).to.be.true;
+                        done();
+                    },
+                    e => {
+                        console.warn('www:' + JSON.stringify(e));
+                        //expect(e).to.deep.equal(liveroomCmdError);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+        done();
     });
 
     it('loginRoom config15', async function() {
-        roomID = 'roomID';
-        const result = await zg.loginRoom(
-            roomID,
-            token,
-            {
-                userID: userID,
-                userName: 'userName',
-            },
-            {
-                userUpdate: undefined,
-                maxMemberCount: Number.MAX_VALUE,
-            },
-        );
-        expect(result).to.be.true;
-    });
-
-    it('loginRoom config16', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -1052,24 +1336,8 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom config17', async function() {
-        roomID = 'roomID';
-        const result = await zg.loginRoom(
-            roomID,
-            token,
-            {
-                userID: userID,
-                userName: 'userName',
-            },
-            {
-                userUpdate: true,
-                maxMemberCount: Number.MAX_VALUE,
-            },
-        );
-        expect(result).to.be.true;
-    });
-
-    it('loginRoom config18', async function() {
+    it('loginRoom config16', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -1086,7 +1354,8 @@ describe('express-web loginRoom', function() {
         expect(result).to.be.true;
     });
 
-    it('loginRoom config19', async function() {
+    it('loginRoom config17', async function() {
+        this.timeout(TIMEOUT);
         roomID = 'roomID';
         const result = await zg.loginRoom(
             roomID,
@@ -1101,7 +1370,7 @@ describe('express-web loginRoom', function() {
             },
         );
         expect(result).to.be.true;
-    });*/
+    });
 });
 /*
 describe('express-web logoutRoom', function() {
