@@ -106,6 +106,7 @@ describe('express-web 初始化SDK', function() {
         });
     }
 });
+
 //#endregion
 
 //#region setLogConfig
@@ -381,8 +382,18 @@ describe('express-web setDebugVerbose', function() {
 //#region checkSystemRequirements
 describe('express-web checkSystemRequirements', function() {
     before(function() {
+        num = 0;
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;
+    });
+
+    beforeEach(function() {
+        num += 1;
+        console.warn('checkSystemRequirements TestCase Begin ' + num);
+    });
+
+    afterEach(function() {
+        console.warn('checkSystemRequirements TestCase End ' + num);
     });
 
     if (P0) {
@@ -402,13 +413,6 @@ describe('express-web checkSystemRequirements', function() {
                             console.log('CapabilityDetection.videoCodec.VP9', CapabilityDetection.videoCodec.VP9);
                             console.log('CapabilityDetection.screenSharing', CapabilityDetection.screenSharing);
 
-                            // expect(CapabilityDetection.webRTC).to.be.true;
-                            // expect(CapabilityDetection.customCapture).to.be.true;
-                            // expect(CapabilityDetection.camera).to.be.true;
-                            // expect(CapabilityDetection.microphone).to.be.true;
-                            // expect(CapabilityDetection.videoCodec.H264).to.be.true;
-                            // expect(CapabilityDetection.videoCodec.VP8).to.be.true;
-                            // expect(CapabilityDetection.screenSharing).to.be.true;
                             expect(CapabilityDetection).to.have.property('webRTC', true);
                             expect(CapabilityDetection).to.have.property('customCapture', true);
                             expect(CapabilityDetection).to.have.property('camera', true);
@@ -437,8 +441,18 @@ describe('express-web checkSystemRequirements', function() {
 //#region enumDevices
 describe('express-web enumDevices', function() {
     before(function() {
+        num = 0;
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;
+    });
+
+    beforeEach(function() {
+        num += 1;
+        console.warn('enumDevices TestCase Begin ' + num);
+    });
+
+    afterEach(function() {
+        console.warn('enumDevices TestCase End ' + num);
     });
 
     if (P0) {
@@ -455,7 +469,6 @@ describe('express-web enumDevices', function() {
                                 }
                                 console.log('microphone: ' + item.deviceName + ',' + item.deviceID);
                             });
-                            //expect(deviceResult).to.be.not.null;
                             expect(deviceResult).to.have.property('microphones');
                             done();
                         },
@@ -481,7 +494,6 @@ describe('express-web enumDevices', function() {
                                 }
                                 console.log('speaker: ' + item.deviceName + ',' + item.deviceID);
                             });
-                            //expect(deviceResult).to.be.not.null;
                             expect(deviceResult).to.have.property('speakers');
                             done();
                         },
@@ -507,7 +519,6 @@ describe('express-web enumDevices', function() {
                                 }
                                 console.log('camera: ' + item.deviceName + ',' + item.deviceID);
                             });
-                            //expect(deviceResult).to.be.not.null;
                             expect(deviceResult).to.have.property('cameras');
                             done();
                         },
@@ -532,8 +543,18 @@ describe('express-web enumDevices', function() {
 //#region getVersion
 describe('express-web getVersion', function() {
     before(function() {
+        num = 0;
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;
+    });
+
+    beforeEach(function() {
+        num += 1;
+        console.warn('getVersion TestCase Begin ' + num);
+    });
+
+    afterEach(function() {
+        console.warn('getVersion TestCase End ' + num);
     });
 
     if (P0) {
