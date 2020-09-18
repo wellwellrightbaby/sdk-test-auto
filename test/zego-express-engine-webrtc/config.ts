@@ -17,6 +17,8 @@ const userIDEmptyError = { code: 1002005, msg: 'user ID is empty' };
 
 const userNameEmptyError = { code: 1002008, msg: 'username is empty' };
 
+const numMustBeIntegerError = { code: 1, msg: 'must be int' };
+
 export { P0, P1, P2, sdkVersion };
 export {
     tokenFormatError,
@@ -30,4 +32,5 @@ export {
     tokenError,
     userIDEmptyError,
     userNameEmptyError,
+    numMustBeIntegerError,
 };
