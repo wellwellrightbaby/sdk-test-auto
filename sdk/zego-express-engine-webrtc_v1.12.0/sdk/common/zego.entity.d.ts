@@ -55,10 +55,6 @@ export interface RoomConfig {
     maxMemberCount?: number;
     userUpdate?: boolean;
 }
-interface CapabilityError {
-    name?: string;
-    message?: string;
-}
 export interface CapabilityDetection {
     webRTC: boolean;
     customCapture: boolean;
@@ -71,12 +67,6 @@ export interface CapabilityDetection {
         VP9: boolean;
     };
     screenSharing: boolean;
-    errInfo: {
-        webRTC?: CapabilityError;
-        customCapture?: CapabilityError;
-        camera?: CapabilityError;
-        microphone?: CapabilityError;
-    };
 }
 export declare const sdkErrorList: {
     CLIENT: string;
@@ -908,4 +898,3 @@ export declare class LinkedList {
      */
     shift(): ListNode | null;
 }
-export {};

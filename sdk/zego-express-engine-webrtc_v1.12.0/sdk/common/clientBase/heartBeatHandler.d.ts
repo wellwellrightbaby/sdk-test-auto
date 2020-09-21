@@ -22,7 +22,7 @@ export declare class HeartBeatHandler {
     fetchUserList(): void;
     updateStreamInfo(streamid: string, cmd: string | number, stream_extra_info?: string, error?: Function): void;
     onUpdateOnlineCount(roomId: string, userCount: number): void;
-    onRecvReliableMessage(transResults: any): void;
+    onRecvReliableMessage(type: string, seq: number, data: string): void;
     resetCheckMessage(): void;
     private checkSendMessageList;
     protected checkMessageListTimeout(messageList: LinkedList, messageMap: {

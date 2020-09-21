@@ -50,7 +50,7 @@ export declare class MessageHandler {
             trans_data: string;
         };
     }): void;
-    onRecvReliableMessage(trans_results: any): void;
+    onRecvReliableMessage(type: string, seq: number, data: string): void;
     relogin(): void;
     fetchReliableMessage(trans_channel: string, fetch_array: {
         trans_type: string;

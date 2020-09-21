@@ -97,6 +97,7 @@ export declare class ZegoPlayWeb {
     private resetPlay;
     private setPlayQualityTimer;
     private getPlayStats;
+    private getNetQuality;
     private uploadPlayQuality;
     private onRecvResetSession;
     private onRecvCloseSession;

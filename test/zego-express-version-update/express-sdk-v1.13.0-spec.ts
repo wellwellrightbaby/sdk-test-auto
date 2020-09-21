@@ -2,8 +2,16 @@ import { ZegoExpressEngine } from '../../sdk/zego-express-engine-webrtc';
 import Axios from 'axios';
 import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 import { before } from 'mocha';
-import { tokenError } from '../zego-express-engine-webrtc/config';
-import { numMustBeIntegerError } from './../zego-express-engine-webrtc/config';
+import { inputParmError, tokenError } from '../zego-express-engine-webrtc/config';
+import {
+    inputParamErroraudioBitrate,
+    inputParamErrorvideoQuality,
+    inputParamErrorframeRate,
+    inputParamErrorbitrate,
+    inputParamErrorheight,
+    inputParamErrorwidth,
+    inputParamErrorchannelCount,
+} from './../zego-express-engine-webrtc/config';
 //import { deviceId } from './../zego-express-engine-webrtc/config';
 const expect = chai.expect;
 
@@ -19,8 +27,10 @@ let firstMicrophones: any;
 let video: any;
 const mydate = new Date();
 let num = 0;
-let token = '';
+const token = '';
 
+//#region createStream 参数为screen
+/*
 describe('1.13.0 number小数点检查 createStream 参数为screen对象', function() {
     before(function(done) {
         num = 0;
@@ -107,7 +117,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.be.null;
                         done();
                     },
                 );
@@ -135,7 +145,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorvideoQuality);
                         done();
                     },
                 );
@@ -163,7 +173,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorvideoQuality);
                         done();
                     },
                 );
@@ -204,7 +214,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
     });
 
     it('2.创建流 screen对象 videoQuality为4时frameRate为0', function(done) {
-        console.warn('2.创建流 videoQuality为4时frameRate为0');
+        console.warn('2.创建流 screen对象 videoQuality为4时frameRate为0');
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -221,7 +231,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
                         done();
                     },
                 );
@@ -233,7 +243,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
     });
 
     it('3.创建流 screen对象 videoQuality为4时frameRate为正数小数点15.6', function(done) {
-        console.warn('3.创建流 videoQuality为4时frameRate为正数小数点15.6');
+        console.warn('3.创建流 screen对象 videoQuality为4时frameRate为正数小数点15.6');
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -250,7 +260,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
                         done();
                     },
                 );
@@ -262,7 +272,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
     });
 
     it('4.创建流 screen对象 videoQuality为4时frameRate为负数小数点-15.6', function(done) {
-        console.warn('4.创建流 videoQuality为4时frameRate为负数小数点-15.6');
+        console.warn('4.创建流 screen对象 videoQuality为4时frameRate为负数小数点-15.6');
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -279,7 +289,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
                         done();
                     },
                 );
@@ -320,7 +330,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
     });
 
     it('6.创建流 screen对象 videoQuality为4时bitrate为0', function(done) {
-        console.warn('6.创建流 videoQuality为4时bitrate为0');
+        console.warn('6.创建流 screen对象 videoQuality为4时bitrate为0');
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -337,7 +347,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -349,7 +359,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
     });
 
     it('7.创建流 screen对象 videoQuality为4时bitrate为正数小数点801.1', function(done) {
-        console.warn('7.创建流 videoQuality为4时bitrate为正数小数点801.1');
+        console.warn('7.创建流 screen对象 videoQuality为4时bitrate为正数小数点801.1');
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -366,7 +376,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -378,7 +388,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
     });
 
     it('8.创建流 screen对象 videoQuality为4时bitrate为负数小数点-801.1', function(done) {
-        console.warn('8.创建流 videoQuality为4时bitrate为负数小数点-801.1');
+        console.warn('8.创建流 screen对象 videoQuality为4时bitrate为负数小数点-801.1');
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -395,7 +405,67 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('9.创建流 screen对象 videoQuality为4时frameRate为正数小数点bitrate为正常', function(done) {
+        console.warn('9.创建流 screen对象 videoQuality为4时frameRate为正数小数点bitrate为正常');
+        this.timeout(TIMEOUT);
+        const test = () => {
+            try {
+                zg.createStream({
+                    screen: {
+                        videoQuality: 4,
+                        bitrate: 800,
+                        frameRate: 15.6,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('10.创建流 screen对象 videoQuality为4时frameRate为正常bitrate为正数小数点', function(done) {
+        console.warn('10.创建流 screen对象 videoQuality为4时frameRate为正常bitrate为正数小数点');
+        this.timeout(TIMEOUT);
+        const test = () => {
+            try {
+                zg.createStream({
+                    screen: {
+                        videoQuality: 4,
+                        bitrate: 800.1,
+                        frameRate: 15,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -406,8 +476,11 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
         setTimeout(test, DELAY);
     });
 });
+*/
+//#endregion
 
-
+//#region 初始化
+/*
 describe('1.13.0 number小数点检查 初始化', function() {
     before(function() {
         num = 0;
@@ -462,7 +535,11 @@ describe('1.13.0 number小数点检查 初始化', function() {
         expect(zg5).is.not.null;
     });
 });
+*/
+//#endregion
 
+//#region loginRoom
+/*
 describe('1.13.0 number小数点检查 loginRoom', function() {
     before(async function() {
         num = 0;
@@ -485,6 +562,7 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
     });
 
     it('loginRoom 填config参数 maxMemberCount正常', function(done) {
+        console.warn('loginRoom 填config参数 maxMemberCount正常');
         this.timeout(TIMEOUT);
         roomID = 'roomID';
         const test = () => {
@@ -518,6 +596,7 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
     });
 
     it('loginRoom 填config参数 maxMemberCount为正数整数', function(done) {
+        console.warn('loginRoom 填config参数 maxMemberCount为正数整数');
         this.timeout(TIMEOUT);
         roomID = 'roomID';
         const test = () => {
@@ -539,7 +618,8 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        console.warn('gaga:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParmError);
                         done();
                     },
                 );
@@ -548,10 +628,10 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
             }
         };
         setTimeout(test, DELAY);
-        done();
     });
 
     it('loginRoom 填config参数 maxMemberCount为负数整数', function(done) {
+        console.warn('loginRoom 填config参数 maxMemberCount为负数整数');
         this.timeout(TIMEOUT);
         roomID = 'roomID';
         const test = () => {
@@ -573,7 +653,7 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParmError);
                         done();
                     },
                 );
@@ -582,10 +662,13 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
             }
         };
         setTimeout(test, DELAY);
-        done();
     });
 });
+*/
+//#endregion
 
+//#region createStream 参数为camera
+/*
 describe('1.13.0 number小数点检查 createStream 参数为camera对象', function() {
     before(function(done) {
         num = 0;
@@ -628,7 +711,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
     });
 
     it('创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）', function(done) {
-        console.log('1:创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）'); //推流音视频
+        console.warn('1:创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）'); //推流音视频
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -696,7 +779,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErroraudioBitrate);
                         done();
                     },
                 );
@@ -724,7 +807,10 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        console.warn('wwww:' + JSON.stringify(e));
+                        console.warn('wwww:' + e);
+
+                        expect(e).to.deep.equal(inputParamErroraudioBitrate);
                         done();
                     },
                 );
@@ -752,7 +838,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErroraudioBitrate);
                         done();
                     },
                 );
@@ -808,7 +894,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorvideoQuality);
                         done();
                     },
                 );
@@ -836,7 +922,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorvideoQuality);
                         done();
                     },
                 );
@@ -864,7 +950,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorvideoQuality);
                         done();
                     },
                 );
@@ -922,7 +1008,8 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        console.warn('eee:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
                         done();
                     },
                 );
@@ -980,7 +1067,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -1028,7 +1115,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                 zg.createStream({
                     camera: {
                         videoQuality: 4,
-                        bitrate: 701.1,
+                        height: 701.1,
                     },
                 }).then(
                     MediaStream => {
@@ -1038,7 +1125,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorheight);
                         done();
                     },
                 );
@@ -1096,7 +1183,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorwidth);
                         done();
                     },
                 );
@@ -1152,7 +1239,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorchannelCount);
                         done();
                     },
                 );
@@ -1180,7 +1267,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorchannelCount);
                         done();
                     },
                 );
@@ -1208,7 +1295,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorchannelCount);
                         done();
                     },
                 );
@@ -1219,7 +1306,10 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
         setTimeout(test, DELAY);
     });
 });
+*/
+//#endregion
 
+//#region createStream 参数为custom
 
 describe('1.13.0 number小数点检查 createStream 参数为custom对象', function() {
     before(function(done) {
@@ -1277,7 +1367,8 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
             try {
                 zg.createStream({
                     custom: {
-                        source: $('#externerVideo')[0],
+                        //document.getElementById('externerVideo') as HTMLElement
+                        source: null,
                         bitrate: 800,
                     },
                 }).then(
@@ -1288,7 +1379,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.be.null;
                         done();
                     },
                 );
@@ -1306,7 +1397,8 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
             try {
                 zg.createStream({
                     custom: {
-                        source: $('#externerVideo')[0],
+                        //$('#externerVideo')[0],
+                        source: null,
                         bitrate: 0,
                     },
                 }).then(
@@ -1317,7 +1409,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.be.null;
                         done();
                     },
                 );
@@ -1335,7 +1427,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
             try {
                 zg.createStream({
                     custom: {
-                        source: $('#externerVideo')[0],
+                        source: null,
                         bitrate: 800.12,
                     },
                 }).then(
@@ -1346,7 +1438,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -1364,7 +1456,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
             try {
                 zg.createStream({
                     custom: {
-                        source: $('#externerVideo')[0],
+                        source: null,
                         bitrate: -800.12,
                     },
                 }).then(
@@ -1375,7 +1467,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(numMustBeIntegerError);
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -1385,8 +1477,12 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
         };
         setTimeout(test, DELAY);
     });
-});*/
+});
 
+//#endregion
+
+//#region startMixerTask
+/*
 describe('1.13.0 number小数点检查 startMixerTask', function() {
     before(function(done) {
         num = 0;
@@ -1505,7 +1601,11 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                             outputConfig,
                             inputList,
                         });
-                        expect(result).to.have.keys(['errorCode', 'extendedData']);
+                        //expect(result).to.have.keys(['errorCode', 'extendedData']);
+                        expect(result).to.have.property('errorCode', 0);
+                        expect(result)
+                            .to.have.property('extendedData')
+                            .include('flvURL');
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
@@ -1569,6 +1669,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -1628,6 +1729,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -1692,6 +1794,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                     }
                 }, DELAY);
             } catch (e) {
+                expect(e).to.have.property('errorCode', 1100001);
                 console.warn('eee2:' + JSON.stringify(e));
                 done(e);
             }
@@ -1746,6 +1849,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -1805,6 +1909,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -1864,6 +1969,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -1923,6 +2029,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -1982,6 +2089,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -2042,6 +2150,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -2103,6 +2212,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -2165,6 +2275,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
                         console.warn('eee0:' + JSON.stringify(result));
                         done();
                     } catch (e) {
+                        expect(e).to.have.property('errorCode', 1100001);
                         console.warn('eee1:' + JSON.stringify(e));
                         done(e);
                     }
@@ -2177,8 +2288,11 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
         setTimeout(test, DELAY);
     });
 });
+*/
+//#endregion
 
-
+//#region setMixerTaskConfig
+/*
 describe('1.13.0 number小数点检查 setMixerTaskConfig', function() {
     before(function(done) {
         num = 0;
@@ -2205,7 +2319,7 @@ describe('1.13.0 number小数点检查 setMixerTaskConfig', function() {
                 expect(deviceResult).to.have.property('screenSharing', true);
             });
 
-            zg.loginRoom('Mixer-123321', token, {
+            zg.loginRoom('Mixer-123321123', token, {
                 userID: userID,
                 userName: 'userName',
             }).then(loginResult => {
@@ -2480,7 +2594,11 @@ describe('1.13.0 number小数点检查 setMixerTaskConfig', function() {
         setTimeout(test, DELAY);
     });
 });
+*/
+//#endregion
 
+//#region setSoundLevelDelegate
+/*
 describe('1.13.0 number小数点检查 setSoundLevelDelegate', function() {
     before(function(done) {
         num = 0;
@@ -2565,3 +2683,5 @@ describe('1.13.0 number小数点检查 setSoundLevelDelegate', function() {
         zg.setSoundLevelDelegate(true, -1000.12);
     });
 });
+*/
+//#endregion

@@ -17,7 +17,13 @@ const userIDEmptyError = { code: 1002005, msg: 'user ID is empty' };
 
 const userNameEmptyError = { code: 1002008, msg: 'username is empty' };
 
-const numMustBeIntegerError = { code: 1, msg: 'must be int' };
+const inputParamErroraudioBitrate = { code: 1103001, msg: 'input param error. audioBitrate must be integer number' };
+const inputParamErrorvideoQuality = { code: 1103001, msg: 'input param error. videoQuality must be integer number' };
+const inputParamErrorframeRate = { code: 1103001, msg: 'input param error. frameRate must be integer number' };
+const inputParamErrorbitrate = { code: 1103001, msg: 'input param error. bitrate must be integer number' };
+const inputParamErrorheight = { code: 1103001, msg: 'input param error. height must be integer number' };
+const inputParamErrorwidth = { code: 1103001, msg: 'input param error. width must be integer number' };
+const inputParamErrorchannelCount = { code: 1103001, msg: 'input param error. channelCount must be integer number' };
 
 export { P0, P1, P2, sdkVersion };
 export {
@@ -32,5 +38,11 @@ export {
     tokenError,
     userIDEmptyError,
     userNameEmptyError,
-    numMustBeIntegerError,
+    inputParamErroraudioBitrate,
+    inputParamErrorvideoQuality,
+    inputParamErrorframeRate,
+    inputParamErrorbitrate,
+    inputParamErrorheight,
+    inputParamErrorwidth,
+    inputParamErrorchannelCount,
 };

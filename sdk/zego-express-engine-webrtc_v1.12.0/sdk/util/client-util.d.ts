@@ -54,12 +54,10 @@ export declare class ClientUtil {
         dest_id_name: string[];
         custom_msg: string;
     }): boolean;
-    static checkInteger(num: number | undefined, positive?: boolean): boolean;
     static checkValidNumber(param: number, min?: number, max?: number): boolean;
     static generateRandumNumber(maxNum: number): number;
     static uuid(len?: number, radix?: number): string;
     static supportDetection(screenShotReady: boolean, success: Function): Promise<void>;
-    static getNetQuality(rtt: number, fractionLost: number): number;
     static getDevices(deviceInfoCallback: Function, error: (err: ERRO) => void): void;
     static compareVersion(v1: string[] | string, v2: string | string[]): 0 | 1 | -1;
     static isSupportLive(sucCall: {

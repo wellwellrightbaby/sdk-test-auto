@@ -25,10 +25,6 @@ export declare const errorCodeList: {
         code: number;
         msg: string;
     };
-    TIMEOUT: {
-        code: number;
-        msg: string;
-    };
     INIT_SDK_WRONG: {
         code: number;
         msg: string;
