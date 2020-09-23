@@ -1438,6 +1438,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         done();
                     },
                     e => {
+                        console.warn('eee:' + JSON.stringify(e));
                         expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
@@ -1466,8 +1467,9 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => {
-                        expect(e).to.deep.equal(inputParamErrorbitrate);
+                    e2 => {
+                        console.warn('eee:' + JSON.stringify(e2));
+                        expect(e2).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );

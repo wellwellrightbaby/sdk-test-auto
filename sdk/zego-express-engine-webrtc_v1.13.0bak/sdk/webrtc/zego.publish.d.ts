@@ -41,6 +41,7 @@ export declare class ZegoPublish {
     offerSeq: number;
     streamId: string;
     localStream: MediaStream;
+    streamSource: MediaStreamAudioSourceNode;
     ac: ZegoAudioContext;
     mediaEleSources: Array<{
         audio: HTMLMediaElement;
@@ -80,8 +81,7 @@ export declare class ZegoPublish {
     waittingConnectedInerval: number;
     tryingNexitSignal: boolean;
     soundLevel: number;
-    script: any;
-    mic: any;
+    script: ScriptProcessorNode | null;
     cameraState: string;
     microState: string;
     constructor(log: LoggerWeb, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext, mediaEleSources: Array<{

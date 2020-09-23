@@ -23,7 +23,7 @@ export declare class AudioMixUtil {
     paused: boolean;
     isMixAudio: boolean;
     isMixingBuffer: boolean;
-    private streamSource;
+    streamSource: MediaStreamAudioSourceNode;
     private gainNode;
     private mixAudio;
     private destination;
@@ -40,7 +40,7 @@ export declare class AudioMixUtil {
     playRealTimeEffect(ab: AudioBuffer): void;
     pauseEffect(): void;
     resumeEffect(): void;
-    mixEffect(audioBuffer: AudioBuffer, callBack: Function): void;
+    mixEffect(audioBuffer: AudioBuffer, callBack: Function): false | undefined;
     startMixingAudio(audio: any, replace?: boolean): boolean;
     replaceTrack(): boolean;
     stopMixingAudio(): boolean;
