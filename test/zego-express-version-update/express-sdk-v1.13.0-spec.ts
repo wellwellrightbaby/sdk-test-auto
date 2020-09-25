@@ -11,6 +11,7 @@ import {
     inputParamErrorheight,
     inputParamErrorwidth,
     inputParamErrorchannelCount,
+    inputParamErrormaxMemberCount,
 } from './../zego-express-engine-webrtc/config';
 //import { deviceId } from './../zego-express-engine-webrtc/config';
 const expect = chai.expect;
@@ -30,7 +31,7 @@ let num = 0;
 const token = '';
 
 //#region createStream 参数为screen
-/*
+
 describe('1.13.0 number小数点检查 createStream 参数为screen对象', function() {
     before(function(done) {
         num = 0;
@@ -476,7 +477,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region 初始化
@@ -595,8 +596,8 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
         setTimeout(test, DELAY);
     });
 
-    it('loginRoom 填config参数 maxMemberCount为正数整数', function(done) {
-        console.warn('loginRoom 填config参数 maxMemberCount为正数整数');
+    it('loginRoom 填config参数 maxMemberCount为正数小数点', function(done) {
+        console.warn('loginRoom 填config参数 maxMemberCount为正数小数点');
         this.timeout(TIMEOUT);
         roomID = 'roomID';
         const test = () => {
@@ -619,7 +620,7 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
                     },
                     e => {
                         console.warn('gaga:' + JSON.stringify(e));
-                        expect(e).to.deep.equal(inputParmError);
+                        expect(e).to.deep.equal(inputParamErrormaxMemberCount);
                         done();
                     },
                 );
@@ -630,8 +631,8 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
         setTimeout(test, DELAY);
     });
 
-    it('loginRoom 填config参数 maxMemberCount为负数整数', function(done) {
-        console.warn('loginRoom 填config参数 maxMemberCount为负数整数');
+    it('loginRoom 填config参数 maxMemberCount为负数小数点', function(done) {
+        console.warn('loginRoom 填config参数 maxMemberCount为负数小数点');
         this.timeout(TIMEOUT);
         roomID = 'roomID';
         const test = () => {
@@ -653,7 +654,8 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
                         done();
                     },
                     e => {
-                        expect(e).to.deep.equal(inputParmError);
+                        console.warn('gaga:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrormaxMemberCount);
                         done();
                     },
                 );
@@ -1310,7 +1312,7 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
 //#endregion
 
 //#region createStream 参数为custom
-
+/*
 describe('1.13.0 number小数点检查 createStream 参数为custom对象', function() {
     before(function(done) {
         num = 0;
@@ -1467,9 +1469,9 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e2 => {
-                        console.warn('eee:' + JSON.stringify(e2));
-                        expect(e2).to.deep.equal(inputParamErrorbitrate);
+                    e => {
+                        console.warn('eee:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorbitrate);
                         done();
                     },
                 );
@@ -1480,7 +1482,7 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
         setTimeout(test, DELAY);
     });
 });
-
+*/
 //#endregion
 
 //#region startMixerTask

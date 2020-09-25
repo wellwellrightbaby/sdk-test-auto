@@ -4,8 +4,7 @@
  1. 所有与服务端交互传数字的字段都需要做小数点检查
  2. 检查设备可用性时，需要sdk返回具体错误详情
  3. onPublishQualityUpdate推流质量回调中增加音视频网络质量参数回调
- 4. 混音 safari 模糊问题修复
- 5. 推流状态回调onpublisherStateUpdate中errorCode回调了Error.Timeout
+ 4. 推流状态回调onpublisherStateUpdate中errorCode回调了Error.Timeout
  
 ### 2020-09-10(version 1.12.0)
  1. 新增房间附加消息功能setRoomExtraInfo

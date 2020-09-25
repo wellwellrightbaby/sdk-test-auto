@@ -24,6 +24,10 @@ const inputParamErrorbitrate = { code: 1103001, msg: 'input param error. bitrate
 const inputParamErrorheight = { code: 1103001, msg: 'input param error. height must be integer number' };
 const inputParamErrorwidth = { code: 1103001, msg: 'input param error. width must be integer number' };
 const inputParamErrorchannelCount = { code: 1103001, msg: 'input param error. channelCount must be integer number' };
+const inputParamErrormaxMemberCount = {
+    code: 1100001,
+    msg: 'input parm error. maxMemberCount must be integer number.',
+};
 
 export { P0, P1, P2, sdkVersion };
 export {
@@ -45,4 +49,5 @@ export {
     inputParamErrorheight,
     inputParamErrorwidth,
     inputParamErrorchannelCount,
+    inputParamErrormaxMemberCount,
 };
