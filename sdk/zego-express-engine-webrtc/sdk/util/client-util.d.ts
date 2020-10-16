@@ -26,13 +26,7 @@ export declare class ClientUtil {
     /**
          错误管理
          */
-    static getServerError(code: string | number): {
-        code: string;
-        msg: string;
-    } | {
-        code: number;
-        msg: string;
-    };
+    static getServerError(code: number): ERRO;
     static unregisterCallback(fName: string, callbackList: {
         [index: string]: Function;
     }): void;

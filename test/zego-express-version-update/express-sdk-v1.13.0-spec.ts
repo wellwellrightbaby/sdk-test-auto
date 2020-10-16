@@ -28,10 +28,10 @@ let firstMicrophones: any;
 let video: any;
 const mydate = new Date();
 let num = 0;
-const token = '';
+let token = '';
 
 //#region createStream 参数为screen
-
+/*
 describe('1.13.0 number小数点检查 createStream 参数为screen对象', function() {
     before(function(done) {
         num = 0;
@@ -477,7 +477,7 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
         setTimeout(test, DELAY);
     });
 });
-
+*/
 //#endregion
 
 //#region 初始化
@@ -1186,6 +1186,138 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
                     },
                     e => {
                         expect(e).to.deep.equal(inputParamErrorwidth);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('9.创建流 camara对象 videoQuality为4时四项必填都补全时frameRate为正数小数点15.6', function(done) {
+        console.warn('9.创建流 camara对象 videoQuality为4时四项必填都补全时frameRate为正数小数点15.6');
+        this.timeout(TIMEOUT);
+        const test = () => {
+            try {
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        frameRate: 15.6,
+                        bitrate: 800,
+                        width: 700,
+                        height: 400,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        console.warn('eee:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('10.创建流 camara对象 videoQuality为4时四项必填都补全时bitrate为正数小数点801.888', function(done) {
+        console.warn('10.创建流 camara对象 videoQuality为4时四项必填都补全时bitrate为正数小数点801.888');
+        this.timeout(TIMEOUT);
+        const test = () => {
+            try {
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        frameRate: 15,
+                        bitrate: 801.888,
+                        width: 700,
+                        height: 400,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        console.warn('eee:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('11.创建流 camara对象 videoQuality为4时四项必填都补全时width为正数小数点700.5', function(done) {
+        console.warn('11.创建流 camara对象 videoQuality为4时四项必填都补全时width为正数小数点700.5');
+        this.timeout(TIMEOUT);
+        const test = () => {
+            try {
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        frameRate: 15,
+                        bitrate: 800,
+                        width: 700.5,
+                        height: 400,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        console.warn('eee:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('12.创建流 camara对象 videoQuality为4时四项必填都补全时height为正数小数点400.5', function(done) {
+        console.warn('11.创建流 camara对象 videoQuality为4时四项必填都补全时height为正数小数点400.5');
+        this.timeout(TIMEOUT);
+        const test = () => {
+            try {
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        frameRate: 15,
+                        bitrate: 800,
+                        width: 700,
+                        height: 400.5,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        console.warn('eee:' + JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorframeRate);
                         done();
                     },
                 );
@@ -2296,7 +2428,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
 //#endregion
 
 //#region setMixerTaskConfig
-/*
+
 describe('1.13.0 number小数点检查 setMixerTaskConfig', function() {
     before(function(done) {
         num = 0;
@@ -2598,7 +2730,7 @@ describe('1.13.0 number小数点检查 setMixerTaskConfig', function() {
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region setSoundLevelDelegate

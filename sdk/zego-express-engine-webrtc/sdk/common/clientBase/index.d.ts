@@ -28,10 +28,12 @@ export declare abstract class BaseCenter extends Common {
     sendCustomCommand(roomID: string, command: string | Record<string, any>, toUserList: string[]): Promise<{
         errorCode: number;
         messageID: number;
+        extendedData: string;
     }>;
     sendBroadcastMessage(roomID: string, message: string): Promise<{
         errorCode: number;
         messageID: number;
+        extendedData: string;
     }>;
     sendReliableMessage(type: string, data: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): void;
     setRoomExtraInfo(roomID: string, type: string, data: string): Promise<{
@@ -40,6 +42,7 @@ export declare abstract class BaseCenter extends Common {
     sendBarrageMessage(roomID: string, message: string): Promise<{
         errorCode: number;
         messageID: number;
+        extendedData: string;
     }>;
     sendRelayMessage(type: string, data: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void): void;
     requestJoinLive(destIdName: string, success: (seq: number) => void, error: (err: ERRO, seq: number) => void, resultCallback: (result: boolean, fromUserId: string, fromUserName: string) => void): boolean;
@@ -56,14 +59,17 @@ export declare abstract class BaseCenter extends Common {
     }>;
     stopMixerTask(taskId: string): Promise<{
         errorCode: number;
+        extendedData: string;
     }>;
-    addPublishCdnUrl(streamID: string, signature: string, targetURL: string): Promise<{
+    addPublishCdnUrl(streamID: string, targetURL: string): Promise<{
         errorCode: number;
+        extendedData: string;
     }>;
-    removePublishCdnUrl(streamID: string, signature: string, targetURL: string): Promise<{
+    removePublishCdnUrl(streamID: string, targetURL: string): Promise<{
         errorCode: number;
+        extendedData: string;
     }>;
-    clearPublishCdnUrl(streamID: string, signature: string, targetURL: string): Promise<{
+    clearPublishCdnUrl(streamID: string, targetURL: string): Promise<{
         errorCode: number;
     }>;
     private publishTarget;
@@ -76,4 +82,6 @@ export declare abstract class BaseCenter extends Common {
     getVersion(): string;
     private setSdkBizVersion;
     protected setSdkLoginRelateService(relateService: Array<string>): void;
+    protected disconnectedHandle(error: ERRO): void;
+    protected roomStateHandle(state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED', error: ERRO): void;
 }

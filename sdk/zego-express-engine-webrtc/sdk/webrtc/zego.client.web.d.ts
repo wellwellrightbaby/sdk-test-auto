@@ -2,7 +2,7 @@ import { webPlayOption, AudioMixConfig, Constraints, ERRO, CapabilityDetection, 
 import { ZegoStreamCenterWeb } from './zego.streamCenter.web';
 import { BaseCenter } from '../common/clientBase/index';
 import { ZegoMediaElement, MediaRecorder, ZegoAudioContext } from '../../types/index';
-export declare class ZegoExpressEngine extends BaseCenter {
+export declare class ZegoWebRTC extends BaseCenter {
     streamCenter: ZegoStreamCenterWeb;
     ac: ZegoAudioContext;
     mediaEleSources: Array<{
@@ -25,11 +25,12 @@ export declare class ZegoExpressEngine extends BaseCenter {
     startPlayingStream(streamID: string, playOption?: webPlayOption): Promise<MediaStream>;
     stopPlayingStream(streamID: string): void;
     createStream(option?: Constraints): Promise<MediaStream>;
+    private checkScreenParams;
     private checkCameraParams;
     destroyStream(localStream: MediaStream): void;
     startPublishingStream(streamID: string, localStream: MediaStream, publishOption?: webPublishOption): boolean;
     stopPublishingStream(streamID: string): boolean;
-    setPublishStreamConstraints(localStream: MediaStream, constraints: PublishStreamConstraints): Promise<{
+    setVideoConfig(localStream: MediaStream, constraints: PublishStreamConstraints): Promise<{
         errorCode: number;
         extendedData: string;
     }>;
@@ -105,11 +106,11 @@ export declare class ZegoExpressEngine extends BaseCenter {
     saveSnapShot(el: HTMLVideoElement, name: string): void;
     useVideoDevice(localStream: MediaStream, deviceID: string): Promise<{
         errorCode: number;
-        extendData: string;
+        extendedData: string;
     }>;
     useAudioDevice(localStream: MediaStream, deviceID: string): Promise<{
         errorCode: number;
-        extendData: string;
+        extendedData: string;
     }>;
     setSoundLevelDelegate(bool: boolean, timeInMs?: number): void;
     private bindWindowListener;

@@ -13,7 +13,6 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
     heartbeatTimer: any;
     heartbeatInterval: number;
     qualityTimerInterval: number;
-    maxRetryCount: number;
     previewVideoList: ZegoPreview[];
     signalList: {
         [index: string]: SignalInfo;
@@ -52,32 +51,23 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
     startPreview(mediaStreamConstraints: Constraints['camera'] | Constraints['custom'], success: (stream: MediaStream) => void, error: (err: ERRO) => void): boolean;
     stopPreview(localStream: MediaStream): boolean;
     setPublishStateStart(streamid: string, localStream: MediaStream, publishOption: webPublishOption): boolean;
-    getTotalStreamId(streamid: string): string;
-    /**
-     * "zsc.grs.0": "ZegoStreamCenter.getRealStreamId"
-     * @param streamid
-     */
-    getRealStreamId(streamid: string): string;
     startPublishingStream(streamid: string, serverUrls: string[]): boolean;
     updateWaitingList(signalInfo: SignalInfo, isPublish: boolean, streamID: string, success: Function, error: Function | undefined): void;
     publishStream(streamid: string): void;
-    connectPublishServer(streamID: string, isForce?: boolean): boolean;
-    shouldRetry(stream: {
-        serverUrls: string[];
-        retryCount: number;
-    }, errorCode: number): boolean;
+    connectPublishServer(streamID: string, server: string): boolean;
     getTokenSuccess(): void;
     stopPublishingStream(streamid: string): void;
     setStreamAudioOutput(localVideo: any, audioOutput: string): boolean;
-    connetWithReuseSignalServer(streamID: string, isPublish: boolean, serverUrl: string, success: Function, error: Function | undefined, isForce?: boolean): void;
+    connetWithReuseSignalServer(streamID: string, isPublish: boolean, serverUrl: string, success: Function, error: Function | undefined): void;
     setPlayStateStart(streamid: string, playOption?: webPlayOption): boolean;
     startPlayingStream(streamid: string, serverUrls: string[], success: (stream: MediaStream) => void): boolean;
-    connectPlayServer(streamId: string, success: (stream: MediaStream) => void, isForce?: boolean): boolean;
+    connectPlayServer(streamId: string, success: (stream: MediaStream) => void, server: string): boolean;
     private tryCountConnectInterval;
-    private connetWithReuseSignalServerTimer;
     private playStream;
     private removeStreamFromSignal;
     private stopSignalHeartbeat;
+    publishStateHandle(type: number, streamID: string, error?: ERRO, stopRetry?: boolean): void;
+    playStateHandle(type: number, streamID: string, error: ERRO, stopRetry?: boolean): void;
     stopPlayingStream(streamid: string): void;
     reset(): void;
     replaceTrack(localStream: MediaStream, mediaStreamTrack: MediaStreamTrack, success?: (res: any) => void, error?: (err: ERRO) => void): void;
@@ -99,6 +89,8 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
         videoQuality?: 1 | 2 | 3 | 4;
         bitRate?: number;
         frameRate?: number;
+        width?: number;
+        height: number;
     } | MediaStreamConstraints | boolean): ScreenConfig;
     createScreenPreviewer(stream: MediaStream, screenConfig?: ScreenConfig): any;
     switchDevice(type: 'audio' | 'video', localStream: MediaStream, deviceId: string, success: Function, error: Function): void;

@@ -30,8 +30,6 @@ export declare abstract class ZegoStreamCenter {
         soundLevel: number;
         type: string;
     }>): void;
-    abstract getTotalStreamId(streamID: string): string;
-    abstract getRealStreamId(streamID: string): string;
     onRemoteCameraStatusUpdate(streamID: string, status: 'OPEN' | 'MUTE'): void;
     onRemoteMicStatusUpdate(streamID: string, status: 'OPEN' | 'MUTE'): void;
     setSessionInfo(appid: number, userid: string, token: string, testEnvironment: boolean): void;

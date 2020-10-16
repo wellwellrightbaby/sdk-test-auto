@@ -2,6 +2,7 @@ import { ZegoSignal } from './zego.signal';
 import { ZegoPlayWeb } from '../webrtc/zego.play.web';
 import { ZegoVideoCodec } from '../../types/index';
 import { ZegoPublish } from '../webrtc/zego.publish';
+import { TryStreamHandler } from '../webrtc/tryStreamHandler';
 export declare const PROTO_VERSION: any;
 export declare const ROOMVERSION: any;
 export declare enum ENUM_LOG_LEVEL {
@@ -225,6 +226,7 @@ export declare const ENUM_PLAY_STATE_NEGO: {
     waitingCandidate: number;
     sendCandidate: number;
     iceConnected: number;
+    iceDisconnected: number;
 };
 export interface VideoInfo {
     width: number;
@@ -271,6 +273,10 @@ export declare enum ENUM_RUN_STATE {
     trylogin = 1,
     login = 2
 }
+export declare enum ENUM_NETWORK_STATE {
+    offline = 0,
+    online = 1
+}
 export declare const ENUM_PUBLISH_STATE_UPDATE: {
     start: number;
     error: number;
@@ -312,18 +318,16 @@ export interface StreamInfo {
     streamID: string;
     user: User;
     extraInfo: string;
-    urlsFLV: string | null;
-    urlsRTMP: string | null;
-    urlsHLS: string | null;
-    urlsHttpsFLV: string | null;
-    urlsHttpsHLS: string | null;
+    urlsFLV: string;
+    urlsRTMP: string;
+    urlsHLS: string;
+    urlsHttpsFLV: string;
+    urlsHttpsHLS: string;
 }
 export interface ERRO {
-    code: string | number;
+    code: number | string;
     msg: string;
 }
-export declare const MAX_TRY_LOGIN_COUNT = 5;
-export declare const TRY_LOGIN_INTERVAL: number[];
 export declare const MINIUM_HEARTBEAT_INTERVAL = 3000;
 export declare const ENUM_STREAM_UPDATE_CMD: {
     added: number;
@@ -369,27 +373,23 @@ export interface PlayerInfo {
     player: ZegoPlayWeb;
     signal: ZegoSignal | null;
     serverUrls: string[];
-    retryCount: number;
     streamID: string;
     playOption: webPlayOption | wxPlayOption;
-    tryCountConnect: number;
-    countConnectTimer: any;
+    streamTryHandler: TryStreamHandler;
 }
 export interface PublisherInfo {
     seq: number;
     localStream: MediaStream | null;
     publisher: ZegoPublish;
     serverUrls: string[];
-    retryCount: 0;
     streamID: string;
     publishOption: webPublishOption | wxPublishOption;
-    tryCountConnect: number;
-    countConnectTimer: any;
     cameraLabel?: string;
     microLabel: string;
     cameraDeviceId?: string;
     microDeviceId?: string;
     deviceStateCount: number;
+    streamTryHandler: TryStreamHandler;
 }
 export declare enum QUALITYLEVEL {
     low = 1,
@@ -445,6 +445,8 @@ export interface Constraints {
         bitRate?: number;
         bitrate?: number;
         frameRate?: number;
+        width?: number;
+        height?: number;
     } | MediaStreamConstraints | boolean;
     custom?: {
         source: HTMLMediaElement | MediaStream;
@@ -525,7 +527,6 @@ export interface CdnPushConfig {
     type: 'addpush' | 'delpush' | 'clearpush';
     streamID: string;
     pushUrl: string;
-    signature: string;
 }
 export interface WebQualityStats {
     video: {
@@ -613,6 +614,7 @@ export declare const ENUM_PUBLISH_STATE_NEGO: {
     waitingCandidate: number;
     sendCandidate: number;
     iceConnected: number;
+    iceDisconnected: number;
 };
 export interface WebPublishStats {
     video: {
@@ -621,10 +623,19 @@ export interface WebPublishStats {
         videoTransferFPS: number;
         frameHeight: number;
         frameWidth: number;
+        googCodecName: string;
+        muteState: '0' | '1';
+        videoPacketsLost: number;
+        videoPacketsLostRate: number;
     };
     audio: {
         audioBitrate: number;
         audioCodec: string;
+        googCodecName: string;
+        muteState: '0' | '1';
+        audioPacketsLost: number;
+        audioPacketsLostRate: number;
+        audioFPS: number;
     };
     streamID: string;
     nackCount: number;
@@ -643,10 +654,13 @@ export interface WebPlayStats {
         videoQuality: number;
         frameHeight: number;
         frameWidth: number;
+        googCodecName: string;
+        muteState: '0' | '1';
+        videoPacketsLost: number;
     };
     audio: {
         audioBitrate: number;
-        audioCodec: number;
+        audioCodec: string;
         audioJitter: number;
         audioLevel: number;
         audioPacketsLost: number;
@@ -654,6 +668,8 @@ export interface WebPlayStats {
         audioQuality: number;
         audioSamplingRate: number;
         audioSendLevel: number;
+        muteState: '0' | '1';
+        audioFPS: number;
     };
     streamID: string;
     nackCount: number;

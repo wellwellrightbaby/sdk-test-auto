@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 import { before } from 'mocha';
 //import { deviceId } from './../zego-express-engine-webrtc/config';
+import { inputParamErrorwidth, inputParamErrorbitraterequired } from './config';
 const expect = chai.expect;
 
 const TIMEOUT = 10000;
@@ -16,6 +17,8 @@ let roomID: string;
 let firstCamera;
 let firstMicrophones: any;
 let video: any;
+const num = 0;
+//#region createStream
 /*
 describe('createStream', function() {
     before(async function() {
@@ -34,15 +37,18 @@ describe('createStream', function() {
     });
 
     beforeEach(function() {
+        num += 1;
+        console.warn('loginRoom TestCase Begin ' + num);
         video = document.createElement('video');
-        video.width = 300;
-        video.height = 300;
+        video.width = 1000;
+        video.height = 1000;
         video.autoplay = true;
         video.controls = true;
     });
 
     afterEach(function() {
         document.body.appendChild(video);
+        console.warn('createStream TestCase End ' + num);
     });
 
     it('创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）', function(done) {
@@ -54,7 +60,7 @@ describe('createStream', function() {
         //           audio: $('#audioList').val() === '0' ? false : true,
         //       },
         //   };
-        console.log('1:创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）'); //推流音视频
+        console.warn('1:创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）'); //推流音视频
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -65,7 +71,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -75,7 +84,7 @@ describe('createStream', function() {
     });
 
     it('创建流 带三个参数，但三个参数都为空', function(done) {
-        console.log('2:创建流 带三个参数，但三个参数都为空'); //共享屏幕
+        console.warn('2:创建流 带三个参数，但三个参数都为空'); //共享屏幕
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -90,7 +99,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -100,7 +112,7 @@ describe('createStream', function() {
     });
 
     it('创建流 带camera参数，但camera参数为空', function(done) {
-        console.log('3:创建流 带camera参数，但camera参数为空'); //推流音视频
+        console.warn('3:创建流 带camera参数，但camera参数为空'); //推流音视频
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -113,7 +125,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -123,7 +138,7 @@ describe('createStream', function() {
     });
 
     it('创建流 带screen参数，但screen参数为空', function(done) {
-        console.log('4:创建流 带screen参数，但screen参数为空'); //共享屏幕
+        console.warn('4:创建流 带screen参数，但screen参数为空'); //共享屏幕
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -136,7 +151,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -146,7 +164,7 @@ describe('createStream', function() {
     });
 
     it('创建流 带custom参数，但custom参数为空', function(done) {
-        console.log('5:创建流 带custom参数，但custom参数为空'); //推流音视频
+        console.warn('5:创建流 带custom参数，但custom参数为空'); //推流音视频
         this.timeout(TIMEOUT);
         const test = () => {
             try {
@@ -159,7 +177,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -170,7 +191,7 @@ describe('createStream', function() {
 
     //camera参数测试
     it('创建流，修改 camera 参数，同时禁用 audio 和 video 会抛出错误', function(done) {
-        console.log('6:创建流，修改 camera 参数，同时禁用 audio 和 video 会抛出错误');
+        console.warn('6:创建流，修改 camera 参数，同时禁用 audio 和 video 会抛出错误');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -190,7 +211,11 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done('should be rejected');
                     },
-                    e => done(),
+                    e => {
+                        console.warn(JSON.stringify(e));
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -201,7 +226,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,audioInput和videoInput乱填', function(done) {
-        console.log('7:创建流，修改 camera 参数,audioInput和videoInput乱填');
+        console.warn('7:创建流，修改 camera 参数,audioInput和videoInput乱填');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -219,7 +244,11 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done('should be rejected');
                     },
-                    e => done(),
+                    e => {
+                        console.warn(JSON.stringify(e));
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -230,7 +259,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,videoInput乱填,添加facingMode', function(done) {
-        console.log('8:创建流，修改 camera 参数,videoInput乱填,添加facingMode'); //有facingMode参数会忽略videoInput参数
+        console.warn('8:创建流，修改 camera 参数,videoInput乱填,添加facingMode'); //有facingMode参数会忽略videoInput参数
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -248,7 +277,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -259,7 +291,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,视频质量等级为1', function(done) {
-        console.log('9:创建流，修改 camera 参数,视频质量等级为1');
+        console.warn('9:创建流，修改 camera 参数,视频质量等级为1');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -276,7 +308,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -287,7 +322,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,视频质量等级为3', function(done) {
-        console.log('10:创建流，修改 camera 参数,视频质量等级为3');
+        console.warn('10:创建流，修改 camera 参数,视频质量等级为3');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -304,7 +339,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -315,7 +353,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,视频质量等级为4,不传需要传的width/height/frameRate/bitrate属性', function(done) {
-        console.log('11:创建流，修改 camera 参数,视频质量等级为4,不传需要传的width/height/frameRate/bitrate属性');
+        console.warn('11:创建流，修改 camera 参数,视频质量等级为4,不传需要传的width/height/frameRate/bitrate属性');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -332,7 +370,11 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        console.warn(JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorwidth);
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -343,7 +385,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,视频质量等级为4,传需要传的width/height/frameRate/bitrate属性', function(done) {
-        console.log('12:创建流，修改 camera 参数,视频质量等级为4,传需要传的width/height/frameRate/bitrate属性');
+        console.warn('12:创建流，修改 camera 参数,视频质量等级为4,传需要传的width/height/frameRate/bitrate属性');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -364,7 +406,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -375,7 +420,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,facingMode为user', function(done) {
-        console.log('13:创建流，修改 camera 参数,facingMode为user');
+        console.warn('13:创建流，修改 camera 参数,facingMode为user');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -392,7 +437,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -403,7 +451,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,facingMode为environment', function(done) {
-        console.log('14:创建流，修改 camera 参数,facingMode为environment');
+        console.warn('14:创建流，修改 camera 参数,facingMode为environment');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -420,7 +468,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -431,7 +482,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,声道数为1', function(done) {
-        console.log('15:创建流，修改 camera 参数,声道数为1');
+        console.warn('15:创建流，修改 camera 参数,声道数为1');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -448,7 +499,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -459,7 +513,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,声道数为2', function(done) {
-        console.log('16:创建流，修改 camera 参数,声道数为2');
+        console.warn('16:创建流，修改 camera 参数,声道数为2');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -476,7 +530,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -487,7 +544,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,声道数为3（异常值）', function(done) {
-        console.log('17:创建流，修改 camera 参数,声道数为3（异常值）');
+        console.warn('17:创建流，修改 camera 参数,声道数为3（异常值）');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -504,7 +561,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -515,7 +575,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 camera 参数,ANS,AGC,AEC为false', function(done) {
-        console.log('18:创建流，修改 camera 参数,ANS,AGC,AEC为false');
+        console.warn('18:创建流，修改 camera 参数,ANS,AGC,AEC为false');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -534,7 +594,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -544,8 +607,9 @@ describe('createStream', function() {
         setTimeout(test, DELAY);
     });
 
+    /*
     it('创建流，修改 screen 参数,audio为true', function(done) {
-        console.log('19:创建流，修改 screen 参数,audio为true');
+        console.warn('19:创建流，修改 screen 参数,audio为true');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -562,7 +626,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -573,7 +640,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 screen 参数,videoQuality为1', function(done) {
-        console.log('20:创建流，修改 screen 参数,videoQuality为1');
+        console.warn('20:创建流，修改 screen 参数,videoQuality为1');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -590,7 +657,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -601,7 +671,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 screen 参数,videoQuality为2', function(done) {
-        console.log('21:创建流，修改 screen 参数,videoQuality为2');
+        console.warn('21:创建流，修改 screen 参数,videoQuality为2');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -619,7 +689,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -630,7 +703,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 screen 参数,videoQuality为3', function(done) {
-        console.log('22:创建流，修改 screen 参数,videoQuality为3');
+        console.warn('22:创建流，修改 screen 参数,videoQuality为3');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -648,7 +721,10 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -659,7 +735,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate', function(done) {
-        console.log('23:创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate');
+        console.warn('23:创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -669,7 +745,7 @@ describe('createStream', function() {
                     screen: {
                         audio: true,
                         videoQuality: 4,
-                        frameRate: 4,
+                        frameRate: 15,
                         bitrate: 2000,
                     },
                 }).then(
@@ -679,7 +755,81 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+
+        setTimeout(test, DELAY);
+    });
+
+    it('创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate/width', function(done) {
+        console.warn('23:创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate/width');
+        this.timeout(TIMEOUT);
+
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    screen: {
+                        audio: true,
+                        videoQuality: 4,
+                        frameRate: 15,
+                        bitrate: 2000,
+                        width: 500,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+
+        setTimeout(test, DELAY);
+    });
+
+    it('创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate/width/height', function(done) {
+        console.warn('23:创建流，修改 screen 参数,videoQuality为4，并传需要的frameRate/birate/width/height');
+        this.timeout(TIMEOUT);
+
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    screen: {
+                        audio: true,
+                        videoQuality: 4,
+                        frameRate: 15,
+                        bitrate: 1500,
+                        width: 500,
+                        height: 500,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => {
+                        expect(e).to.be.null;
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -690,7 +840,7 @@ describe('createStream', function() {
     });
 
     it('创建流，修改 screen 参数,videoQuality为4，并不传需要的frameRate/birate', function(done) {
-        console.log('24:创建流，修改 screen 参数,videoQuality为4，并不传需要的frameRate/birate');
+        console.warn('24:创建流，修改 screen 参数,videoQuality为4，并不传需要的frameRate/birate');
         this.timeout(TIMEOUT);
 
         const test = () => {
@@ -708,7 +858,11 @@ describe('createStream', function() {
                         expect(MediaStream).to.to.be.a('MediaStream');
                         done();
                     },
-                    e => done(),
+                    e => {
+                        console.warn(JSON.stringify(e));
+                        expect(e).to.deep.equal(inputParamErrorbitraterequired);
+                        done();
+                    },
                 );
             } catch (e) {
                 done(e);
@@ -717,8 +871,10 @@ describe('createStream', function() {
 
         setTimeout(test, DELAY);
     });
-});*/
-/*
+});
+*/
+//#endregion
+
 describe('createstream custom', function() {
     before(async function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -743,7 +899,7 @@ describe('createstream custom', function() {
     });
 
     it('创建流，修改 custom 参数', function(done) {
-        console.log('1');
+        console.warn('1');
         this.timeout(TIMEOUT);
 
         const videotest = document.createElement('video');
@@ -780,7 +936,7 @@ describe('createstream custom', function() {
     });
 
     it('创建流，修改 custom 参数', function(done) {
-        console.log('2');
+        console.warn('2');
         this.timeout(TIMEOUT);
 
         const videotest = document.createElement('video');
@@ -817,7 +973,7 @@ describe('createstream custom', function() {
         setTimeout(test, DELAY);
     });
 });
-*/
+
 /*
 describe('on test', function() {
     this.timeout(10000);

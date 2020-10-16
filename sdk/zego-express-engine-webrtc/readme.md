@@ -1,10 +1,11 @@
 ### 日志更新
 
 ### 2020-09-24(version 1.13.0)
- 1. 所有与服务端交互传数字的字段都需要做小数点检查
- 2. 检查设备可用性时，需要sdk返回具体错误详情
- 3. onPublishQualityUpdate推流质量回调中增加音视频网络质量参数回调
- 4. 推流状态回调onpublisherStateUpdate中errorCode回调了Error.Timeout
+ 1. 增加接口数值参数的类型判断，数值类型要求是整数
+ 2. 增加替换音视频轨道
+ 3. 检查设备可用性时，增加返回具体错误详情
+ 4. 统一推流状态回调 publisherStateUpdate 在请求超时的错误码
+ 5. 修复登录后更改日志配置导致日志事件上报缺失roomid
  
 ### 2020-09-10(version 1.12.0)
  1. 新增房间附加消息功能setRoomExtraInfo

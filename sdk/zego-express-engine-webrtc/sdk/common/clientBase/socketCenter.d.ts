@@ -34,7 +34,7 @@ export declare class SocketCenter {
     createSocket(server: string): void;
     openHandler(hander: any): void;
     closeHandler(hander: any): void;
-    errorHandler(): void;
+    errorHandler(hander: any): void;
     checkResponse(msg: any): boolean;
     responseHandler(): void;
     private handleSendCommandMsgRsp;

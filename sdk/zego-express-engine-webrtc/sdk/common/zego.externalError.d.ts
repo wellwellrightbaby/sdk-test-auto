@@ -21,6 +21,10 @@ export declare const errorCodeList: {
         code: number;
         msg: string;
     };
+    NETWORK_BROKEN: {
+        code: number;
+        msg: string;
+    };
     INPUT_PARAM: {
         code: number;
         msg: string;

@@ -1,6 +1,6 @@
 export declare const commonErrorList: {
     SUCCESS: {
-        code: string;
+        code: number;
         msg: string;
     };
     INIT: {
@@ -175,6 +175,18 @@ export declare const publishErrorList: {
         code: number;
         msg: string;
     };
+    CONNECT_FAILED: {
+        code: number;
+        msg: string;
+    };
+    RETRY_TIMEOUT: {
+        code: number;
+        msg: string;
+    };
+    NETWORK_BROKEN: {
+        code: number;
+        msg: string;
+    };
 };
 export declare const playErrorList: {
     PARAM: {
@@ -266,6 +278,18 @@ export declare const playErrorList: {
         msg: string;
     };
     SERVER_NEGO_TIMEOUT: {
+        code: number;
+        msg: string;
+    };
+    CONNECT_FAILED: {
+        code: number;
+        msg: string;
+    };
+    RETRY_TIMEOUT: {
+        code: number;
+        msg: string;
+    };
+    NETWORK_BROKEN: {
         code: number;
         msg: string;
     };

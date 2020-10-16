@@ -1,5 +1,6 @@
-import { ENUM_RUN_STATE, LinkedList, MixStreamAdvance } from '../zego.entity';
+import { ENUM_RUN_STATE, LinkedList, MixStreamAdvance, ENUM_NETWORK_STATE } from '../zego.entity';
 import { LoggerWeb } from '../../webrtc/zego.logger.webrtc';
+import { RetryRoomHandler } from './rertyRoomHandler';
 export declare class StateCenter {
     debug: boolean;
     debugCustom: boolean;
@@ -75,6 +76,9 @@ export declare class StateCenter {
     screenShotStream: MediaStream;
     tryLoginCount: number;
     tryLoginTimer: any;
+    tryLoginInterval: number;
+    lastRoomState: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED';
+    roomState: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED';
     tryHeartbeatCount: number;
     heartbeatInterval: number;
     heartbeatTimer: any;
@@ -135,6 +139,10 @@ export declare class StateCenter {
     deviceChangeTimer: any;
     deviceStateOut: boolean;
     logger: LoggerWeb;
+    roomTryHandler?: RetryRoomHandler;
+    networkState: ENUM_NETWORK_STATE;
+    roomRetryTime: number;
+    streamRetryTime: number;
     constructor();
     isLogin(): boolean;
     getRequestId(): string;

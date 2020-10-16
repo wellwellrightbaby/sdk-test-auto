@@ -111,7 +111,7 @@ describe('express-web loginRoom', function() {
             expect(result).to.be.true;
         });
     }
-
+    /*
     if (P2) {
         it('loginRoom roomID4', function(done) {
             this.timeout(TIMEOUT);
@@ -392,6 +392,7 @@ describe('express-web loginRoom', function() {
             setTimeout(test, DELAY);
         });
     }
+    */
 
     if (P0) {
         it('loginRoom token1', async function() {
@@ -1408,6 +1409,7 @@ describe('express-web loginRoom', function() {
 //#endregion
 
 //#region logoutRoom
+
 describe('express-web logoutRoom', function() {
     before(async function() {
         num = 0;
@@ -1619,4 +1621,5 @@ describe('express-web logoutRoom', function() {
         });
     }
 });
+
 //#endregion

@@ -23,7 +23,6 @@ export declare class ZegoPublish {
     maxQualityListCount: number;
     lastPublishStats: any;
     reportSeq: number;
-    retrySeq: number;
     streamReportSeq: number;
     dataReport: ZegoDataReport;
     qualityUpload: boolean;
@@ -31,8 +30,6 @@ export declare class ZegoPublish {
     qualityUploadLastTime: number;
     qualitySeq: number;
     maxRetryCount: number;
-    currentRetryCount: number;
-    retryState: number;
     waitingServerTimerInterval: number;
     waitingServerTimer: number | null;
     firstGetStatsTimer: any;
@@ -71,14 +68,8 @@ export declare class ZegoPublish {
     stateNego: number;
     negoTimer: any;
     negoInterval: number;
-    negoTryCount: number;
-    negoTryMaxCount: number;
     publishOption: webPublishOption;
     publishEvent: boolean;
-    nextSignalTryCount: number;
-    waittingConnectedTimer: any;
-    waittingConnectedInerval: number;
-    tryingNexitSignal: boolean;
     soundLevel: number;
     script: any;
     mic: any;
@@ -89,10 +80,9 @@ export declare class ZegoPublish {
         node: MediaElementAudioSourceNode;
     }>);
     private publishStateUpdateError;
-    private resetPublish;
-    private clearTryPublishTimer;
+    resetPublish(): void;
     private clearPublishQualityTimer;
-    private shouldSendCloseSession;
+    shouldSendCloseSession(errorCode: ERRO): boolean;
     startPublish(streamId: string, localStream: MediaStream, videoInfo: VideoInfo, mediaStreamConfig: any, publishOption?: webPublishOption): void;
     onCreatePublishSessionSuccess(data: any): void;
     onCreateOfferSuccess(desc: {
@@ -112,9 +102,6 @@ export declare class ZegoPublish {
     onRecvCloseSession(seq: number, sessionId: number, data: any): void;
     onRecvResetSession(seq: number, sessionId: number, data: any): void;
     onRecvPublishEvent(seq: number, sessionId: number, data: any): void;
-    shouldRetryPublish(): boolean;
-    startRetryPublish(): void;
-    tryStartPublish(streamId: string): void;
     checkPublishConnectionFailedState(connectionState: string): void;
     setPublishQualityTimer(): void;
     peerConnectionGetStats(supportStatsCallback: boolean, callback?: Function): void;
@@ -123,7 +110,7 @@ export declare class ZegoPublish {
     }, callbackResults: any): void;
     uploadPublishQuality(publishData: any): void;
     stopPublish(): void;
-    onPublishStateUpdate(type: number, streamId: string | null, error: ERRO): void;
+    onPublishStateUpdate(type: number, streamId: string | null, error?: ERRO, stopRetry?: boolean): void;
     onPublishQualityUpdate(streamId: string | null, quality: any): void;
     onDisconnect(): void;
     playEffect(AudioMixConfig: AudioMixConfig, audioBuffer: AudioBuffer, start?: Function, end?: Function): void;
@@ -136,7 +123,6 @@ export declare class ZegoPublish {
     stopMixingBuffer(sourceID?: string): boolean;
     setMixingAudioVolume(volume: number, audio: HTMLMediaElement): boolean;
     publishSuccess(): void;
-    tryNextSignal(error: any): void;
     startSoundLevel(): void;
     stopSoundLevel(): void;
     rebackMic(): void;

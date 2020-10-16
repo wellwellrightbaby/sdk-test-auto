@@ -41,225 +41,225 @@ describe('1.12.0 createStream', function() {
         document.body.appendChild(video);
     });
 
-    // it('1.12.0 创建流，宽为带小数点时', function(done) {
-    //     console.log('1.12.0 创建流，宽为带小数点时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，宽为带小数点时', function(done) {
+        console.warn('1.12.0 创建流，宽为带小数点时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640.23,
-    //                     height: 300,
-    //                     frameRate: 15,
-    //                     bitrate: 1500,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640.23,
+                        height: 300,
+                        frameRate: 15,
+                        bitrate: 1500,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
-    // it('1.12.0 创建流，高为带小数点时', function(done) {
-    //     console.log('1.12.0 创建流，高为带小数点时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，高为带小数点时', function(done) {
+        console.warn('1.12.0 创建流，高为带小数点时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640,
-    //                     height: 300.55,
-    //                     frameRate: 15,
-    //                     bitrate: 1500,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640,
+                        height: 300.55,
+                        frameRate: 15,
+                        bitrate: 1500,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
-    // it('1.12.0 创建流，宽和高为带小数点时', function(done) {
-    //     console.log('1.12.0 创建流，宽和高为带小数点时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，宽和高为带小数点时', function(done) {
+        console.warn('1.12.0 创建流，宽和高为带小数点时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640.05,
-    //                     height: 300.50,
-    //                     frameRate: 15,
-    //                     bitrate: 1500,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640.05,
+                        height: 300.5,
+                        frameRate: 15,
+                        bitrate: 1500,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
-    // it('1.12.0 创建流，帧率和码率为带小数点时', function(done) {
-    //     console.log('1.12.0 创建流，帧率和码率为带小数点时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，帧率和码率为带小数点时', function(done) {
+        console.warn('1.12.0 创建流，帧率和码率为带小数点时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640,
-    //                     height: 300,
-    //                     frameRate: 15.23,
-    //                     bitrate: 1500.20,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640,
+                        height: 300,
+                        frameRate: 15.23,
+                        bitrate: 1500.2,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
-    // it('1.12.0 创建流，码率为带小数点时', function(done) {
-    //     console.log('1.12.0 创建流，码率为带小数点时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，码率为带小数点时', function(done) {
+        console.warn('1.12.0 创建流，码率为带小数点时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640,
-    //                     height: 300,
-    //                     frameRate: 15,
-    //                     bitrate: 1500.20,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640,
+                        height: 300,
+                        frameRate: 15,
+                        bitrate: 1500.2,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
-    // it('1.12.0 创建流，宽、高、帧率和码率为带小数点时', function(done) {
-    //     console.log('1.12.0 创建流，宽、高、帧率和码率为带小数点时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，宽、高、帧率和码率为带小数点时', function(done) {
+        console.warn('1.12.0 创建流，宽、高、帧率和码率为带小数点时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640.005,
-    //                     height: 300.03,
-    //                     frameRate: 15.23,
-    //                     bitrate: 1500.20,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640.005,
+                        height: 300.03,
+                        frameRate: 15.23,
+                        bitrate: 1500.2,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
-    // it('1.12.0 创建流，宽、高、帧率和码率为整数时', function(done) {
-    //     console.log('1.12.0 创建流，宽、高、帧率和码率为整数时');
-    //     this.timeout(TIMEOUT);
+    it('1.12.0 创建流，宽、高、帧率和码率为整数时', function(done) {
+        console.warn('1.12.0 创建流，宽、高、帧率和码率为整数时');
+        this.timeout(TIMEOUT);
 
-    //     const test = () => {
-    //         try {
-    //             // @ts-ignore
-    //             zg.createStream({
-    //                 camera: {
-    //                     videoQuality: 4,
-    //                     width: 640,
-    //                     height: 300,
-    //                     frameRate: 15,
-    //                     bitrate: 1500,
-    //                 },
-    //             }).then(
-    //                 MediaStream => {
-    //                     video.srcObject = MediaStream;
-    //                     expect(MediaStream).to.to.be.empty;
-    //                     expect(MediaStream).to.to.be.a('MediaStream');
-    //                     done();
-    //                 },
-    //                 e => done(),
-    //             );
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
-    //     setTimeout(test, DELAY);
-    // });
+        const test = () => {
+            try {
+                // @ts-ignore
+                zg.createStream({
+                    camera: {
+                        videoQuality: 4,
+                        width: 640,
+                        height: 300,
+                        frameRate: 15,
+                        bitrate: 1500,
+                    },
+                }).then(
+                    MediaStream => {
+                        video.srcObject = MediaStream;
+                        expect(MediaStream).to.to.be.empty;
+                        expect(MediaStream).to.to.be.a('MediaStream');
+                        done();
+                    },
+                    e => done(),
+                );
+            } catch (e) {
+                done(e);
+            }
+        };
+        setTimeout(test, DELAY);
+    });
 
     it('1.12.0 登录并创建流，宽和高为带小数点时', async function(done) {
-        console.log('1.12.0 登录并创建流，宽和高为带小数点时');
+        console.warn('1.12.0 登录并创建流，宽和高为带小数点时');
         this.timeout(TIMEOUT);
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: userID + '1' },
@@ -307,7 +307,7 @@ describe('1.12.0 createStream', function() {
     });
 
     it('1.12.0 登录并创建流，宽、高、帧率、码率为整数时', async function(done) {
-        console.log('1.12.0 登录并创建流，宽、高、帧率、码率为整数时');
+        console.warn('1.12.0 登录并创建流，宽、高、帧率、码率为整数时');
         this.timeout(TIMEOUT);
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: userID + '2' },
@@ -353,6 +353,7 @@ describe('1.12.0 createStream', function() {
     });
 });
 
+/*
 describe('v1.12.0 logout', function() {
     before(async function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -372,6 +373,7 @@ describe('v1.12.0 logout', function() {
     });
 
     it('connect', async function() {
+        console.warn('connect');
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: userID },
         });
@@ -390,6 +392,7 @@ describe('v1.12.0 logout', function() {
     });
 
     it('connect and disconnect1', async function() {
+        console.warn('connect and disconnect1');
         const zg1 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: 'test1' },
@@ -405,6 +408,7 @@ describe('v1.12.0 logout', function() {
     });
 
     it('connect and disconnect2', async function() {
+        console.warn('connect and disconnect2');
         const zg2 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: 'test1' },
@@ -420,6 +424,7 @@ describe('v1.12.0 logout', function() {
     });
 
     it('connect and disconnect3', async function() {
+        console.warn('connect and disconnect3');
         const zg3 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: 'test1' },
@@ -446,6 +451,7 @@ describe('v1.12.0 logout', function() {
     });
 
     it('connect and disconnect4', async function() {
+        console.warn('connect and disconnect4');
         const zg4 = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
             params: { app_id: APPID, id_name: 'test11' },
@@ -471,7 +477,8 @@ describe('v1.12.0 logout', function() {
         expect(result1).to.be.undefined;
     });
 });
-
+*/
+/*
 describe('混流功能', function() {
     before(async () => {
         console.warn('开始测试停止混流里logout问题');
@@ -498,133 +505,134 @@ describe('混流功能', function() {
     //     console.warn('完成测试停止混流里logout问题')
     // })
 
-    // it('开始混流', function(done) {
-    //     console.log('开始混流')
-    //     this.timeout(TIMEOUT);
+    it('开始混流', function(done) {
+        console.log('开始混流');
+        this.timeout(TIMEOUT);
 
-    //     const test = async () => {
-    //         try {
-    //             const taskID = 'taskId';
-    //             const stream = await zg.createStream();
-    //             zg.startPublishingStream(stream.id, stream);
+        const test = async () => {
+            try {
+                const taskID = 'taskId';
+                const stream = await zg.createStream();
+                zg.startPublishingStream(stream.id, stream);
 
-    //             // 延时，保证推流成功。再去执行混流
-    //             setTimeout(async () => {
-    //                 try {
-    //                     const inputList = [
-    //                         {
-    //                             streamID: stream.id,
-    //                             layout: {
-    //                                 top: 3,
-    //                                 left: 3,
-    //                                 bottom: 5,
-    //                                 right: 5,
-    //                             },
-    //                             contentType: 'VIDEO',
-    //                         },
-    //                     ];
-    //                     const outputList = [
-    //                         {
-    //                             target: 'output-stream id or url',
-    //                         },
-    //                     ];
-    //                     const outputConfig = {
-    //                         outputBitrate: 300,
-    //                         outputFPS: 15,
-    //                         outputWidth: 320,
-    //                         outputHeight: 480,
-    //                         // singleStreamPassThrough: true
-    //                     };
-    //                     zg.startMixerTask({
-    //                         taskID,
-    //                         outputList,
-    //                         outputConfig,
-    //                         inputList,
-    //                     }).then(
-    //                         res=>{
-    //                             //zg.logoutRoom()
-    //                             expect(res).to.have.keys(['errorCode', 'extendedData']);
-    //                         },
-    //                     ).catch(err => {
-    //                         console.error(err)
-    //                     });
-    //                     //expect(result).to.have.keys(['errorCode', 'extendedData']);
-    //                     done();
-    //                 } catch (e) {
-    //                     done(e);
-    //                 }
-    //             }, DELAY);
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
+                // 延时，保证推流成功。再去执行混流
+                setTimeout(async () => {
+                    try {
+                        const inputList = [
+                            {
+                                streamID: stream.id,
+                                layout: {
+                                    top: 3,
+                                    left: 3,
+                                    bottom: 5,
+                                    right: 5,
+                                },
+                                contentType: 'VIDEO',
+                            },
+                        ];
+                        const outputList = [
+                            {
+                                //target: 'output-stream id or url',
+                                target: 'outputstreamidorurl',
+                            },
+                        ];
+                        const outputConfig = {
+                            outputBitrate: 300,
+                            outputFPS: 15,
+                            outputWidth: 320,
+                            outputHeight: 480,
+                            // singleStreamPassThrough: true
+                        };
+                        zg.startMixerTask({
+                            taskID,
+                            outputList,
+                            outputConfig,
+                            inputList,
+                        })
+                            .then(res => {
+                                //zg.logoutRoom()
+                                expect(res).to.have.keys(['errorCode', 'extendedData']);
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            });
+                        //expect(result).to.have.keys(['errorCode', 'extendedData']);
+                        done();
+                    } catch (e) {
+                        done(e);
+                    }
+                }, DELAY);
+            } catch (e) {
+                done(e);
+            }
+        };
 
-    //     setTimeout(test, DELAY);
-    // });
+        setTimeout(test, DELAY);
+    });
 
-    // it('混流高级配置', function(done) {
-    //     this.timeout(TIMEOUT);
+    it('混流高级配置', function(done) {
+        this.timeout(TIMEOUT);
 
-    //     const test = async () => {
-    //         try {
-    //             const taskID = 'taskId';
-    //             const stream = await zg.createStream();
-    //             await zg.startPublishingStream(stream.id, stream);
+        const test = async () => {
+            try {
+                const taskID = 'taskId';
+                const stream = await zg.createStream();
+                await zg.startPublishingStream(stream.id, stream);
 
-    //             // 延时，保证推流成功。再去执行混流
-    //             setTimeout(async () => {
-    //                 try {
-    //                     const inputList = [
-    //                         {
-    //                             streamID: stream.id,
-    //                             layout: {
-    //                                 top: 3,
-    //                                 left: 3,
-    //                                 bottom: 5,
-    //                                 right: 5,
-    //                             },
-    //                             contentType: 'VIDEO',
-    //                         },
-    //                     ];
-    //                     const outputList = [
-    //                         {
-    //                             target: 'output-stream id or url',
-    //                         },
-    //                     ];
-    //                     const outputConfig = {
-    //                         outputBitrate: 300,
-    //                         outputFPS: 15,
-    //                         outputWidth: 320,
-    //                         outputHeight: 480,
-    //                         // singleStreamPassThrough: true
-    //                     };
+                // 延时，保证推流成功。再去执行混流
+                setTimeout(async () => {
+                    try {
+                        const inputList = [
+                            {
+                                streamID: stream.id,
+                                layout: {
+                                    top: 3,
+                                    left: 3,
+                                    bottom: 5,
+                                    right: 5,
+                                },
+                                contentType: 'VIDEO',
+                            },
+                        ];
+                        const outputList = [
+                            {
+                                target: 'outputstreamidorurl',
+                            },
+                        ];
+                        const outputConfig = {
+                            outputBitrate: 300,
+                            outputFPS: 15,
+                            outputWidth: 320,
+                            outputHeight: 480,
+                            // singleStreamPassThrough: true
+                        };
 
-    //                     zg.setMixerTaskConfig({
-    //                         // 16 进制 rgb
-    //                         backgroundColor: 666666,
-    //                         // backgroundImage: '#FFB400',
-    //                         videoCodec: 'h264',
-    //                     });
+                        zg.setMixerTaskConfig({
+                            // 16 进制 rgb
+                            backgroundColor: 666666,
+                            // backgroundImage: '#FFB400',
+                            videoCodec: 'h264',
+                        });
 
-    //                     const result = await zg.startMixerTask({
-    //                         taskID,
-    //                         outputList,
-    //                         outputConfig,
-    //                         inputList,
-    //                     });
-    //                     expect(result).to.have.keys(['errorCode', 'extendedData']);
-    //                     done();
-    //                 } catch (e) {
-    //                     done(e);
-    //                 }
-    //             });
-    //         } catch (e) {
-    //             done(e);
-    //         }
-    //     };
+                        const result = await zg.startMixerTask({
+                            taskID,
+                            outputList,
+                            outputConfig,
+                            inputList,
+                        });
+                        expect(result).to.have.keys(['errorCode', 'extendedData']);
+                        done();
+                    } catch (e) {
+                        done(e);
+                    }
+                });
+            } catch (e) {
+                done(e);
+            }
+        };
 
-    //     setTimeout(test, DELAY);
-    // });
+        setTimeout(test, DELAY);
+    });
 
     it('结束混流', function(done) {
         this.timeout(TIMEOUT);
@@ -682,7 +690,7 @@ describe('混流功能', function() {
                             })
                             .catch(err => {
                                 zg.logoutRoom('mixer1.12.0');
-                                console.error('停止混流失败:' + err);
+                                console.error('停止混流失败:' + JSON.stringify(err));
                             });
                         done();
                     } catch (e) {
@@ -697,3 +705,4 @@ describe('混流功能', function() {
         setTimeout(test, DELAY);
     });
 });
+*/

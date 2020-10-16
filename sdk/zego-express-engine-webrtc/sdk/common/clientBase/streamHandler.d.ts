@@ -3,12 +3,14 @@ import { StateCenter } from './stateCenter';
 import { CdnPushConfig, MixStreamConfig, ERRO, MixStreamAdvance } from '../zego.entity';
 import { Logger } from '../zego.logger';
 import { ZegoDataReport } from '../zego.datareport';
+import { ZegoStreamCenter } from '../ZegoStreamCenter';
 export declare class StreamHandler {
     private logger;
     private socketCenter;
     private stateCenter;
     private dataReport;
-    constructor(logger: Logger, stateCenter: StateCenter, socketCenter: SocketCenter, dataReport: ZegoDataReport);
+    private streamCenter;
+    constructor(logger: Logger, stateCenter: StateCenter, socketCenter: SocketCenter, dataReport: ZegoDataReport, streamCenter: ZegoStreamCenter);
     setCDNInfo(streamInfo: {
         urlFlv: string;
         urlHls: string;
@@ -31,6 +33,7 @@ export declare class StreamHandler {
     private handleDeletedStreamList;
     private handleUpdatedStreamList;
     private fetchStreamList;
+    private handleReconnectStream;
     makeCallbackStreamList(streamList: any[]): {
         user: {
             userID: any;
@@ -54,10 +57,17 @@ export declare class StreamHandler {
         errorCode: number;
         extendedData: string;
     }>;
-    publishTarget(cdnPushConfig: CdnPushConfig, success: Function, error: Function): void;
+    publishTarget(cdnPushConfig: CdnPushConfig, success: (result: {
+        errorCode: number;
+        extendedData: string;
+    }) => void, error: (result: {
+        errorCode: number;
+        extendedData: string;
+    }) => void): void;
     stopMixStream(taskid: string, successCallback: Function, errorCallback: (err: {
         errorCode: number;
         extendedData: string;
     }) => void): boolean;
     updateStreamExtraInfo(streamid: string, extraInfo: string): boolean;
+    roomStateHandle(state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED', error: ERRO): void;
 }
