@@ -17,9 +17,9 @@ let roomID: string;
 let firstCamera;
 let firstMicrophones: any;
 let video: any;
-const num = 0;
+let num = 0;
 //#region createStream
-/*
+
 describe('createStream', function() {
     before(async function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -607,7 +607,6 @@ describe('createStream', function() {
         setTimeout(test, DELAY);
     });
 
-    /*
     it('创建流，修改 screen 参数,audio为true', function(done) {
         console.warn('19:创建流，修改 screen 参数,audio为true');
         this.timeout(TIMEOUT);
@@ -872,7 +871,7 @@ describe('createStream', function() {
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 describe('createstream custom', function() {

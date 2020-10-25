@@ -31,7 +31,7 @@ let num = 0;
 let token = '';
 
 //#region createStream 参数为screen
-/*
+
 describe('1.13.0 number小数点检查 createStream 参数为screen对象', function() {
     before(function(done) {
         num = 0;
@@ -477,11 +477,11 @@ describe('1.13.0 number小数点检查 createStream 参数为screen对象', func
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region 初始化
-/*
+
 describe('1.13.0 number小数点检查 初始化', function() {
     before(function() {
         num = 0;
@@ -536,11 +536,11 @@ describe('1.13.0 number小数点检查 初始化', function() {
         expect(zg5).is.not.null;
     });
 });
-*/
+
 //#endregion
 
 //#region loginRoom
-/*
+
 describe('1.13.0 number小数点检查 loginRoom', function() {
     before(async function() {
         num = 0;
@@ -666,11 +666,11 @@ describe('1.13.0 number小数点检查 loginRoom', function() {
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region createStream 参数为camera
-/*
+
 describe('1.13.0 number小数点检查 createStream 参数为camera对象', function() {
     before(function(done) {
         num = 0;
@@ -1440,11 +1440,11 @@ describe('1.13.0 number小数点检查 createStream 参数为camera对象', func
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region createStream 参数为custom
-/*
+
 describe('1.13.0 number小数点检查 createStream 参数为custom对象', function() {
     before(function(done) {
         num = 0;
@@ -1614,11 +1614,11 @@ describe('1.13.0 number小数点检查 createStream 参数为custom对象', func
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region startMixerTask
-/*
+
 describe('1.13.0 number小数点检查 startMixerTask', function() {
     before(function(done) {
         num = 0;
@@ -2424,7 +2424,7 @@ describe('1.13.0 number小数点检查 startMixerTask', function() {
         setTimeout(test, DELAY);
     });
 });
-*/
+
 //#endregion
 
 //#region setMixerTaskConfig
@@ -2734,7 +2734,7 @@ describe('1.13.0 number小数点检查 setMixerTaskConfig', function() {
 //#endregion
 
 //#region setSoundLevelDelegate
-/*
+
 describe('1.13.0 number小数点检查 setSoundLevelDelegate', function() {
     before(function(done) {
         num = 0;
@@ -2819,5 +2819,5 @@ describe('1.13.0 number小数点检查 setSoundLevelDelegate', function() {
         zg.setSoundLevelDelegate(true, -1000.12);
     });
 });
-*/
+
 //#endregion

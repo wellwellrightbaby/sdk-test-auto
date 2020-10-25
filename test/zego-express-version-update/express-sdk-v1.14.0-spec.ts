@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.entity';
 import { before } from 'mocha';
 import { inputParmError, tokenError } from '../zego-express-engine-webrtc/config';
+import md5 from 'md5';
 import {
     inputParamErroraudioBitrate,
     inputParamErrorvideoQuality,
@@ -39,7 +40,11 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
 
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
         expect(zg).is.not.null;
-        const test = () => {
+        const test = async () => {
+            const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
+                params: { app_id: APPID, id_name: userID },
+            });
+            token = data;
             zg.checkSystemRequirements().then(deviceResult => {
                 expect(deviceResult).to.have.property('webRTC', true);
                 expect(deviceResult).to.have.property('customCapture', true);
@@ -55,13 +60,12 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
                 console.warn(deviceResult.camera);
             });
 
-            // zg.loginRoom('Mixer-123321', token, {
-            //     userID: userID,
-            //     userName: 'userName',
-            // }).then(loginResult => {
-            //     expect(loginResult).to.be.true;
-            //     done();
-            // });
+            zg.loginRoom('Cdn-123321', token, {
+                userID: userID,
+                userName: 'userName',
+            }).then(loginResult => {
+                expect(loginResult).to.be.true;
+            });
             done();
         };
         setTimeout(test, DELAY);
@@ -76,10 +80,6 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
         video.height = 300;
         video.autoplay = true;
         video.controls = true;
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: userID },
-        });
-        token = data;
     });
 
     afterEach(function() {
@@ -87,11 +87,24 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
         console.warn('去掉鉴权 addPublishCdnUrl End ' + num);
     });
 
-    it('1.去掉鉴权 addPublishCdnUrl', function() {
-        const stream = zg.createStream();
-        zg.addPublishCdnUrl(stream.id, 'rtmp://wsdemo.zego.im/livestream/test259').then(result => {
-            console.warn('test' + JSON.stringify(result));
-        });
+    it('1.去掉鉴权 addPublishCdnUrl', function(done) {
+        this.timeout(TIMEOUT);
+        const test = async () => {
+            const taskID = 'taskId';
+            const createstream = await zg.createStream();
+            console.warn('test:' + createstream.id);
+            const publishresult = zg.startPublishingStream(createstream.id, createstream);
+            expect(publishresult).to.be.true;
+            zg.addPublishCdnUrl(
+                createstream.id,
+                md5(APPID + Math.ceil(new Date().getTime() / 1000).toString() + '1ec3f85cb2f21370264eb371c8c65ca3'),
+                'rtmp://wsdemo.zego.im/livestream/test259',
+            ).then(result => {
+                console.warn('test' + JSON.stringify(result));
+            });
+            done();
+        };
+        setTimeout(test, DELAY);
     });
 });
 
