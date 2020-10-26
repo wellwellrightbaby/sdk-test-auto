@@ -31,7 +31,7 @@ const mydate = new Date();
 let num = 0;
 let token = '';
 
-//#region setSoundLevelDelegate
+//#region addPublishCdnUrl
 
 describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
     before(function(done) {
@@ -45,20 +45,7 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
                 params: { app_id: APPID, id_name: userID },
             });
             token = data;
-            zg.checkSystemRequirements().then(deviceResult => {
-                expect(deviceResult).to.have.property('webRTC', true);
-                expect(deviceResult).to.have.property('customCapture', true);
-                expect(deviceResult).to.have.property('camera', true);
-                expect(deviceResult).to.have.property('microphone', true);
-                expect(deviceResult)
-                    .to.have.property('videoCodec')
-                    .to.have.property('H264', true);
-                expect(deviceResult)
-                    .to.have.property('videoCodec')
-                    .to.have.property('VP8', true);
-                expect(deviceResult).to.have.property('screenSharing', true);
-                console.warn(deviceResult.camera);
-            });
+            zg.checkSystemRequirements();
 
             zg.loginRoom('Cdn-123321', token, {
                 userID: userID,
@@ -87,12 +74,12 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
         console.warn('去掉鉴权 addPublishCdnUrl End ' + num);
     });
 
-    it('1.去掉鉴权 addPublishCdnUrl', function(done) {
+    it('1.去掉鉴权 addPublishCdnUrl 带鉴权', function(done) {
+        console.warn('1.去掉鉴权 addPublishCdnUrl 带鉴权');
         this.timeout(TIMEOUT);
         const test = async () => {
             const taskID = 'taskId';
             const createstream = await zg.createStream();
-            console.warn('test:' + createstream.id);
             const publishresult = zg.startPublishingStream(createstream.id, createstream);
             expect(publishresult).to.be.true;
             zg.addPublishCdnUrl(
@@ -100,9 +87,125 @@ describe('1.14.0 去掉鉴权 addPublishCdnUrl', function() {
                 md5(APPID + Math.ceil(new Date().getTime() / 1000).toString() + '1ec3f85cb2f21370264eb371c8c65ca3'),
                 'rtmp://wsdemo.zego.im/livestream/test259',
             ).then(result => {
-                console.warn('test' + JSON.stringify(result));
+                console.warn('test1:' + JSON.stringify(result));
+                expect(result).to.have.property('errorCode', 0);
+                // expect(result)
+                //     .to.have.property('extendedData')
+                //     .include('flvURL');
             });
             done();
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('2.去掉鉴权 addPublishCdnUrl 带错误鉴权', function(done) {
+        console.warn('2.去掉鉴权 addPublishCdnUrl 带错误鉴权');
+        this.timeout(TIMEOUT);
+        const test = async () => {
+            const taskID = 'taskId';
+            const createstream = await zg.createStream();
+            const publishresult = zg.startPublishingStream(createstream.id, createstream);
+            expect(publishresult).to.be.true;
+            zg.addPublishCdnUrl(createstream.id, 'test', 'rtmp://wsdemo.zego.im/livestream/test259').then(result => {
+                console.warn('test2:' + JSON.stringify(result));
+                expect(result).to.have.property('errorCode', 0);
+            });
+            done();
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('3.去掉鉴权 addPublishCdnUrl 不带鉴权', function(done) {
+        console.warn('3.去掉鉴权 addPublishCdnUrl 不带鉴权');
+        this.timeout(TIMEOUT);
+        const test = async () => {
+            const taskID = 'taskId';
+            const createstream = await zg.createStream();
+            const publishresult = zg.startPublishingStream(createstream.id, createstream);
+            expect(publishresult).to.be.true;
+            zg.addPublishCdnUrl(createstream.id, 'rtmp://wsdemo.zego.im/livestream/test259').then(result => {
+                console.warn('test3:' + JSON.stringify(result));
+                expect(result).to.have.property('errorCode', 0);
+            });
+            done();
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('4.去掉鉴权 addPublishCdnUrl 不带鉴权', function(done) {
+        console.warn('4.去掉鉴权 addPublishCdnUrl 不带鉴权');
+        this.timeout(TIMEOUT);
+        const test = async () => {
+            const taskID = 'taskId';
+            const createstream = await zg.createStream();
+            const publishresult = zg.startPublishingStream(createstream.id, createstream);
+            expect(publishresult).to.be.true;
+            zg.addPublishCdnUrl('', 'rtmp://wsdemo.zego.im/livestream/test259').then(
+                result => {
+                    console.warn('test4:' + JSON.stringify(result));
+                    expect(result).to.have.property('errorCode', 0);
+                    done();
+                },
+                e => {
+                    console.warn('test123456:' + JSON.stringify(e));
+                    console.warn('test123456');
+                    done();
+                },
+            );
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('5.去掉鉴权 addPublishCdnUrl 不带鉴权', function(done) {
+        console.warn('5.去掉鉴权 addPublishCdnUrl 不带鉴权');
+        this.timeout(TIMEOUT);
+        const test = async () => {
+            const taskID = 'taskId';
+            const createstream = await zg.createStream();
+            const publishresult = zg.startPublishingStream(createstream.id, createstream);
+            expect(publishresult).to.be.true;
+            zg.addPublishCdnUrl(createstream.id, '').then(
+                result => {
+                    console.warn('test5:' + JSON.stringify(result));
+                    expect(result).to.have.property('errorCode', 0);
+                    done();
+                },
+                e => {
+                    console.warn('test123456:' + JSON.stringify(e));
+                    console.warn('test123456');
+                    done();
+                },
+            );
+        };
+        setTimeout(test, DELAY);
+    });
+
+    it('6.去掉鉴权 addPublishCdnUrl 带鉴权', function(done) {
+        console.warn('6.去掉鉴权 addPublishCdnUrl 带鉴权');
+        this.timeout(TIMEOUT);
+        const test = async () => {
+            const taskID = 'taskId';
+            const createstream = await zg.createStream();
+            const publishresult = zg.startPublishingStream(createstream.id, createstream);
+            expect(publishresult).to.be.true;
+            zg.addPublishCdnUrl(
+                createstream.id,
+                md5(APPID + Math.ceil(new Date().getTime() / 1000).toString() + '1ec3f85cb2f21370264eb371c8c65ca3'),
+                '',
+            ).then(
+                result => {
+                    console.warn('test6:' + JSON.stringify(result));
+                    expect(result).to.have.property('errorCode', 0);
+                    console.warn('123456test');
+                    done();
+                },
+                e => {
+                    //为什么没有触发error promise函数
+                    console.warn('test123456:' + JSON.stringify(e));
+                    console.warn('test123456');
+                    done();
+                },
+            );
         };
         setTimeout(test, DELAY);
     });
