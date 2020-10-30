@@ -4,6 +4,7 @@ import { LOG_LEVEL } from '../../sdk/zego-express-engine-webrtc/sdk/common/zego.
 import { before } from 'mocha';
 //import { deviceId } from './../zego-express-engine-webrtc/config';
 import { inputParamErrorwidth, inputParamErrorbitraterequired } from './config';
+import { P0, P1, P2 } from './config';
 const expect = chai.expect;
 
 const TIMEOUT = 10000;
@@ -19,7 +20,7 @@ let firstMicrophones: any;
 let video: any;
 let num = 0;
 //#region createStream
-
+/*
 describe('createStream', function() {
     before(async function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -29,6 +30,7 @@ describe('createStream', function() {
             remoteLogLevel: 'info',
         });
         expect(result).to.be.true;
+        zg.checkSystemRequirements()
         const deviceResult = await zg.enumDevices();
         firstCamera = deviceResult.cameras[0].deviceName;
         firstMicrophones = deviceResult.microphones[0].deviceName;
@@ -38,10 +40,10 @@ describe('createStream', function() {
 
     beforeEach(function() {
         num += 1;
-        console.warn('loginRoom TestCase Begin ' + num);
+        console.warn('createStream TestCase Begin ' + num);
         video = document.createElement('video');
-        video.width = 1000;
-        video.height = 1000;
+        video.width = 300;
+        video.height = 300;
         video.autoplay = true;
         video.controls = true;
     });
@@ -50,143 +52,176 @@ describe('createStream', function() {
         document.body.appendChild(video);
         console.warn('createStream TestCase End ' + num);
     });
+    if (P0) {
+        it('创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）', function(done) {
+            //   const _constraints = {
+            //       camera: {
+            //           audioInput: $('#audioList').val() as string,
+            //           videoInput: $('#videoList').val() as string,
+            //           video: video !== undefined ? video : $('#videoList').val() === '0' ? false : true,
+            //           audio: $('#audioList').val() === '0' ? false : true,
+            //       },
+            //   };
+            console.warn('1:创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）'); //推流音视频
+            this.timeout(TIMEOUT);
+            const test = () => {
+                try {
+                    zg.createStream().then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => {
+                            expect(e).to.be.null;
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
+            setTimeout(test, DELAY);
+        });
 
-    it('创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）', function(done) {
-        //   const _constraints = {
-        //       camera: {
-        //           audioInput: $('#audioList').val() as string,
-        //           videoInput: $('#videoList').val() as string,
-        //           video: video !== undefined ? video : $('#videoList').val() === '0' ? false : true,
-        //           audio: $('#audioList').val() === '0' ? false : true,
-        //       },
-        //   };
-        console.warn('1:创建流 不带source参数（source 不传默认采集视频质量为 2 的摄像头麦克风数据）'); //推流音视频
-        this.timeout(TIMEOUT);
-        const test = () => {
-            try {
-                zg.createStream().then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => {
-                        expect(e).to.be.null;
-                        done();
-                    },
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
-        setTimeout(test, DELAY);
+        it('创建流 带三个参数，但三个参数都为空', function(done) {
+            console.warn('2:创建流 带三个参数，但三个参数都为空'); //共享屏幕
+            this.timeout(TIMEOUT);
+            const test = () => {
+                try {
+                    zg.createStream({
+                        camera: {},
+                        screen: {},
+                        custom: {},
+                    }).then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => {
+                            expect(e).to.be.null;
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
+            setTimeout(test, DELAY);
+        });
+
+        it('创建流 带camera参数，但camera参数为空', function(done) {
+            console.warn('3:创建流 带camera参数，但camera参数为空'); //推流音视频
+            this.timeout(TIMEOUT);
+            const test = () => {
+                try {
+                    zg.createStream({
+                        camera: {},
+                    }).then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => {
+                            expect(e).to.be.null;
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
+            setTimeout(test, DELAY);
+        });
+
+        it('创建流 带screen参数，但screen参数为空', function(done) {
+            console.warn('4:创建流 带screen参数，但screen参数为空'); //共享屏幕
+            this.timeout(TIMEOUT);
+            const test = () => {
+                try {
+                    zg.createStream({
+                        screen: {},
+                    }).then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => {
+                            expect(e).to.be.null;
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
+            setTimeout(test, DELAY);
+        });
+
+        it('创建流 带custom参数，但custom参数为空', function(done) {
+            console.warn('5:创建流 带custom参数，但custom参数为空'); //推流音视频
+            this.timeout(TIMEOUT);
+            const test = () => {
+                try {
+                    zg.createStream({
+                        custom: {},
+                    }).then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => {
+                            expect(e).to.be.null;
+                            done();
+                        },
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
+            setTimeout(test, DELAY);
+        });
+    }
+});
+*/
+//#endregion
+
+//#region createStream camera
+
+describe('createStream camera', function() {
+    before(async function() {
+        zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
+        expect(zg).is.not.null;
+        const result = zg.setLogConfig({
+            logLevel: 'info',
+            remoteLogLevel: 'info',
+        });
+        expect(result).to.be.true;
+        zg.checkSystemRequirements();
+        const deviceResult = await zg.enumDevices();
+        firstCamera = deviceResult.cameras[0].deviceName;
+        firstMicrophones = deviceResult.microphones[0].deviceName;
+        console.log('firstCamera：' + firstCamera);
+        console.log('firstMicrophones：' + firstMicrophones);
     });
 
-    it('创建流 带三个参数，但三个参数都为空', function(done) {
-        console.warn('2:创建流 带三个参数，但三个参数都为空'); //共享屏幕
-        this.timeout(TIMEOUT);
-        const test = () => {
-            try {
-                zg.createStream({
-                    camera: {},
-                    screen: {},
-                    custom: {},
-                }).then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => {
-                        expect(e).to.be.null;
-                        done();
-                    },
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
-        setTimeout(test, DELAY);
+    beforeEach(function() {
+        num += 1;
+        console.warn('createStream camera TestCase Begin ' + num);
+        video = document.createElement('video');
+        video.width = 300;
+        video.height = 300;
+        video.autoplay = true;
+        video.controls = true;
     });
 
-    it('创建流 带camera参数，但camera参数为空', function(done) {
-        console.warn('3:创建流 带camera参数，但camera参数为空'); //推流音视频
-        this.timeout(TIMEOUT);
-        const test = () => {
-            try {
-                zg.createStream({
-                    camera: {},
-                }).then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => {
-                        expect(e).to.be.null;
-                        done();
-                    },
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
-        setTimeout(test, DELAY);
-    });
-
-    it('创建流 带screen参数，但screen参数为空', function(done) {
-        console.warn('4:创建流 带screen参数，但screen参数为空'); //共享屏幕
-        this.timeout(TIMEOUT);
-        const test = () => {
-            try {
-                zg.createStream({
-                    screen: {},
-                }).then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => {
-                        expect(e).to.be.null;
-                        done();
-                    },
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
-        setTimeout(test, DELAY);
-    });
-
-    it('创建流 带custom参数，但custom参数为空', function(done) {
-        console.warn('5:创建流 带custom参数，但custom参数为空'); //推流音视频
-        this.timeout(TIMEOUT);
-        const test = () => {
-            try {
-                zg.createStream({
-                    custom: {},
-                }).then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => {
-                        expect(e).to.be.null;
-                        done();
-                    },
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
-        setTimeout(test, DELAY);
+    afterEach(function() {
+        document.body.appendChild(video);
+        console.warn('createStream camera TestCase End ' + num);
     });
 
     //camera参数测试
@@ -606,6 +641,42 @@ describe('createStream', function() {
 
         setTimeout(test, DELAY);
     });
+});
+
+//#endregion
+
+//#region createStream screen
+/*
+describe('createStream screen', function() {
+    before(async function() {
+        zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
+        expect(zg).is.not.null;
+        const result = zg.setLogConfig({
+            logLevel: 'info',
+            remoteLogLevel: 'info',
+        });
+        expect(result).to.be.true;
+        const deviceResult = await zg.enumDevices();
+        firstCamera = deviceResult.cameras[0].deviceName;
+        firstMicrophones = deviceResult.microphones[0].deviceName;
+        console.log('firstCamera：' + firstCamera);
+        console.log('firstMicrophones：' + firstMicrophones);
+    });
+
+    beforeEach(function() {
+        num += 1;
+        console.warn('createStream screen TestCase Begin ' + num);
+        video = document.createElement('video');
+        video.width = 300;
+        video.height = 300;
+        video.autoplay = true;
+        video.controls = true;
+    });
+
+    afterEach(function() {
+        document.body.appendChild(video);
+        console.warn('createStream screen TestCase End ' + num);
+    });
 
     it('创建流，修改 screen 参数,audio为true', function(done) {
         console.warn('19:创建流，修改 screen 参数,audio为true');
@@ -874,6 +945,8 @@ describe('createStream', function() {
 
 //#endregion
 
+//#region createStream custom
+
 describe('createstream custom', function() {
     before(async function() {
         zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
@@ -886,6 +959,8 @@ describe('createstream custom', function() {
     });
 
     beforeEach(function() {
+        num += 1;
+        console.warn('createStream custom TestCase Begin ' + num);
         video = document.createElement('video');
         video.width = 300;
         video.height = 300;
@@ -895,128 +970,85 @@ describe('createstream custom', function() {
 
     afterEach(function() {
         document.body.appendChild(video);
+        console.warn('createStream custom TestCase End ' + num);
     });
 
-    it('创建流，修改 custom 参数', function(done) {
-        console.warn('1');
-        this.timeout(TIMEOUT);
+    if (P0) {
+        it('创建流，修改 custom 参数：参数只写source', function(done) {
+            console.warn('1');
+            this.timeout(TIMEOUT);
 
-        const videotest = document.createElement('video');
-        videotest.src = 'https://zego-public.oss-cn-shanghai.aliyuncs.com/sdk-doc/assets/big_buck_bunny.mp4';
-        videotest.width = 300;
-        videotest.height = 300;
-        videotest.autoplay = true;
-        videotest.controls = true;
-        videotest.loop = true;
-        document.body.appendChild(videotest);
+            const videotest = document.createElement('video');
+            videotest.src = 'https://zego-public.oss-cn-shanghai.aliyuncs.com/sdk-doc/assets/big_buck_bunny.mp4';
+            videotest.width = 300;
+            videotest.height = 300;
+            videotest.autoplay = true;
+            videotest.controls = true;
+            videotest.loop = true;
+            document.body.appendChild(videotest);
 
-        const test = () => {
-            try {
-                // @ts-ignore
-                zg.createStream({
-                    custom: {
-                        source: videotest,
-                    },
-                }).then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => done(),
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
+            const test = () => {
+                try {
+                    // @ts-ignore
+                    zg.createStream({
+                        custom: {
+                            source: videotest,
+                        },
+                    }).then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.empty;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => done(),
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
 
-        setTimeout(test, DELAY);
-    });
-
-    it('创建流，修改 custom 参数', function(done) {
-        console.warn('2');
-        this.timeout(TIMEOUT);
-
-        const videotest = document.createElement('video');
-        videotest.src = 'https://zego-public.oss-cn-shanghai.aliyuncs.com/sdk-doc/assets/big_buck_bunny.mp4';
-        videotest.width = 300;
-        videotest.height = 300;
-        videotest.autoplay = true;
-        videotest.controls = true;
-        videotest.loop = true;
-        document.body.appendChild(videotest);
-
-        const test = () => {
-            try {
-                // @ts-ignore
-                zg.createStream({
-                    custom: {
-                        source: videotest,
-                        bitrate: 2000,
-                    },
-                }).then(
-                    MediaStream => {
-                        video.srcObject = MediaStream;
-                        expect(MediaStream).to.to.be.empty;
-                        expect(MediaStream).to.to.be.a('MediaStream');
-                        done();
-                    },
-                    e => done(),
-                );
-            } catch (e) {
-                done(e);
-            }
-        };
-
-        setTimeout(test, DELAY);
-    });
-});
-
-/*
-describe('on test', function() {
-    this.timeout(10000);
-    roomID = 'loginRoom_1234567890';
-    before(async function() {
-        const { data } = await Axios.get('https://wsliveroom-demo.zego.im:8282/token', {
-            params: { app_id: APPID, id_name: userID },
-        });
-        token = data;
-        expect(token).to.be.a('string');
-        zg = new ZegoExpressEngine(APPID, 'wss://webliveroom-test.zego.im/ws');
-        expect(zg).is.not.null;
-        const result = zg.setLogConfig({
-            logLevel: 'info',
-            remoteLogLevel: 'info',
-        });
-        expect(result).to.be.true;
-        zg.on('roomUserUpdate', (roomID, updateType, userList) => {
-            const ulist = userList.join(',');
-            console.log('roomUserUpdate: ', roomID, updateType, ulist);
+            setTimeout(test, DELAY);
         });
 
-        const result1 = await zg.loginRoom(roomID, token, {
-            userID: userID,
-            userName: 'userName',
-        });
-    });
+        it('创建流，修改 custom 参数：参数写source和bitrate', function(done) {
+            console.warn('2');
+            this.timeout(TIMEOUT);
 
-    it('connect1', async function() {
-        const result = await zg.createStream({
-            camera: {
-                audio: false,
-                video: true,
-                videoQuality: 3,
-                facingMode: 'environment',
-            },
+            const videotest = document.createElement('video');
+            videotest.src = 'https://zego-public.oss-cn-shanghai.aliyuncs.com/sdk-doc/assets/big_buck_bunny.mp4';
+            videotest.width = 300;
+            videotest.height = 300;
+            videotest.autoplay = true;
+            videotest.controls = true;
+            videotest.loop = true;
+            document.body.appendChild(videotest);
+
+            const test = () => {
+                try {
+                    // @ts-ignore
+                    zg.createStream({
+                        custom: {
+                            source: videotest,
+                            bitrate: 2000,
+                        },
+                    }).then(
+                        MediaStream => {
+                            video.srcObject = MediaStream;
+                            expect(MediaStream).to.to.be.empty;
+                            expect(MediaStream).to.to.be.a('MediaStream');
+                            done();
+                        },
+                        e => done(),
+                    );
+                } catch (e) {
+                    done(e);
+                }
+            };
+
+            setTimeout(test, DELAY);
         });
-        const publishOption: any = {
-            streamParams: '',
-            extraInfo: '',
-            videoCodec: 'H.264',
-        };
-        const result1 = zg.startPublishingStream(result.id, result, publishOption);
-        expect(result1).to.be.true;
-    });
+    }
 });
 */
+//#endregion
