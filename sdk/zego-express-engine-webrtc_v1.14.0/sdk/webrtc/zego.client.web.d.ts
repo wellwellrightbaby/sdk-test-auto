@@ -18,15 +18,12 @@ export declare class ZegoWebRTC extends BaseCenter {
     off<k extends keyof WebListener>(event: k, callBack?: WebListener[k]): boolean;
     mutePublishStreamVideo(localStream: MediaStream, mute: boolean): boolean;
     mutePublishStreamAudio(localStream: MediaStream, mute: boolean): boolean;
-    mutePlayStreamVideo(streamID: string, mute: boolean): Promise<boolean>;
-    mutePlayStreamAudio(streamID: string, mute: boolean): Promise<boolean>;
     private enableStream;
     setAudioOutput(localVideo: HTMLMediaElement, audioOutput: string): boolean;
     setCustomSignalUrl(signalUrl: Array<string>): false | undefined;
     private setQualityMonitorCycle;
     startPlayingStream(streamID: string, playOption?: webPlayOption): Promise<MediaStream>;
     stopPlayingStream(streamID: string): void;
-    setTurnOverTcpOnly(bool: boolean): void;
     createStream(option?: Constraints): Promise<MediaStream>;
     private checkScreenParams;
     private checkCameraParams;
@@ -34,10 +31,6 @@ export declare class ZegoWebRTC extends BaseCenter {
     startPublishingStream(streamID: string, localStream: MediaStream, publishOption?: webPublishOption): boolean;
     stopPublishingStream(streamID: string): boolean;
     setVideoConfig(localStream: MediaStream, constraints: PublishStreamConstraints): Promise<{
-        errorCode: number;
-        extendedData: string;
-    }>;
-    setAudioConfig(localStream: MediaStream, constraints: PublishStreamConstraints): Promise<{
         errorCode: number;
         extendedData: string;
     }>;

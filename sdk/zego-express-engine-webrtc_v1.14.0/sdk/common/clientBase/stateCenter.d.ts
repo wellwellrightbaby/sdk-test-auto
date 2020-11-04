@@ -95,7 +95,6 @@ export declare class StateCenter {
     startConnceTime: any;
     startloginTime: any;
     startloginSucTime: any;
-    turnOverTcpOnly: boolean;
     audioEffectBuffer: any;
     audioBitRate: number;
     cdnSeq: number;

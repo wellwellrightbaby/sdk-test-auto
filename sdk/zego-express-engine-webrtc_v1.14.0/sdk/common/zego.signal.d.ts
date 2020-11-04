@@ -14,9 +14,6 @@ export declare class ZegoSignal {
     heartbeatInterval: number;
     sendDataTimeout: number;
     sendDataDropTimeout: number;
-    sendDataCheckTimer: any;
-    sendDataCheckInterval: number;
-    checkMessageList: string[];
     tryConnectCount: number;
     tryConnectTimer: any;
     tryConnectInterval: number;
@@ -96,8 +93,6 @@ export declare class ZegoSignal {
     checkMessageTimeout(): void;
     sendHeartbeat(): void;
     QualityReport(seq: number, sessionId: number, qualityStat: any, success: Function | null, error: Function | null): void;
-    sendStreamStatus(seq: number, sessionId: number, camera: number, microphone: number, streamID: string): void;
-    ActivatePlayVideoStream(seq: number, sessionId: number, mute: boolean, success: Function, error: Function): void;
-    ActivatePlayAudioStream(seq: number, sessionId: number, mute: boolean, success: Function, error: Function): void;
+    sendStreamStatus(seq: number, sessionId: number, camera: number, microphone: number): void;
     sendBroadcasterStatus(seq: number, sessionId: number, status: 0 | 1): void;
 }

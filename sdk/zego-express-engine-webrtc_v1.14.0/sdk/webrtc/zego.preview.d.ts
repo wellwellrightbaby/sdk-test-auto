@@ -8,7 +8,6 @@ export declare class ZegoPreview {
     videoInfo: any;
     mediaStreamConfig: any;
     previewSuc: boolean;
-    micTrack: MediaStreamTrack | null;
     constructor(log: Logger);
     getMediaStreamConstraints(mediaStreamConfig: any, force?: boolean): any;
     startPreview(mediaStreamConfig: any, successCallback: Function, errorCallback: (err: ERRO) => void): void;

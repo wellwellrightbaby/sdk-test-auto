@@ -6,7 +6,6 @@ import { ZegoVideoCodec, ZegoAudioContext } from '../../types/index';
 import { PitchUtil } from '../util/pitchUtil';
 import { LoggerWeb } from './zego.logger.webrtc';
 import { ZegoStreamCenterWeb } from './zego.streamCenter.web';
-import { StateCenter } from '../common/clientBase/stateCenter';
 export declare class ZegoPublish {
     logger: LoggerWeb;
     signal: any;
@@ -25,7 +24,6 @@ export declare class ZegoPublish {
     lastPublishStats: any;
     reportSeq: number;
     streamReportSeq: number;
-    stateCenter: StateCenter;
     dataReport: ZegoDataReport;
     qualityUpload: boolean;
     qualityUploadInterval: number;
@@ -80,7 +78,7 @@ export declare class ZegoPublish {
     constructor(log: LoggerWeb, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext, mediaEleSources: Array<{
         audio: HTMLMediaElement;
         node: MediaElementAudioSourceNode;
-    }>, stateCenter: StateCenter);
+    }>);
     private publishStateUpdateError;
     resetPublish(): void;
     private clearPublishQualityTimer;

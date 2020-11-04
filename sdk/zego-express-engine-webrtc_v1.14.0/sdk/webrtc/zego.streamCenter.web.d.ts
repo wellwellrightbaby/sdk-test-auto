@@ -47,7 +47,6 @@ export declare class ZegoStreamCenterWeb extends ZegoStreamCenter {
     onUpdateHeartBeartIntervalHandle(interval: number): void;
     enableMicrophone(localStream: MediaStream, enable: boolean): boolean;
     enableCamera(localStream: MediaStream, enable: boolean): boolean;
-    mutePlayStream(streamID: string, type: string, mute: boolean): Promise<boolean>;
     recordDevices(): void;
     startPreview(mediaStreamConstraints: Constraints['camera'] | Constraints['custom'], success: (stream: MediaStream) => void, error: (err: ERRO) => void): boolean;
     stopPreview(localStream: MediaStream): boolean;

@@ -34,8 +34,6 @@ export declare const eventList: {
     kZegoTaskCheckSystemRequirements: string;
     kZegoTaskMutePublishVideo: string;
     kZegoTaskMutePublishAudio: string;
-    kZegoTaskMutePlayVideo: string;
-    kZegoTaskMutePlayAudio: string;
     kZegoTaskRemoteCameraUpdate: string;
     kZegoTaskRemoteMicUpdate: string;
     kZegoTaskGetSoundLevel: string;
@@ -52,7 +50,6 @@ export declare const eventList: {
     kZegoEventPublishStat: string;
     kZegoEventPlayStat: string;
     kZegoSetPublishConstraints: string;
-    kZegoSetAudioConfig: string;
 };
 export declare const errorList: {
     kOK: number;

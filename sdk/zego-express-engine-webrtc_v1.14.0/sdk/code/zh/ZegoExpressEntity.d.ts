@@ -1,157 +1,4 @@
 /**
- * @param roomID 房间ID
- * @param messageInfo 弹幕消息信息
- */
-declare type IMRecvBarrageMessageCallBack = (roomID: string, messageInfo: ZegoBarrageMessageInfo[]) => void;
-/**
- * @param roomID 房间ID
- * @param chatData 房间消息信息
- */
-declare type IMRecvBroadcastMessageCallBack = (roomID: string, chatData: ZegoBroadcastMessageInfo[]) => void;
-/**
- * @param roomID 房间ID
- * @param fromUser 发送消息用户信息
- * @param command 收到的自定义消息
- */
-declare type IMRecvCustomCommandCallBack = (roomID: string, fromUser: ZegoUser, command: string) => void;
-/**
- * 拉流质量回调,拉流成功后开始触发
- *
- * @param streamID 流 ID
- * @param stats 拉流质量回调信息
- */
-declare type PlayQualityUpdateCallBack = (streamID: string, stats: ZegoPlayStats) => void;
-/**
- * 拉流状态发生变化是回调
- *
- * @param result 拉流状态结果
- */
-declare type PlayerStateUpdateCallBack = (result: ZegoPlayerState) => void;
-/**
- * 订阅推流质量回调
- *
- * @param streamID 推流流ID
- * @param stats 推流质量描述
- */
-declare type PublishQualityUpdateCallBack = (streamID: string, stats: ZegoPublishStats) => void;
-/**
- * @param result 推流状态结果
- */
-declare type PublisherStateUpdateCallBack = (result: ZegoPublisherState) => void;
-/**
- * @param streamID 流 ID
- * @param status 所拉流的摄像头状态 'OPEN'表示开启 'MUTE'表示关闭
- */
-declare type RemoteCameraStatusUpdateCallBack = (streamID: string, status: 'OPEN' | 'MUTE') => void;
-/**
- * @param streamID 流 ID
- * @param status 所拉流的麦克风状态 'OPEN'表示开启 'MUTE'表示关闭
- */
-declare type RemoteMicStatusUpdateCallBack = (streamID: string, status: 'OPEN' | 'MUTE') => void;
-/**
- * @param roomID 发生用户变化房间的ID
- * @param count 当前在线用户数量
- */
-declare type RoomOnlineUserCountUpdateCallBack = (roomID: string, count: number) => void;
-/**
- * @param roomID 房间ID
- * @param state DISCONNECTED: 房间和服务期断开,并重试后仍旧失败
- *              CONNECTING:  断开并开始重连
- *              CONNECTED: 重连成功
- * @param errorCode 断开时候的具体错误码
- * @param extendedData 扩展信息
- */
-declare type RoomStateUpdateCallBack = (roomID: string, state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED', errorCode: number, extendedData: string) => void;
-/**
- * 监听已登录房间内流的变化（增加，删除）
- *
- * @param roomID 房间ID
- * @param updateType DELETE：流删除，ADD：流新增
- * @param streamList 更新流列表
- */
-declare type RoomStreamUpdateCallBack = (roomID: string, updateType: 'DELETE' | 'ADD', streamList: ZegoStreamList[]) => void;
-/**
- * 房间用户变化回调
- *
- * Note: 详情描述：当前登录房间,如果用户发生新增,删除等,触发回调通知当前用户
- *
- * Note: 触发条件：其他用户登录,推出时触发
- *
- * Note: 限制频率：无
- *
- * Note: 关注回调：无
- *
- * Note: 重点提示：触发前提是登录时,设置了关注用户变化
- *
- * Note: 支持版本：1.0.0
- *
- * Note: 废弃时间：无
- *
- * @param roomID 发生用户变化房间的ID
- * @param updateType 用户行为，DELETE 表示离开，ADD 表示进入
- * @param userList 发生变化用户的具体信息
- *
- * @return 没有返回
- */
-declare type RoomUserUpdateCallBack = (roomID: string, updateType: 'DELETE' | 'ADD', userList: ZegoUser[]) => void;
-/**
- * @param mediaStream 创建屏幕共享流得到的流对象
- */
-declare type ScreenSharingEndedCallBack = (mediaStream: MediaStream) => void;
-/**
- * 推拉流音浪回调,该接口目前不兼容safari
- *
- * @param soundLevelList 声浪信息列表，包括流id，声浪大小，及流状态
- */
-declare type SoundLevelUpdateCallBack = (soundLevelList: ZegoSoundLevelInfo[]) => void;
-/**
- * 流附加消息变化时回调
- *
- * @param roomID 房间ID
- * @param streamList 流信息
- */
-declare type StreamExtraInfoUpdateCallBack = (roomID: string, streamList: {
-    streamID: string;
-    user: ZegoUser;
-    extraInfo: string;
-}[]) => void;
-/**
- * 音频设备状态变化回调
- *
- * @param updateType 'DELETE' 表示设备删除， 'ADD'表示设备增加
- * @param deviceType 'Input'表示输入设备， 'Output'表示输出设备
- * @param deviceInfo 设备信息
- */
-declare type audioDeviceStateChangedCallBack = (updateType: 'DELETE' | 'ADD', deviceType: 'Input' | 'Output', deviceInfo: {
-    deviceName: string;
-    deviceID: string;
-}) => void;
-/**
- * 设备异常回调
- *
- * @param errorCode 错误码
- * @param deviceName 发生异常的设备名称
- */
-declare type deviceErrorCallBack = (errorCode: number, deviceName: string) => void;
-/**
- * 房间额外消息更新回调
- *
- * @param roomID 房间ID
- * @param type 消息类型
- * @param data 消息内容
- */
-declare type roomExtraInfoUpdateCallBack = (roomID: string, type: string, data: string) => void;
-/**
- * 视频设备状态变化更新回调
- *
- * @param updateType 'DELETE' 为设备被移除， 'ADD'表示设备增加
- * @param deviceInfo 设备信息，deviceName为设备名称，deviceID为设备ID
- */
-declare type videoDeviceStateChangedCallBack = (updateType: 'DELETE' | 'ADD', deviceInfo: {
-    deviceName: string;
-    deviceID: string;
-}) => void;
-/**
  * 房间弹幕消息
  *
  */
@@ -413,7 +260,7 @@ export interface ZegoMixStreamAdvance {
     /**
      * 混流视频编码，'vp8' 或 ' h264',默认'h264'
      */
-    videoCodec: 'VP8' | 'H264' | 'vp8' | 'h264';
+    videoCodec: "VP8" | "H264" | "vp8" | "h264";
 }
 export interface ZegoMixStreamConfig {
     /**
@@ -539,7 +386,7 @@ export interface ZegoPlayAudioStats {
     /**
      * 音轨是否被关闭
      */
-    muteState: '0' | '1';
+    muteState: "0" | "1";
     /**
      * 音频帧率
      */
@@ -575,7 +422,7 @@ export interface ZegoPlayVideoStats {
     /**
      * 是否视轨被关闭
      */
-    muteState: '0' | '1';
+    muteState: "0" | "1";
     /**
      * 视频码率
      */
@@ -667,20 +514,6 @@ export interface ZegoPublishStats {
      */
     audio: ZegoPublishAudioStats;
 }
-export interface ZegoPublishStreamAudioConfig {
-    /**
-     * 是否开启降噪
-     */
-    ANS: boolean;
-    /**
-     * 是否开启自动增益
-     */
-    AGC: boolean;
-    /**
-     * 是否开启回声消除
-     */
-    AEC: boolean;
-}
 export interface ZegoPublishStreamConfig {
     width: number;
     height: number;
@@ -703,7 +536,7 @@ export interface ZegoPublishVideoStats {
     /**
      * 是否视轨被关闭
      */
-    muteState: '0' | '1';
+    muteState: "0" | "1";
     /**
      * 视频码率
      */
@@ -898,4 +731,157 @@ export interface ZegoWebPublishOption {
      */
     videoCodec?: 'VP8' | 'H264';
 }
+/**
+ * @param roomID 房间ID
+ * @param messageInfo 弹幕消息信息
+ */
+declare type IMRecvBarrageMessageCallBack = (roomID: string, messageInfo: ZegoBarrageMessageInfo[]) => void;
+/**
+ * @param roomID 房间ID
+ * @param chatData 房间消息信息
+ */
+declare type IMRecvBroadcastMessageCallBack = (roomID: string, chatData: ZegoBroadcastMessageInfo[]) => void;
+/**
+ * @param roomID 房间ID
+ * @param fromUser 发送消息用户信息
+ * @param command 收到的自定义消息
+ */
+declare type IMRecvCustomCommandCallBack = (roomID: string, fromUser: ZegoUser, command: string) => void;
+/**
+ * 拉流质量回调,拉流成功后开始触发
+ *
+ * @param streamID 流 ID
+ * @param stats 拉流质量回调信息
+ */
+declare type PlayQualityUpdateCallBack = (streamID: string, stats: ZegoPlayStats) => void;
+/**
+ * 拉流状态发生变化是回调
+ *
+ * @param result 拉流状态结果
+ */
+declare type PlayerStateUpdateCallBack = (result: ZegoPlayerState) => void;
+/**
+ * 订阅推流质量回调
+ *
+ * @param streamID 推流流ID
+ * @param stats 推流质量描述
+ */
+declare type PublishQualityUpdateCallBack = (streamID: string, stats: ZegoPublishStats) => void;
+/**
+ * @param result 推流状态结果
+ */
+declare type PublisherStateUpdateCallBack = (result: ZegoPublisherState) => void;
+/**
+ * @param streamID 流 ID
+ * @param status 所拉流的摄像头状态 'OPEN'表示开启 'MUTE'表示关闭
+ */
+declare type RemoteCameraStatusUpdateCallBack = (streamID: string, status: 'OPEN' | 'MUTE') => void;
+/**
+ * @param streamID 流 ID
+ * @param status 所拉流的麦克风状态 'OPEN'表示开启 'MUTE'表示关闭
+ */
+declare type RemoteMicStatusUpdateCallBack = (streamID: string, status: 'OPEN' | 'MUTE') => void;
+/**
+ * @param roomID 发生用户变化房间的ID
+ * @param count 当前在线用户数量
+ */
+declare type RoomOnlineUserCountUpdateCallBack = (roomID: string, count: number) => void;
+/**
+ * @param roomID 房间ID
+ * @param state DISCONNECTED: 房间和服务期断开,并重试后仍旧失败
+ *              CONNECTING:  断开并开始重连
+ *              CONNECTED: 重连成功
+ * @param errorCode 断开时候的具体错误码
+ * @param extendedData 扩展信息
+ */
+declare type RoomStateUpdateCallBack = (roomID: string, state: 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED', errorCode: number, extendedData: string) => void;
+/**
+ * 监听已登录房间内流的变化（增加，删除）
+ *
+ * @param roomID 房间ID
+ * @param updateType DELETE：流删除，ADD：流新增
+ * @param streamList 更新流列表
+ */
+declare type RoomStreamUpdateCallBack = (roomID: string, updateType: 'DELETE' | 'ADD', streamList: ZegoStreamList[]) => void;
+/**
+ * 房间用户变化回调
+ *
+ * Note: 详情描述：当前登录房间,如果用户发生新增,删除等,触发回调通知当前用户
+ *
+ * Note: 触发条件：其他用户登录,推出时触发
+ *
+ * Note: 限制频率：无
+ *
+ * Note: 关注回调：无
+ *
+ * Note: 重点提示：触发前提是登录时,设置了关注用户变化
+ *
+ * Note: 支持版本：1.0.0
+ *
+ * Note: 废弃时间：无
+ *
+ * @param roomID 发生用户变化房间的ID
+ * @param updateType 用户行为，DELETE 表示离开，ADD 表示进入
+ * @param userList 发生变化用户的具体信息
+ *
+ * @return 没有返回
+ */
+declare type RoomUserUpdateCallBack = (roomID: string, updateType: 'DELETE' | 'ADD', userList: ZegoUser[]) => void;
+/**
+ * @param mediaStream 创建屏幕共享流得到的流对象
+ */
+declare type ScreenSharingEndedCallBack = (mediaStream: MediaStream) => void;
+/**
+ * 推拉流音浪回调,该接口目前不兼容safari
+ *
+ * @param soundLevelList 声浪信息列表，包括流id，声浪大小，及流状态
+ */
+declare type SoundLevelUpdateCallBack = (soundLevelList: ZegoSoundLevelInfo[]) => void;
+/**
+ * 流附加消息变化时回调
+ *
+ * @param roomID 房间ID
+ * @param streamList 流信息
+ */
+declare type StreamExtraInfoUpdateCallBack = (roomID: string, streamList: {
+    streamID: string;
+    user: ZegoUser;
+    extraInfo: string;
+}[]) => void;
+/**
+ * 音频设备状态变化回调
+ *
+ * @param updateType 'DELETE' 表示设备删除， 'ADD'表示设备增加
+ * @param deviceType 'Input'表示输入设备， 'Output'表示输出设备
+ * @param deviceInfo 设备信息
+ */
+declare type audioDeviceStateChangedCallBack = (updateType: 'DELETE' | 'ADD', deviceType: 'Input' | 'Output', deviceInfo: {
+    deviceName: string;
+    deviceID: string;
+}) => void;
+/**
+ * 设备异常回调
+ *
+ * @param errorCode 错误码
+ * @param deviceName 发生异常的设备名称
+ */
+declare type deviceErrorCallBack = (errorCode: number, deviceName: string) => void;
+/**
+ * 房间额外消息更新回调
+ *
+ * @param roomID 房间ID
+ * @param type 消息类型
+ * @param data 消息内容
+ */
+declare type roomExtraInfoUpdateCallBack = (roomID: string, type: string, data: string) => void;
+/**
+ * 视频设备状态变化更新回调
+ *
+ * @param updateType 'DELETE' 为设备被移除， 'ADD'表示设备增加
+ * @param deviceInfo 设备信息，deviceName为设备名称，deviceID为设备ID
+ */
+declare type videoDeviceStateChangedCallBack = (updateType: 'DELETE' | 'ADD', deviceInfo: {
+    deviceName: string;
+    deviceID: string;
+}) => void;
 export {};

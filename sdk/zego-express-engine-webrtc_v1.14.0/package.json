@@ -1,9 +1,9 @@
 {
     "name": "zego-express-engine-webrtc",
-    "version": "1.15.0",
+    "version": "1.14.0",
     "description": "zego webrtc express sdk",
     "main": "./ZegoExpressWebRTC.js",
-    "typings": "./sdk/code/zh/zego.client.web.d.ts",
+    "typings": "./sdk/webrtc/zego.client.web.d.ts",
     "keywords": [
         "sdk",
         "zego",

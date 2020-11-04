@@ -27,6 +27,7 @@ export declare abstract class BaseCenter extends Common {
     logoutRoom(roomID?: string): void;
     sendCustomCommand(roomID: string, command: string | Record<string, any>, toUserList: string[]): Promise<{
         errorCode: number;
+        messageID: number;
         extendedData: string;
     }>;
     sendBroadcastMessage(roomID: string, message: string): Promise<{

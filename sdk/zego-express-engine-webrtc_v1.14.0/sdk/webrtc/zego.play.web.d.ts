@@ -4,7 +4,6 @@ import { ZegoSignal } from '../common/zego.signal';
 import { Logger } from '../common/zego.logger';
 import { ZegoStreamCenterWeb } from './zego.streamCenter.web';
 import { ZegoAudioContext } from '../../types';
-import { StateCenter } from '../common/clientBase/stateCenter';
 export declare class ZegoPlayWeb {
     logger: Logger;
     signal: ZegoSignal;
@@ -62,12 +61,11 @@ export declare class ZegoPlayWeb {
     playEvent: boolean;
     gotStreamStatus: boolean;
     streamStatus: any;
-    stateCenter: StateCenter;
     ac: ZegoAudioContext;
     soundLevel: number;
     mic: any;
     script: any;
-    constructor(log: Logger, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext, stateCenter: StateCenter);
+    constructor(log: Logger, signal: ZegoSignal | null, dataReport: ZegoDataReport, qualityTimeInterval: number, streamCenter: ZegoStreamCenterWeb, ac: ZegoAudioContext);
     startPlay(streamId: string, success: (stream: MediaStream) => void, playOption?: webPlayOption): void;
     private onCreatePlaySessionSuccess;
     onCreateOfferSuccess(desc: {
